@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <script src="modules/user.js"></script>
+    <script src="modules/adv.js"></script>
+</head>
+<body>
+<div id="myApp">
+    <user-info></user-info>
+    <login></login>
+    <adv-info></adv-info>
+    <adv-type></adv-type>
+    <one></one>
+</div>
+</body>
+<script>
+    new Vue({
+        el:"#myApp",
+        components:{
+            ...userM,
+            ...advM,
+            ...{
+                one:{
+                    template:`<div>one</div>`
+                }
+            }
+        }
+        // components:Object.assign(userM,advM,{
+        //     one:{
+        //         template:`<div>one</div>`
+        //     }
+        // })
+    })
+</script>
+</html>

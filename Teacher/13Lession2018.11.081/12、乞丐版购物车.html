@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <script src="lib/vue-filters.js"></script>
+</head>
+<body>
+<div id="myApp">
+    <div v-for="item in goodsList">
+        <h3>{{item.goodsName}}</h3>
+        <p>价格：{{item.money | currency}}</p>
+        <input type="button" value="加入购物车" @click="joinCar(item.id)">
+        <hr/>
+    </div>
+
+
+
+    <div v-for="item in carList">
+        <h3>{{item.goodsName}}</h3>
+        <p>单价：{{item.money | currency}}</p>
+        <p>购买的数量：{{item.buyNum}}</p>
+        <p>合计：{{item.buyNum*item.money | currency}}</p>
+    </div>
+    <div>
+        合计：{{goodsSum | currency}}
+    </div>
+
+
+
+
+</div>
+</body>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+            goodsList:[
+                {
+                    id:1,
+                    goodsName:"袜子",
+                    money:100
+                },{
+                    id:2,
+                    goodsName:"上衣",
+                    money:20
+                },{
+                    id:3,
+                    goodsName:"裤子",
+                    money:30
+                }
+            ],
+            carList:[]
+
+            //[{id:商品ID,goodsName,money,buyNum}]
+        },
+        methods:{
+            // 加入购物车
+            joinCar(id){
+                // 根据ID找到商品信息
+                var goodsInfo=this.goodsList.find(v=>v.id===id);
+                // 根据商品ID找到购物车的index
+                var carIndex=this.carList.findIndex(v=>v.id===id);
+                // 在购物车当中找到该物品
+                if(carIndex>-1){
+                    this.carList[carIndex].buyNum+=1;
+                }else{
+                    this.carList.unshift({
+                        id,
+                        goodsName:goodsInfo.goodsName,
+                        money:goodsInfo.money,
+                        buyNum:1
+                    })
+                }
+            }
+        },
+        computed:{
+            goodsSum(){
+                var sum=0;
+                this.carList.forEach((v)=>{
+                    sum+=v.buyNum*v.money
+                })
+                return sum;
+            }
+        }
+    })
+</script>
+</html>

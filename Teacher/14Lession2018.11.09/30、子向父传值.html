@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="myApp">
+    <input type="button" :value="num" @click="addOne">
+    <child :num="num" @one="fn"></child>
+</div>
+</body>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+            num:45
+        },
+        methods:{
+            addOne(){
+                this.num++
+            },
+            fn(num){
+                this.num+=num;
+            }
+        },
+        components:{
+
+            child:{
+                props:["num"],
+                methods:{
+                    addOne(){
+                        this.$emit("one",666)
+                    }
+                },
+                template:`<div>{{num}} <input type="button" value="子组件的按钮" @click="addOne"></div>`
+            }
+        }
+    })
+</script>
+</html>

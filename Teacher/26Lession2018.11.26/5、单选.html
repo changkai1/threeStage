@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/babel.min.js"></script>
+    <script src="lib/axios.min.js"></script>
+</head>
+<body>
+<div id="myApp"></div>
+</body>
+<script type="text/babel">
+    class MyCom extends React.Component{
+        constructor(props){
+            super(props);
+            this.state={
+                isHot:1,
+                hobbyArr:["1"]
+            }
+        }
+        handleSubmit(e){
+            console.log(this.state.isHot,this.state.hobbyArr);
+            e.preventDefault();// 阻止默认事件
+        }
+        handleChange=(e)=>{
+            var val=e.target.value;
+            if(e.target.type==="checkbox"){
+                var val=this.state.hobbyArr;
+                var index=val.indexOf(e.target.value);
+                index>-1?val.splice(index,1): val.push(e.target.value);
+            }
+            this.setState({
+                [e.target.name]:val
+            })
+
+
+            // if(e.target.type==="checkbox"){
+            //     var arr=this.state.hobbyArr;
+            //     var index=arr.indexOf(e.target.value);
+            //     index>-1?arr.splice(index,1): arr.push(e.target.value);
+            //     this.setState({
+            //         hobbyArr:arr
+            //     })
+            // }else{
+            //     this.setState({
+            //         [e.target.name]:e.target.value
+            //     })
+            // }
+
+        }
+        // changeIsHot=(e)=>{
+        //    console.log(typeof e.target.value);
+        //    this.setState({
+        //        isHot:e.target.value
+        //    })
+        // }
+        changeHobbyArr=(e)=>{
+            var arr=this.state.hobbyArr;
+            var index=arr.indexOf(e.target.value);
+            index>-1?arr.splice(index,1): arr.push(e.target.value);
+            this.setState({
+                hobbyArr:arr
+            })
+
+
+
+
+            // var arr=this.state.hobbyArr;
+            // var index=arr.indexOf(e.target.value);
+            // if(index>-1){
+            //     arr.splice(index,1);
+            // }else{
+            //     arr.push(e.target.value);
+            // }
+            // this.setState({
+            //     hobbyArr:arr
+            // })
+
+
+
+
+
+
+            // if(arr.includes( e.target.value) ){
+            // }
+        }
+        render(){
+            // defaultChecked只是在第一次渲染时起作用。可以通过该属性设置初始值
+            return (
+                <form onSubmit={this.handleSubmit.bind(this)}>
+                    <p>
+                        是否热门： <input name="isHot" onChange={this.handleChange} defaultChecked={this.state.isHot===1} type="radio" value="1"/>是
+                                   <input name="isHot"  onChange={this.handleChange} defaultChecked={this.state.isHot===2} type="radio" value="2"/>否
+                    </p>
+                    <p>
+                        爱好：
+                        <input type="checkbox" name="hobbyArr" onChange={this.handleChange} defaultChecked={this.state.hobbyArr.includes("1")} value="1"/>学习
+                        <input type="checkbox" name="hobbyArr" onChange={this.handleChange} defaultChecked={this.state.hobbyArr.includes("2")} value="2"/>下棋
+                        <input type="checkbox" name="hobbyArr" onChange={this.handleChange} defaultChecked={this.state.hobbyArr.includes("3")} value="3"/>乒乓
+                    </p>
+                    <p><input type="submit" value="登陆"/></p>
+                </form>
+            )
+        }
+    }
+    ReactDOM.render(
+        <MyCom/>,
+        document.querySelector("#myApp")
+    )
+</script>
+</html>

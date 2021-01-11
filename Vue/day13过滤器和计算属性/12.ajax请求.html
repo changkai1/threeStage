@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-filters.js"></script>
+    <script src="../lib/vue-resource.js"></script>
+</head>
+<body>
+    <div id="app1">
+        <input type="text" v-model="num">+
+        <input type="text" v-model="num2">
+        <input type="button" value="=" @click="sum">
+        <input type="text" v-model="num3">
+    </div>
+</body>
+</html>
+<script>
+    new Vue({
+        el:"#app1",
+        data:{
+            num:0,
+            num2:0,
+            num3:0
+        },
+        methods:{
+            sum(){
+                this.$http.get("http://127.0.0.1:8081/sum",{
+                    num:this.num,
+                    num2:this.num2
+                }).then(({data})=>{
+                    console.log(data);
+                    this.num3 = data.sum;
+                })
+            }
+        },
+        computed:{
+           
+        }
+    })
+   
+
+
+
+
+
+
+
+
+
+
+</script>

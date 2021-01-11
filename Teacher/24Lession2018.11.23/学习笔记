@@ -1,0 +1,55 @@
+1、引入
+    <!--主库文件-->
+    <script src="lib/react.development.js"></script>
+    <!--对DOM操作，-->
+    <script src="lib/react-dom.development.js"></script>
+    <!--支持JSX-->
+    <script src="lib/babel.min.js"></script>
+
+    React
+    <!--支持babel-->
+    <script type="text/babel">
+        // 第一个参数是你的内容，第二个参数是你要将内容挂载到哪里
+        ReactDOM.render(<div>大家好，我的名字叫JSX</div>,document.querySelector("#myApp"));
+    </script>
+2、JSX:javascript xml----->是对js的一个扩展。   也是javascript
+1、如果你的内容是字符串，会作为文档来显示。
+2、只能有一个根元素
+3、首字母大写会认为是你定义的组件
+
+*class---->className
+*style---->{}
+// 注释：
+ {
+    //<p style="color:yellow">单行注释</p>
+}
+{
+    /* 多行注释 <p className="red">给我点颜色</p>
+<p style={s}>再给我点颜色，我要开染房</p>
+<p style={{color:"yellow"}}>再给我点颜色，我要开染房</p>*/
+}
+*jsx当中可以直接展开你的数组。---》将数组的元素依次渲染到你的页面当中
+通过函数的方式定义组件：
+*函数的名字要大写
+  function Fn(){
+        return (
+            <div>我是在fn里</div>
+            )
+
+    }
+    ReactDOM.render(
+        <Fn/>
+        ,document.querySelector("#myApp")
+    )
+
+    1、传值通过属性：
+     function Fn(props){
+            return (
+                <div>我是在fn里{props.userName}</div>
+            )
+        }
+        ReactDOM.render(
+            <Fn userName="123"/>
+            ,document.querySelector("#myApp")
+        )
+

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-filters.js"></script>
+</head>
+<body>
+    <div id="app1">
+       <div v-for="item in myList">
+            <p>事项：{{item.title}}</p>
+            <p>收支：{{item.money | money}}</p>
+            <hr>
+       </div>
+       <div>
+           合计：{{count()}}
+       </div>
+    </div>
+</body>
+</html>
+<script>
+    // 过滤器
+    Vue.filter("money",function(v){
+        if( v > 0){
+            return "+"+v;
+        }else{
+            return "士"+v*(-1);
+        }
+    })
+    new Vue({
+        el:"#app1",
+        data:{
+           myList:[
+               {
+                   title:"板砖",
+                   money:5
+               },
+               {
+                   title:"吃饭",
+                   money:50
+               },
+               {
+                   title:"买手机",
+                   money:-100
+               },
+               {
+                   title:"打游戏",
+                   money:-10
+               }
+           ]
+        },
+        methods:{
+            count(){
+                var sum = 0;
+                this.myList.forEach((v)=>{
+                    sum += v.money;
+                })
+                return sum;
+            }
+        }
+    })
+   
+
+
+
+
+
+
+
+
+
+
+</script>

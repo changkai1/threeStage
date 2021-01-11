@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+       <p style="color:red;background:yellow">写一点字</p>
+       <!-- 1.绑定的是一个字符串 -->
+       <p :style="'color:red;background:yellow'">写一点字</p>
+       <!-- 2. 绑定data里的myc对象-->
+       <p :style="myc">写一点字</p>
+        <!-- 3. 绑定data里的myc2字符串-->
+       <p :style="myc2">写一点字</p>
+       <!-- 4.对象的写法 -->
+       <p :style="{color:'red',background:'yellow'}">写一点字</p>
+       <!-- 5. 绑定data里的数据-->
+       <p :style="{'color':color,'background':yellow}">写一点字</p>
+       <!-- 6.多个样式，可以使用数组 -->
+       <p :style="[styleA,styleB]">写一点字</p>
+    </div>
+</body>
+</html>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            myc:{
+                color:"red",
+                background:"yellow"
+            },
+            myc2:"color:red;background:yellow;",
+            color:"red",
+            yellow:"yellow",
+            styleA:{
+                background:"yellow"
+            },
+            styleB:{
+                color:"red"
+            }
+        },
+        methods:{
+            
+        }
+    })
+
+
+
+
+
+
+
+
+
+
+
+</script>

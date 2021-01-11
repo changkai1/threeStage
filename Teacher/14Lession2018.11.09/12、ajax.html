@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <script src="lib/vue-resource.js"></script>
+</head>
+<body>
+<div id="myApp">
+
+</div>
+</body>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+
+        },
+        mounted(){
+            this.$http.post("http://127.0.0.1/addweibo",{
+                a:1,
+                b:2
+            },{
+                // 如果你的服务器端不接收JSON数据的话。urlencode
+                emulateJSON:true//  不是JSON
+            }).then(function({data}){
+                console.log(data);
+            })
+        }
+    })
+</script>
+</html>

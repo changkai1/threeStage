@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事 件1</title>
+    <script src="lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/babel.min.js"></script>
+</head>
+<body>
+    <div id="myApp">
+
+    </div>
+</body>
+<script type="text/babel">
+    class MyCom extends React.Component{
+        constructor(props){// 构造器
+            super(props);
+            this.state={
+                num:1
+            };
+            // this.changeNum=this.changeNum.bind(this);
+        }
+        // changeNum(){
+        //     this.setState({
+        //         num:++this.state.num
+        //     })
+        // }
+        changeNum=()=>{
+            this.setState({
+                num:++this.state.num
+            })
+        }
+        render(){
+            //<!--<input type="button" value="困不困" onClick={this.changeNum.bind(this)}/>-->
+            // <!--<input type="button" value="困不困" onClick={()=>{this.changeNum()}}/>-->
+            // <!--<input type="button" value="困不困" onClick={this.changeNum}/>-->
+            return (
+                <div>
+
+                    <input type="button" value="困不困" onClick={this.changeNum}/>
+
+                    <p>{this.state.num}</p>
+                </div>
+            )
+        }
+    }
+    ReactDOM.render(
+        <MyCom></MyCom>,
+        document.querySelector("#myApp")
+    )
+</script>
+</html>

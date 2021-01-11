@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--主库文件-->
+    <script src="lib/react.development.js"></script>
+    <!--对DOM操作，-->
+    <script src="lib/react-dom.development.js"></script>
+    <!--支持JSX-->
+    <script src="lib/babel.min.js"></script>
+</head>
+<body>
+    <div id="myApp">
+
+    </div>
+</body>
+<script type="text/babel">
+    function SiteName(props){
+        return (
+            <p>网站名称:{props.siteName}</p>
+        )
+    }
+    function SiteUrl(props){
+        return (
+            <p>网站地址:{props.siteUrl}</p>
+        )
+    }
+    function Component(props){
+        return (
+            <div>
+                 <SiteName siteName={props.site.siteName}></SiteName>
+                 <SiteUrl siteUrl={props.site.siteUrl}></SiteUrl>
+            </div>
+        );
+    }
+
+    ReactDOM.render(
+        <Component site={{siteName:"百度",siteUrl:"http://127.0.0.1"}}></Component>,
+        document.querySelector("#myApp")
+    )
+</script>
+</html>

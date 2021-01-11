@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <script src="./modules/adv.js"></script>
+    <script src="./modules/user.js"></script>
+</head>
+<body>
+    <div id="app">
+        <adv-info></adv-info>
+        <adv-type></adv-type>
+        <user-info></user-info>
+        <login></login>
+    </div>
+    
+</body>
+</html>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+           
+        },
+        components:{
+            // 对象合并第二种方法
+            ...advM,
+            ...userM,
+            ...{  // ...拓展运算符可以合并对象，还可以接着写自己的组件
+                one:{
+                    template:`<div>one</div>`
+                }
+            }
+        }
+        // components:Object.assign(advM,userM,{  //对象合并第一种方法
+        //     one:{ //还可以接着写组件
+        //         template:`<div>one</div>`
+        //     }
+        // })
+     })
+
+  
+
+
+
+
+
+
+
+
+
+
+</script>

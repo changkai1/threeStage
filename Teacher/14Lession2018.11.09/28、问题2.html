@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="myApp">
+    <input type="button" :value="num" @click="addOne">
+    <child :num="num"></child>
+</div>
+</body>
+<script>
+    <!--子组件接收的值不要与data内的返回对象属性同名-->
+    new Vue({
+        el:"#myApp",
+        data:{
+            num:45
+        },
+        methods:{
+            addOne(){
+                this.num++
+            }
+        },
+        components:{
+
+            child:{
+                data(){
+                    return {
+                        num:35
+                    }
+                },
+                props:["num"],
+                template:`<div>{{num}}</div>`
+            }
+        }
+    })
+</script>
+</html>

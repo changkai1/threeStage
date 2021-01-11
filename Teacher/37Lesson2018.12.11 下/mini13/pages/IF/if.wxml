@@ -1,0 +1,24 @@
+<!-- <view wx:if="{{isShow}}">{{str}}</view>
+<view wx:else>上有天堂 ，下有苏杭</view> -->
+
+
+<!-- <view>
+{{sex===1?"男":"女"}}
+</view> -->
+
+
+<!-- <view wx:if="{{sex===1}}">男</view>
+
+<view wx:elif="{{sex===2}}">女</view>
+
+<view wx:else>未知</view> -->
+
+<block wx:if="{{sex===1}}">
+<view>河北</view>
+<view>河南</view>
+</block>
+
+<block wx:else>
+<view>湖南</view>
+<view>湖北</view>
+</block>

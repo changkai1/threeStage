@@ -1,0 +1,23 @@
+1、hosts 文件地址  c:/windows/System32/drivers/etc/hosts
+2、node查看版本号：node -v
+3、node运行js文件 node file.js   .js扩展名可以省略，可以通过tab键对文件进行切换
+4、ipconfig：可以查看IP信息
+5、ping www.baidu.com  查看是否连接  ping www.baidu.com -t可以一直请求
+6、cls 清屏
+7、response.end(只允许写字符串和Buffer)
+8、fs.readFile() 读取文件
+9、fs.writeFile() 写入文件  fs.writeFile("文件名","写入的内容",{flag:"a" 追加内容},function(err){console.log(err,"写入成功")} 回调函数,写入成功后会调用  )                          
+10、对url操作
+    var http = require("http");
+    var fs = require("fs");
+    var url = require("url");
+    http.createServer(function(req,res){
+        //http://127.0.0.1:80/sum?a=1&b=2&c=3
+        console.log(111,req.url);                      //---sum?a=1&b=2&c=3
+        console.log(222,url.parse(req.url).pathname);  //---/sum
+        console.log(333,url.parse(req.url).query);     //---a=1&b=2&c=3
+        console.log(444,url.parse(req.url,true).query);//---{ a: '1', b: '2', c: '3' }
+        res.end();
+    }).listen("80",function(){
+        console.log(555,"开启成功"); 
+    })

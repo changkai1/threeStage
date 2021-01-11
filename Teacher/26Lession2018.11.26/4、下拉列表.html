@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/babel.min.js"></script>
+    <script src="lib/axios.min.js"></script>
+</head>
+<body>
+<div id="myApp"></div>
+</body>
+<script type="text/babel">
+    class MyCom extends React.Component{
+        constructor(props){
+            super(props);
+            this.state={
+                provinceList:[],
+                cityList:[],
+                userName:"",
+                passWord:"",
+                province:"0",
+                city:"0"
+            }
+        }
+        handleSubmit(e){
+            // console.log(e.target.querySelector("input[type='submit']").value);
+            console.log(this.state.userName,this.state.passWord,this.state.province,this.state.city);
+            e.preventDefault();// 阻止默认事件
+        }
+        handleChange(e){
+            this.setState({
+                [e.target.name]:e.target.value
+            })
+
+            if(e.target.name==="province"){// 省
+                console.log(e.target.value);
+                this.setState({
+                    cityList:this.state.provinceList.find(v=>v.id===e.target.value/1).cityList
+                })
+            }
+
+
+        }
+        componentDidMount(){
+            axios.get("./data.json")
+                .then(({data})=>{
+                    this.setState({
+                        provinceList:data
+                    })
+                })
+        }
+        // changeProvince(e){
+        //     this.setState({
+        //         province:e.target.value
+        //     })
+        // }
+        render(){
+            return (
+                <form onSubmit={this.handleSubmit.bind(this)}>
+                    <p>用户名：<input name="userName" onChange={this.handleChange.bind(this)}  value={this.state.userName} type="text"/></p>
+                    <p>密码：<input name="passWord" onChange={this.handleChange.bind(this)} value={this.state.passWord} type="password"/></p>
+                    <p>省份：<select name="province" onChange={this.handleChange.bind(this)} value={this.state.province}>
+                        <option value="0">--请选择--</option>
+                        {
+                            this.state.provinceList.map(v=>{
+                                return <option value={v.id} key={v.id}>{v.provinceName}</option>
+                            })
+                        }
+                    </select></p>
+                    <p>市： <select name="city" onChange={this.handleChange.bind(this)} value={this.state.city}>
+                        <option value="0">--请选择--</option>
+                        {
+                            this.state.cityList.map(v=>{
+                                return <option value={v.id} key={v.id}>{v.cityName}</option>
+                            })
+                        }
+                    </select></p>
+                    <p><input type="submit" value="登陆"/></p>
+                </form>
+            )
+        }
+    }
+    ReactDOM.render(
+        <MyCom/>,
+        document.querySelector("#myApp")
+    )
+</script>
+</html>

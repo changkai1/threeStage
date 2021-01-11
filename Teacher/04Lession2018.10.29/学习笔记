@@ -1,0 +1,59 @@
+1、模块
+    mo.js
+        module.exports.age
+    server1.js
+    require("mo.js"
+2、多用户投票系统
+    1、对投票人的增删改查
+    2、多用户的登陆和注册
+
+    查看端口号是否被占用：
+    netstat -ano
+
+    req.method----->请求的方式
+3、作业：
+   1、不允许添加重复的名字
+   // webStorage
+   localStorage  sessionStorage
+
+   写入
+       localStorage.age=12;
+       localStorage["age"]=12;
+       localStorage.setItem("age",12);
+   读取
+        localStorage.age;
+        localStorage["age"];
+        localStorage.getItem("age");
+   删除
+        localStorage.remove("age");
+        localStorage.clear();
+  1、理论------重要
+
+  1、JSONP的原理！
+  2、AJAX
+
+
+//  1、传递被投票人的id,投票人的userId
+2\服务器
+    1、sendVote.json
+        [
+            {
+                voteId:被投票人的ID
+                userId:投票人的ID
+                id:自己的标识
+                lastTime:时间戳
+            }
+        ]
+        查找，
+        1、找到了
+            1、判断时间是否超过24小时
+                1、超过了24小时
+                    1、投票,将被投票人加1
+                    2、sendVote.json的时间更新
+                 2、没有超过
+                    提示：您已经投过票了
+        2、没找到
+            1、、sendVote.json添加元素
+            2、、sendVote.json
+
+

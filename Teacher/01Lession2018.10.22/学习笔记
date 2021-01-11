@@ -1,0 +1,82 @@
+张培跃
+个人博客：http://www.zhangpeiyue.com
+微信：zhangpeiyue
+电话：15101125517
+*****************************************************
+作业：
+    1、同城帮：http://bang.360.cn/ 布局
+**********************************************
+项目：
+    核心：数据，代码。
+        数据放到数据库当中。数据库是放到服务器当中
+        代码需要放到服务当中，需要服务器进行相对应的环境支持。
+
+    后台语言：php，java,c# ,javascript
+    node是运行JAVASCRIPT的环境。
+
+    服务器（后台）接口：网址
+        http://www.baidu.com
+
+    ajax:
+
+
+***************************************************
+node:
+查看版本号：node -v
+npm-->node package  manage
+cnpm
+*************************
+node file.js   js扩展名可以省略。
+cls:清屏
+可以通过tab键对文件进行切换。
+ipconfig:可以查看你的IP信息
+ping www.baidu.com
+*当你修改程序之后，一定一定要重启服务，否则没有效果！
+*端口号只能同时应用一个场景。
+*response.end(只允许写string Buffer)
+
+************************开启服务****************************************
+// 服务
+// 引入http模块。
+/*
+* 1、内置模块：自身拥有不需要下载（cnpm)
+* 2、通过cnpm下载的。第三方模块
+* 3、自己写的模块。
+* 模块：依赖，模组。*/
+const http=require("http");
+// 创建HTTP服务  news request 请求对象，response响应对象
+http.createServer(function(request,response){
+    // 响应结束！如果没有结束会一直请求下去！
+    // response.end("wo ai ni zhongguo");
+    // 响应的头部信息设置：第一个参数是个状态码。第二个参数是一个对象
+    response.writeHead(200,{
+        //text/html:可以被浏览器解析成HTML
+        // "content-type":"text/html;charset=utf-8"
+        "content-type":"text/plain;charset=utf-8"
+    });
+    response.end("<a href='http://www.baidu.com'>百度</a>");
+    // response.end("我是一只小小小小鸟！怎么飞也飞不高！安曙很帅！");
+    // listen(端口号，指定的IP,回调函数：当服务开启后会调用 该函数）
+}).listen(8081,"127.0.0.1",function(){
+    console.log("开启服务成功")
+})
+***************************诀窍*************************************
+1、单线程
+2、没有文件夹的概念！
+
+
+
+
+
+
+
+mongodb
+vue
+angular
+react
+小程序
+公众号
+
+webpack
+git
+typescript

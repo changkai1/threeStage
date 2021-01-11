@@ -1,0 +1,11 @@
+<view>
+    <swiper interval='1000' indicator-dots='true'
+     indicator-active-color='green'
+     indicator-color='white'     
+     circular="true"
+      autoplay='true'>
+      <swiper-item style="background:red;">1</swiper-item>
+      <swiper-item style="background:blue;">2</swiper-item>
+      <swiper-item style="background:yellow;">3</swiper-item>
+    </swiper>
+</view>

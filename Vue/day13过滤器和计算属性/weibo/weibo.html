@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>微博</title>
+<link href="style/weibo.css" rel="stylesheet" type="text/css" />
+    <script src="lib/vue.js"></script>
+    <script src="lib/vue-resource.js"></script>
+</head>
+
+<body>
+<div class="jyArea">
+<!--留言-->
+     <div class="takeComment">
+        <textarea v-model.trim="context" name="textarea" class="takeTextField" id="tijiaoText"></textarea>
+        <div class="takeSbmComment">
+            <input type="button" class="inputs" value="" @click="addWeibo" />
+        </div>
+    </div>
+<!--已留-->
+    <div class="commentOn">
+        <div class="noContent">暂无留言</div>
+        <div class="messList">
+        	<div class="reply">
+                <p class="replyContent">内容</p>
+                <p class="operation">
+                    <span class="replyTime">2017.7.30</span>
+                    <span class="handle">
+                    	<a href="javascript:;" class="top">0</a>
+                        <a href="javascript:;" class="down_icon">9</a>
+                        <a href="javascript:;" class="cut">删除</a>
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="page">
+        	<a href="javascript:;" class="active">1</a>
+        	<a href="javascript:;">2</a>
+        	<a href="javascript:;">3</a>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+
+    new Vue({
+        el:".jyArea",
+        data:{
+            context:"",
+            contextList:[]
+        },
+        methods:{
+            addWeibo(){
+                this.$http.get("http://127.0.0.1:8081/addweibo",{
+                    context:this.context
+                }).then(({data})=>{
+                    console.log(data);
+                    this.getWeibo();
+                })
+            },
+            getWeibo(){
+
+            }
+        },
+        mounted(){// 挂载完毕以后会执行该钩子函数。
+            console.log(12);
+            this.getWeibo();
+        }
+    })
+</script>
+</html>

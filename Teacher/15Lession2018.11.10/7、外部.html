@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <script src="lib/vue-components.js"></script>
+</head>
+<body>
+<div id="myApp">
+    {{num}}  <one username="laowang"></one>
+    <two></two>
+    <red></red>
+</div>
+<div id="myApp2">
+    {{num}} <one username="laoli"></one>
+    <two></two>
+</div>
+</body>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+            num:1
+        }
+    })
+    new Vue({
+        el:"#myApp2",
+        data:{
+            num:2
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>豆瓣网</title>
+</head>
+<body>
+<div id="wrap">
+    <%for(var i=0;i<subjects.length;i++){%>
+    <div>
+        <h3>《<%=subjects[i].title%>》</h3>
+        <img src="<%=subjects[i].images.small%>" alt="">
+    </div>
+    <%}%>
+</div>
+
+</body>
+</html>

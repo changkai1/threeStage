@@ -1,0 +1,7 @@
+<!--pages/navi/navi.wxml-->
+<view>
+
+<navigator hover-class='navi'  url="../logs/logs?a=1&b=2">查看日志</navigator>
+
+
+</view>

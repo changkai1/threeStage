@@ -1,0 +1,1 @@
+console.log("xixi,我是index1");

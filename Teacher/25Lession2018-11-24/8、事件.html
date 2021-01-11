@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事 件1</title>
+    <script src="lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/babel.min.js"></script>
+</head>
+<body>
+<div id="myApp">
+
+</div>
+</body>
+<script type="text/babel">
+    class MyCom extends React.Component{
+        constructor(props){// 构造器
+            super(props);
+            this.state={
+                num:1,
+                v:"初来自夸"
+            };
+            // this.changeNum=this.changeNum.bind(this)
+        }
+        // 额外传递参数。
+        // changeNum=(e,num)=>{
+        //     this.setState({
+        //         num:this.state.num+num,
+        //         v:e.target.value
+        //     })
+        // }
+        changeNum(num,e){
+            this.setState({
+                num:this.state.num+num,
+                v:e.target.value
+            })
+        }
+        render(){
+            // <!--<input type="button" value="困不困" onClick={this.changeNum}/>-->
+            // <!--<input type="button" value="困不困" onClick={(e)=>{-->
+            //     <!--this.changeNum(e,3)-->
+            // <!--}}/>-->
+            //<input type="button" value="困不困" onClick={this.changeNum.bind(this,5)}/>
+            return (
+                <div>
+
+
+
+
+                    <p>{this.state.num}</p>
+                    <p>{this.state.v}</p>
+                </div>
+            )
+        }
+    }
+    ReactDOM.render(
+        <MyCom></MyCom>,
+        document.querySelector("#myApp")
+    )
+</script>
+</html>

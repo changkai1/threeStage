@@ -1,0 +1,194 @@
+ 1、 自定义插件
+    1. main.js里引入自定义的插件
+       // 引入自定义的插件
+       import plugin from '@/components/plugin'
+    2. // 使用引入的插件，会默认执行插件里的方法,输出lalala
+        Vue.use(plugin);
+    3. 插件
+        export default{
+            // 当通过Vue.use来使用该插件时会默认执行install方法
+            install(Vue){ // 接收一个参数Vue实例
+                Vue.prototype.$http = {
+                    get(){
+                        console.log("你调用的了get方法")
+                    }
+                }
+                Vue.component("loading",{ //vue的全局组件，都可以使用
+                    template:`<div>加载中</div>`
+                })
+                console.log("lalallaal");
+            }
+        }
+    4.main.js使用
+        new Vue({
+            el: '#app',
+            router,
+            components: { App },
+            template: '<App/>',
+            mounted(){
+                this.$http.get(); //调用plugin里的get方法
+            }
+        })
+
+2、子路由(二级路由)
+    router--->index.js里设置
+        routes: [
+            {
+                path: '/',
+                name: 'HelloWorld',
+                component: HelloWorld
+            },
+            {
+                path:'/study',
+                name:'study',
+                component:Study,
+                children:[   //二级路由
+                    {
+                        path:'/',  //二级路由路径不加(/)  默认显示htm组件(/)
+                        component:htm,
+                        alias:'htm'  // 别名设置成htm
+                    },
+                    {
+                        path:'php',
+                        component:php
+                    },
+                    {
+                        path:'java',
+                        component:java
+                    }
+                ]
+            }
+        ] 
+    在study--->index.vue里设置
+    <template>
+        <div>
+            好好学习，天天向上
+            <router-link to="/study/htm">htm</router-link>
+            <router-link to="/study/php">php</router-link>
+            <router-link to="/study/java">java</router-link>
+            <router-view/>  //用来显示子路由
+        </div>
+    </template>
+
+3、路由--拦截器
+    1.单个组件里设置的  shop--->index.vue
+    export default {
+        name:'shop',
+            // 进入组件所在路由之前进行拦截,方法会自动执行
+            // to   去哪里
+            // from 从哪来
+            // next 是否允许继续执行  next() 默认为true,如果设置为false,不允许放行
+        beforeRouteEnter(to,from,next){
+            // console.log("to",to);
+            // console.log("from",from);
+            // console.log("to",to.meta);
+            if(to.meta.isAuthorization){ //如果为true的话next()
+                next();
+            }else{
+            // next("/");  // 为false的时候跳转到首页
+            next({path:'/',query:{a:1,b:2}});
+            }
+        },
+
+            // 离开路由之前
+            // to   去哪里
+            // from 从哪来
+            // next 是否允许继续执行  next() 默认为true,如果设置为false,不允许放行
+        beforeRouteLeave(to,from,next){
+            console.log("to",to);
+            console.log("from",from);
+        }
+    }
+    2.单个路由的设置
+        {
+            path:'/shop',
+            component:shop,
+            meta:{  //使用路由拦截器的时候会用到
+                isAuthorization:true  //是否授权
+            }
+        }
+    ***********************************************************************
+    3.进入所有路由之前 写在main.js里
+        to:去哪里
+        from:从哪里来
+
+        router.beforeEach((to,from,next)=>{
+            next();
+        })
+    
+        //动态加载title标题，在router路由的meta:{title:xxx}设置
+        router.beforeEach((to,from,next)=>{
+            if( to.meta.title ){
+                document.title = to.meta.title;
+            }
+            next();
+        })
+
+
+
+
+4、sync修饰符使用
+    1.子组件发射事件,事件名 update:isShow   子组件发射的事件名必须是  updata:事件名，才能使用sync修饰符
+         methods:{
+            changeIsShow(){
+                this.$emit("update:isShow",false);
+            }
+        }
+    2.父组件接收(不简写形式)
+    <router-view :isShow="isShow" str="父组件向子组件传值" @update:isShow="v=>isShow = v"/>
+
+    简写形式，使用sync修饰符,isShow直接修改的是父组件的data值，传过来的值直接赋值给data的isShow
+    <router-view :isShow="isShow" str="父组件向子组件传值" :isShow.sync="isShow"/>  
+
+    export default {
+        name: 'App',
+        data(){
+            return{
+            isShow:true
+            }
+        },
+        methods:{
+            changeIsShow(value){
+                this.isShow = value;
+            }
+        }
+    }
+
+5、assets和static区别
+    图片、外部引入的css放在assets文件夹里，打包时会被压缩，一般放到这个里面
+    在static文件夹里打包时不会被压缩
+
+6、npm run build  打包
+    打包到dist文件夹,dist-->index.html 打不开可能是路径错误
+    修改打包路径
+    config--->index.js--->assetsPublicPath: './', //设置为当前目录
+
+7、vue-cli中使用vue-resource
+    1.下载
+        npm install vue-resource --save-dev
+    2.引入
+        import vueResource from "vue-resource"
+        Vue.use(vueResource);
+    3.组件当中使用
+        //1. get 方法
+        this.$http.get("url",{
+            params:{
+                a:1,
+                b:2
+            }
+        }).then(({data})=>{
+
+        })
+ 
+        //2. post方法
+        this.$http.post("url",{
+            a:1,
+            b:2
+        }).then(({data})=>{
+
+        })
+
+
+
+
+

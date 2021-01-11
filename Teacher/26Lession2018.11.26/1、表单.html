@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/babel.min.js"></script>
+</head>
+<body>
+    <div id="myApp"></div>
+</body>
+<script type="text/babel">
+    class MyCom extends React.Component{
+        constructor(props){
+            super(props);
+
+        }
+        handelSubmit(e){
+            console.log(e.target.value);
+            e.preventDefault();// 阻止默认事件
+        }
+        render(){
+            return (
+                <form>
+                    <p>用户名：<input type="text"/></p>
+                    <p>密码：<input type="password"/></p>
+                    <p><input type="submit" onClick={this.handelSubmit.bind(this)} value="登陆"/></p>
+                </form>
+            )
+        }
+    }
+    ReactDOM.render(
+        <MyCom/>,
+        document.querySelector("#myApp")
+    )
+</script>
+</html>

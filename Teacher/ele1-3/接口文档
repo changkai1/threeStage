@@ -1,0 +1,9 @@
+1、获得管理员日志列表
+    地址：
+2、提交你的店铺类别
+    1、http://127.0.0.1/addShopType
+    2、post
+    3、传递的参数：
+        shopTypeName
+        shopTypePic
+    4、返回成功信息

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-resource.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="button" :value="num" @click="addFn">
+        <!-- 父组件向子组件传值，通过属性，子组件通过props来接收传过来的属性 -->
+        <!-- 子向父传值通过事件@one="fn" -->
+        <child :num="num" @one="fn"></child>
+    </div>
+
+    <template id="tp">
+        <div>
+            <p>大家好，我是子组件{{num}}</p>
+            <input type="button" value="子组件按钮" @click="addOne">
+        </div>
+    </template>
+</body>
+</html>
+<script>
+
+    new Vue({
+        el:"#app",
+        data:{
+           num:45
+        },
+        methods:{
+            addFn(){
+                this.num++;
+            },
+            fn(a){
+                this.num+=a;
+            }
+        },
+        components:{ //组件
+            child:{ //组件名
+                props:["num"],
+                methods:{
+                    addOne(){
+                        // 点击子组件按钮，发射一个事件名,传值666
+                        this.$emit("one",666);
+                    }
+                },
+                template:"#tp"
+            }
+        }
+    })
+
+
+
+
+
+</script>

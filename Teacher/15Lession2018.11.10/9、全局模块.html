@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <!--<script src="modules/user.js"></script>-->
+    <!--<script src="modules/adv.js"></script>-->
+</head>
+<body>
+<div id="myApp">
+    <user-info></user-info>
+    <login></login>
+    <adv-info></adv-info>
+    <adv-type></adv-type>
+    <!--<one></one>-->
+</div>
+</body>
+<script type="module">
+   import userM from "./modules/user.js";
+   import advM from "./modules/adv.js";
+    var comM={
+        ...userM,
+        ...advM
+    }
+    for(var key in comM){
+        Vue.component(key,comM[key]);
+    }
+    // for(var key in userM){
+    //     Vue.component(key,userM[key]);
+    // }
+    // for(var key in advM){
+    //     Vue.component(key,advM[key]);
+    // }
+
+    new Vue({
+        el:"#myApp",
+
+    })
+</script>
+</html>

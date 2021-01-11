@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+    <div id="myApp">
+        <p v-if="sex === 1">男</p>
+        <p v-else-if="sex === 2">女</p>
+        <p v-else>未知</p>
+    </div>
+</body>
+</html>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+            sex:2   //1.男  2.女  3.未知
+        }
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>董月壮账本</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="myApp">
+    <div v-for="item in myList">
+        <p>事项：{{item.title}}</p>
+        <p>收支：{{item.money | money}}</p>
+        <hr>
+    </div>
+    <div>
+        合计：{{count | money}}
+    </div>
+</div>
+</body>
+<script>
+    Vue.filter("money",function(v){
+            if(v>0){
+                return "+"+v;
+            }else
+                return "士"+v*-1;
+    })
+    new Vue({
+        el:"#myApp",
+        data:{
+            myList:[
+                {
+                    title:"搬砖",
+                    money:5,
+                },
+                {
+                    title:"吃饭",
+                    money:-50
+                },
+                {
+                    title:"扶老太太过马路",
+                    money:10
+                },
+                {
+                    title:"捡到钱包",
+                    money:1
+                },
+                {
+                    title:"手机",
+                    money:-100
+                }
+            ]
+        },
+        methods:{
+            // countFn(){
+            //     var sum=0;
+            //     this.myList.forEach((v)=>{
+            //         sum+=v.money;
+            //     });
+            //     return sum;
+            // }
+        },
+        computed:{
+            count(){
+                var sum=0;
+                this.myList.forEach((v)=>{
+                    sum+=v.money;
+                });
+                return sum;
+            }
+        }
+    })
+</script>
+</html>

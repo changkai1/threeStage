@@ -1,0 +1,9 @@
+<!--pages/navi/navi.wxml-->
+<view>
+
+<navigator hover-class='navi' redirect  url="../logs/logs?a=1&b=2">查看日志</navigator>
+<button bindtap='goLogs'>点我</button>
+<navigator url="../index/index">跳转到首页</navigator>
+<button bindtap='goHome'>跳转到首页</button>
+
+</view>

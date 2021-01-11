@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="myApp">
+    <one :num="id"></one>
+</div>
+</body>
+<script>
+    var bus=new Vue();
+    new Vue({
+        el:"#myApp",
+        data:{
+            id:1
+        },
+        mounted(){
+            bus.$on("change",()=>{
+                this.id++;
+            })
+        },
+        components:{
+            one:{
+                props:["num"],
+                template:`
+                    <div>
+                    one{{num}}
+                    <two :num1="num"></two>
+                    <three></three>
+                    </div>
+                `,
+                components:{
+                    two:{
+                        props:["num1"],
+                        methods:{
+                            changeId(){
+                                bus.$emit("change")
+                            }
+                        },
+                        template:`
+                        <div>two{{num1}}
+                        <input type="button" :value="num1" @click="changeId">
+
+
+                        </div>
+                        `
+                    },
+                    three:{
+                        template:`
+                           <div>three</div>
+                        `
+                    }
+                }
+            }
+        }
+    })
+</script>
+</html>

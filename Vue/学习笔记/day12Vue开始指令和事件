@@ -1,0 +1,35 @@
+1、v-if:是否渲染元素的内容，值是一个布尔值
+2、v-model:用于将数据绑定到表单元素当中
+3、v-show:用于指定的内容显示与隐藏，值是一个布尔值，display:none 或者  display:block
+4、v-html:将元素渲染到所在元素中，支持html
+5、v-text:将元素渲染到所在元素中，以纯文本的形式
+6、{{}}:可以实现对数据的渲染，也可以写表达式，但是不能应用到属性当中
+7、v-bind:将数据绑定到元素的属性当中  简写：冒号(:)
+8、v-on: :可以通过该指令指定事件，如果不传值，()可以省略  简写@
+9、v-pre :忽略{{}}
+10、v-once :使用第一次赋予的值，以后数据发生变化，不会再次进行响应
+
+
+修饰符：
+1、number: v-model.number="num"  将内容设置为num
+2、lazy: v-model.lazy="num"      当失去焦点时才会响应
+3、trim: v-model.trim="num"      去除左右两侧空格,提交表单时会用到
+
+阻止冒泡
+4、stop: @click.stop="button"    阻止事件冒泡(第一种)
+5、@click="fn(3,$event)"         当需要传递参数，并且还要传递事件对象时
+6、@click="fn"                   默认参数即时事件对象
+
+阻止默认事件
+contextmenu 右击事件
+7、prevent: @contextmenu.prevent="fn"  阻止默认事件
+
+事件修饰符
+    1、 .stop     防止事件冒泡，由内到外        等同于JavaScript中的event.stopPropagation()
+    2、 .prevent  阻止浏览器默认行为            等同于JavaScript中的event.preventDefault()
+    3、 .capture  捕获冒泡，即有冒泡发生时，有该修饰符的dom元素会先执行，如果有多个，从外到内依次执行，然后再按自然顺序执行触发的事件。
+    4、 .self     将事件绑定到自身，只有自身才能触发，通常用于避免冒泡事件的影响
+    5、 .once     设置事件只能触发一次，比如按钮的点击等
+
+    
+按住alt，用鼠标左键点击，可以出现多个光标

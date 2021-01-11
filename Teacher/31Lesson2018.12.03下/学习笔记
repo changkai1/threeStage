@@ -1,0 +1,29 @@
+1、redux
+2、react-redux
+    1、使用
+        1、下载
+            cnpm install redux --save
+            cnpm install react-redux --save
+        2、import {Provider,connect} from "react-redux";
+
+        <Provider store={store}>
+             <Goods/>
+        </Provider>
+
+
+        class Goods extends React.Component{
+            render(){
+
+            }
+        }
+        // mapStateToProps 将你的状态映射到你的属性当中
+        // mapDispatchToProps 将你的dispatch也可以映射到你的属性当中
+        export default connect(mapStateToProps,mapDispatchToProps)(Goods);
+
+ 3、顺一下：
+
+     1、通过Provider将store传递下去。（ store作为 Provider的属性）
+     2、所使用的组件与你的store进行关联
+         connect(将你指定的状态放到PROPS,将DISPATCH放到指定的方法当中，方法也会放到PROPS当中)(组件名);
+
+

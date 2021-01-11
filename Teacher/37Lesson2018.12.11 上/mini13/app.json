@@ -1,0 +1,15 @@
+{
+  "pages": [
+   
+    "pages/index/index",
+    "pages/my/my",
+    "pages/logs/logs"
+    
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#f00",
+    "navigationBarTitleText": "我的标题",
+    "navigationBarTextStyle": "black"
+  }
+}

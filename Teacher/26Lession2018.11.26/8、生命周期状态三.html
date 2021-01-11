@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/babel.min.js"></script>
+    <script src="lib/axios.min.js"></script>
+</head>
+<body>
+<div id="myApp">
+
+</div>
+</body>
+<script type="text/babel">
+    class Child extends React.Component{
+        constructor(props){
+            super(props);
+            // 写一些你的逻辑，设置你的数据状态
+            this.state={
+                userName:"laoliu",
+                age:0,
+                timer:""
+            }
+            console.log("1、constructor",this.props,this.state);
+        }
+        componentWillMount(){
+            console.log("2、componentWillMount",this.props,this.state)
+        }
+        render(){
+            console.log("3、render",this.props,this.state);
+            return (
+                <div>
+                    <input type="button" value="age+1" onClick={()=>{
+                        this.setState({
+                            age:++this.state.age
+                        })
+                    }}/>
+                    我还是个孩子今年只有{this.state.age}
+                </div>
+            )
+        }
+
+        shouldComponentUpdate(){
+            console.log("shouldComponentUpdate");
+            return false;
+        }
+
+        componentDidMount(){
+            // this.state.timer=setInterval(()=>{
+            //     this.setState({
+            //         age:++this.state.age
+            //     })
+            // },1000)
+            console.log("4、componentDidMount",this.props,this.state)
+        }
+        componentWillUnmount(){// 卸载之前取消掉计时器
+            clearInterval(this.state.timer);
+            console.log("componentWillUnmount");
+        }
+    }
+    class MyCom extends React.Component{
+        constructor(props){
+            super(props);
+            this.state={
+                isShow:true
+            }
+        }
+
+        render(){
+            return (
+                <div>
+                    <input type="button" value="加载与卸载" onClick={()=>{
+                        this.setState({
+                            isShow:!this.state.isShow
+                        })
+                    }}/>
+                    {this.state.isShow?<Child/>:null}
+                </div>
+
+            )
+        }
+
+    }
+    ReactDOM.render(
+        <MyCom num="1"/>,
+        document.querySelector("#myApp")
+    )
+</script>
+</html>

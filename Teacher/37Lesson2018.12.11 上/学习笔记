@@ -1,0 +1,48 @@
+1、webpack
+    jsx es6
+    反向代理
+
+    cnpm install webpack-dev-server -g
+    //
+    webpack-dev-server
+
+
+    // js es6
+    cnpm install babel-loader babel-core babel-preset-env babel-preset-react  -D
+
+    作业：
+        1、build
+        2、fetch
+             //
+
+
+2、微信小程序
+**************************************************************************************************
+英文：miniprogram
+无需下载安装，但需要在微信平台运行的程序。
+通过搜一搜，扫一扫。
+
+1、成为开发者
+2、安装微信开发者工具。
+
+
+
+
+appid:开发者设置--》
+
+页面由四部分组成
+.js       逻辑层。必须的。微信小程序是由数据进行驱动的。
+.wxml:    框架层。必须的。<view>------<div>  <text>-----<span>
+.wxss:    样式层。
+.json     配置项。
+
+ rpx 是小程序的长度单位。 1rpx=屏宽/750
+ flex
+
+
+ 编译：
+    1、ctrl+s
+    2、点击编译按钮
+
+
+

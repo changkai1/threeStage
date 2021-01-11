@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-resource.js"></script>
+    <style>
+        #app p{
+            border:1px solid green;
+        }
+        #app p.active{
+            background:gray;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <form method="get" target="_blank" action="https://www.baidu.com/s">
+            <input type="text" autocomplete="off" v-model="keyword" name="wd" @keyup="searchFn">
+        </form>
+        <!-- 改变下标实现上下切换 -->
+        <p v-for="(v,i) in s" :class="{active:index===i}">{{v}}</p> 
+
+    </div>
+</body>
+</html>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            index:-1,
+            keyword:"",
+            q:"", //输入框的文字
+            s:[] //用于存储返回的结果
+        },
+        methods:{
+           searchFn(e){
+               if(e.keyCode === 13){ //回车
+                  document.querySelector("form").submit();
+               }else if(e.keyCode === 40){ //下箭头
+
+                    this.index++;
+                    if(this.index > (this.s.length-1)){
+                        this.index = -1;
+                        this.keyword = this.q;
+                    }else{
+                        this.keyword = this.s[this.index];
+                    }
+
+               }else if(e.keyCode === 38){ //上箭头
+                    
+                    this.index--;
+                    if(this.index < -1){
+                        this.index = this.s.length-1;
+                    }
+                    if(this.index > -1){
+                        this.keyword = this.s[this.index];
+                    }
+                    if(this.index == -1){
+                        this.keyword = this.q;
+                    }
+
+               }else{
+                    this.$http.jsonp("https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su",{
+                        wd:this.keyword
+                    },{
+                        jsonp:"cb"
+                    }).then(function({data}){
+                        console.log(data);
+                            this.s = data.s;
+                            this.q = data.q;
+                    })
+                }
+           }
+        }
+    })
+
+
+
+
+
+
+
+
+
+
+
+</script>

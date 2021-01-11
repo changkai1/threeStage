@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        #myApp div{
+            width:100px;
+            height:100px;
+            background: pink;
+        }
+    </style>
+</head>
+<body>
+    <div id="myApp">
+       <input type="button" :value="str" v-on:click="changIsShow"/>
+       <div v-show="isShow">
+           我在这里，你在哪里呢？
+       </div>
+    </div>
+</body>
+</html>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+           isShow:true,
+           str:"隐藏"
+        },
+        methods:{ //方法
+            // changIsShow(){
+            //     this.isShow = !this.isShow
+            // }
+            changIsShow:function(){
+                this.isShow = !this.isShow;
+                if(this.isShow){ //显示
+                    this.str = "隐藏";
+                }else{
+                    this.str = "显示";
+                }
+            }
+        }
+    }) 
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="myApp">
+    <select v-model="num">
+        <option value="1">中国</option>
+        <option value="2">泰国</option>
+        <option value="3">马来西亚</option>
+        <option value="4">新加坡</option>
+    </select>
+    <div>
+        {{num}}
+    </div>
+</div>
+</body>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+            num:2
+        }
+    })
+</script>
+</html>

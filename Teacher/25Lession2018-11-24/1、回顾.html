@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #wrap div{
+            width:500px;
+            height:300px;
+            background:green;
+            color:red;
+            border:1px solid yellow;
+        }
+    </style>
+    <script src="lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/babel.min.js"></script>
+</head>
+<body>
+    <div id="myApp">
+
+    </div>
+</body>
+<script type="text/babel">
+    // 不要加双引号，遇到 首字母为大写的标签是自定义的组件。当你遇到{}，内容会被作为 JS去处理。
+    // 事件： onClick  属性，状态
+    class Tag extends React.Component{
+        constructor(props){
+            super(props);
+            this.state={
+                index:0,
+                btnColor:["red","yellow","green"]
+            }
+            console.log(this.props.userName,this.props.key);
+
+        }
+        changeIndex(index){
+            this.setState({
+                index
+            },function(){// 当你的数据更新完毕以后会执行该回调
+                console.log(this.state.index);
+            })
+
+        }
+        fn(){
+            alert(23);
+        }
+        render(){
+            return (
+                <div id="wrap">
+                    <input type="button" value="喝的" style={{background:this.state.index===0?this.state.btnColor[this.state.index]:""}} onClick={this.changeIndex.bind(this,0)}/>
+                    <input type="button" value="吃的" style={{background:this.state.index===1?this.state.btnColor[this.state.index]:""}} onClick={()=>{
+                        this.changeIndex(1)
+                    }}/>
+                    <input type="button" value="玩的" style={{background:this.state.index===2?this.state.btnColor[this.state.index]:""}} onClick={this.changeIndex.bind(this,2)}/>
+                    <div style={{display:this.state.index===0?"block":"none"}}>可乐，雪碧</div>
+                    <div style={{display:this.state.index===1?"block":"none"}}>肯德基，麦当劳</div>
+                    <div style={{display:this.state.index===2?"block":"none"}}>北科，天安门，香山</div>
+                </div>
+            )
+        }
+    }
+    ReactDOM.render(<Tag userName="1" key="2"></Tag>,document.querySelector("#myApp"));
+</script>
+</html>

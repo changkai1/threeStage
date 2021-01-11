@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 使用one组件 -->
+        <one></one>
+    </div>
+</body>
+</html>
+<script>
+    new Vue({
+        el:"#app",
+        components:{ //组件,也是vue的实例
+            one:{ //组件名,在one里面使用嵌套的two和three组件
+                template:`
+                <div>
+                   one
+                   <two></two> 
+                   <three></three>
+                </div>
+                `,
+                // 组件里面在嵌套一个组件
+                components:{
+                    two:{ //嵌套在one里面的two组件
+                        template:`
+                            <div>two</div>
+                        `
+                    },
+                    three:{ //嵌套在one里面的three组件
+                        template:`
+                            <div>three</div>
+                        `
+                    }
+                }
+            }
+        }
+     })
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

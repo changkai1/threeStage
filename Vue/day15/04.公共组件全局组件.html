@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <script src="lib/vue-components.js"></script>
+</head>
+<body>
+    <div id="app1">
+        {{num}}<one username="laoli"></one>
+        <two></two>
+        <red></red>
+    </div>
+    <div id="app2">
+        {{num}}<one username="laozhang"></one>
+        <two></two>
+        <red></red>
+    </div>
+</body>
+</html>
+<script>
+    // script引入的全局组件
+    Vue.component("red",red);
+
+    new Vue({
+        el:"#app1",
+        data:{
+           num:1
+        }
+     })
+
+    new Vue({
+        el:"#app2",
+        data:{
+            num:2
+        }
+    })
+
+
+
+
+
+
+
+
+
+
+
+</script>

@@ -1,0 +1,133 @@
+1、回顾
+    1、创建项目
+    2、如何启动项目
+    3、路由：
+        mode:"history"
+        [
+            { // 当符合该路由条件，会将指定的组件渲染到router-view当中
+                path:"/",
+                component:one,
+                alias:"/home",
+                redirect:"/news"
+            },{
+                path:"*",
+                component:Error
+            }
+        ]
+    4、传值
+        <router-link to="/news">新闻</router-link>
+        <router-link :to="'/news'">新闻</router-link>
+        <router-link :to="{name:'news'}">新闻</router-link>
+        <router-link :to="{path:'news'}">新闻</router-link>
+
+
+        <router-link :to="{path:'/news',query:{a:1,b:2}}">新闻</router-link>
+        this.$route.query.a
+
+            <router-link :to="{name:'news',query:{a:1,b:2}}">新闻</router-link>
+                this.$route.query.a
+
+          <router-link :to="{name:'news',params:{a:1,b:2}}">新闻</router-link>
+                        this.$route.params.a
+
+          path:"/news/:id/:type"
+
+            <router-link :to="{path:'/news/1/2'}">新闻</router-link>
+            this.$route.params.id
+
+         this.$router.push("/");
+         this.$router.push({})
+************************************子路由---（二级路由）**********************************************************************
+
+ {
+            path:"/study",
+            component:study,
+            children:[
+                {
+                    path:"java",
+                    component:java
+                },
+                {
+                    path:"/",// 代表默认项
+                    component:html,
+                    alias:"html"
+                },
+                {
+                    path:"php",
+                    component:php
+                }
+            ]
+        }
+
+        vue:
+        <template>
+            <div>学习的首页，好好学习，天天向上
+                <router-link to="/study/java">java</router-link>
+                <router-link to="/study/php">php</router-link>
+                <router-link to="/study/html">html</router-link>
+                <router-view></router-view>
+            </div>
+        </template>
+
+       // 模块化
+ *********************************拦截器**********************************************************
+         // 进入组件所在路由之前进行拦截
+         // to 去哪里， from 从哪来 next:是否允许继续执行
+         // next() 默认为true,如果设为false不允许放行。
+         beforeRouteEnter(to,from,next){
+            // console.log(to);
+            // console.log(from);
+
+             if(to.meta.isAuthorization){// false
+                 next();
+             }else{
+                 // next("/");
+                 next({path:'/',query:{a:1,b:2}});
+             }
+         },
+         // 离开路由之前
+         beforeRouteLeave(to,from,next){
+             console.log(to);
+             console.log(from);
+             next();
+         }
+
+
+// 进入路由之前
+router.beforeEach((to,from,next)=>{
+        next();
+})
+*********************************vue-resource*****************************************************************
+1、下载
+    npm install vue-resource --save-dev
+
+2、引入
+    import vueResource from "vue-resource"
+
+    Vue.use(vueResource);
+
+3、组件当中使用时
+    this.$http.get("url",{
+        params:{
+            a:1,
+            b:2
+        }
+    }).then(({data})=>{
+    })
+
+     this.$http.post("url",{
+            a:1,
+            b:2
+        }).then(({data})=>{
+
+        })
+*****************************************************************************
+梳理：
+    1、路由传值
+    2、组件的传值
+        bus--->借助自定义的事件，必须在同一VUE实例的$emit下才可以触发。
+    3、vue-resource
+    4、组件和路由
+    5、拦截器。
+
+

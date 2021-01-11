@@ -1,0 +1,34 @@
+1、反向代理( proxyTable) config---->index.js
+        proxyTable: { //反向代理
+            "/ele":{ //当你发送的ajax请求以 /ele开头的话会走该代理
+                target:"http://127.0.0.1", // 代理请求的地址公共部分
+                changeOrigin:true,         // 是否开启代理   公共部分会和开头做拼接 http://127.0.0.1/ele/login
+                pathRewrite:{              // 重定向
+                    '^/ele':'/'
+                }
+            },
+            "/douban":{
+                target:"https://api.douban.com/v2",
+                changeOrigin:true,
+                pathRewrite:{
+                    '^/douban':"/"
+                }
+            }
+        },
+    切记：一定要重启，关注路由拦截
+
+2、下载formidable,可以上传图片 
+       1. npm install formidable --save-dev
+
+
+
+
+
+
+
+
+
+
+
+
+

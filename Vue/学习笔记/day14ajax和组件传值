@@ -1,0 +1,164 @@
+1、手动挂载vue  vm.$mount("#app2");
+2、调取自定义的函数  vm.$options.fn()
+3、vm.$el--------->获得vue所挂载的元素
+4、vm.$options --->可以调用vue自定义的属性与方法
+5、vm.$data------->是vue当中的data属性
+6、watch： 侦听数据是否发生变化
+            new Vue({
+                el:"#app",
+                data:{
+                    str:1212
+                },
+                watch:{  //侦听的是值类型
+                    str(newValue,oldValue){ //侦听str的变化
+
+                    }
+                }
+            })
+            外部侦听 // 第一个参数写要侦听的数据
+                vm.$watch("str",function(){
+                    console.log(1111);
+                    vm.$data.num++;
+                })
+
+
+        //深度侦听，侦听的是引用类型
+        new Vue({
+            el:"#app",
+            data:{
+                obj:{
+                    userName:"laotie",
+                    age:12
+                }
+            },
+            watch:{  //侦听的是引用类型
+                    //深度侦听，可以侦听引用类型和值类型
+                obj:{ //侦听的引用类型
+                    handler(){
+                        console.log(121212);
+                    },
+                    deep:true  //深度侦听
+                }
+            }
+        })
+        外部深度侦听
+        vm.$watch("obj",function(){
+            console.log(121212);
+        },{
+            deep:true //深度侦听
+        })
+7、ajax总结
+    // 1.jsonp
+    this.$http.jsonp("http://www.baidu.com",{
+        a:1,
+        b:2   //传参
+    },{
+        jsonp:"cb"
+    }).then(function({data}){
+
+    })
+
+    //2.get
+    this.$http.get("http://127.0.0.1",{
+        a:1,
+        b:2
+    }).then(({data})=>{
+
+    })
+
+    //3.post
+    this.$http.post("http://127.0.0.1/addweibo",{
+        a:1,
+        b:2
+    },{
+        //如果服务器端不接受json数据的话
+        emulateJSON:true
+    }).then((data)=>{
+
+    })
+
+8、定义模板，三种方法，模板里可以直接双大括号使用data里的值{{age}}
+    1.直接在vue中定义
+        new Vue({
+            el:"#app",
+            data:{
+                age:12
+            },
+            template:`<div>12121212{{age}}</div>`   //模板可以直接使用data中的数据
+        })
+
+    2.外部定义，script标签定义
+        <script type="x-template" id="tp">
+            <div>121212121{{age}}<div>
+        </script>
+        
+        new Vue({
+            el:"#app",
+            data:{
+                age:12
+            },
+            template:"#tp"
+        })
+
+    3.外部定义，template标签定义
+        <template id="tp">
+            <div>12121212{{age}}</div>
+        </template>
+
+        new Vue({
+            el:"#app",
+            data:{
+                age:12
+            },
+            template:"#tp"
+        })
+        
+9、数组合并
+    var obj = {
+        a:1
+    };
+    var obj2 = {
+        b:2
+    };
+    // 将obj2合并到obj中，然后将obj作为返回值赋值给obj3
+    var obj3 = Object.assign(obj,obj2);
+    console.log(obj3);           //{a: 1, b: 2}
+    console.log(obj);           //{a: 1, b: 2}
+    console.log(obj3 === obj);   //true
+    console.log(obj3 === obj2);  //false
+
+10、使用ES6导入时，script标签添加type="module"  <script type="module"></script>
+11、ES6 导出 export default userM 
+        导入 import user from "./module/userM.js"
+12、组件不能直接使用外部定义的data的数据，在组件内部定义data,data不许是一个函数，必须返回一个对象，
+    给组件添加事件，函数应该写在组件的methods里，不能写在组件外面的methods里
+13、组件传值
+    父子属性  
+        1.父组件通过属性传递数据给子组件，子组件通过props:["str"]来接收传递过来的属性，在子组件里就可以直接通过双大括号来使用了{{str}}                                               
+        2.子组件不能直接修改父组件传递过来的属性
+        3.子组件接收的父组件传来的值不要与组件内data的返回对象属性同名
+    子父事件  
+        1.子组件向父组件传值通过事件
+        2.子组件发射一个事件名this.$emit("one事件名",666(传的值)),父组件通过@one="fn",接收传递过来的事件名，触发fn函数  fn(a(传的值)){ this.num += a};                    
+    非父子公共或vuex
+        1.定义var bus = new Vue();
+        2.one组件：methods:{bus.$emit("addone")}里写   two组件：mounted(){bus.$on("addone",()=>{this.num2++;})}
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

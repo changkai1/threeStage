@@ -1,0 +1,7 @@
+var you = require("./you.wxs");
+module.exports = {
+    a: 30,
+    fn: function (num) {
+        return you.age + num;
+    }
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .wrap{
+            width:500px;
+            height:300px;
+            background:red;
+            border:1px solid yellow;
+            color:yellow;
+        }
+    </style>
+    <script src="lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/babel.min.js"></script>
+</head>
+<body>
+    <div id="myApp"></div>
+</body>
+<script type="text/babel">
+    function Yule (){
+        var arr=[{
+            title:"xx",
+            url:""
+        }];
+        return <div className="wrap">娱乐</div>
+    }
+    function TiYu(){
+        return <div  className="wrap">体育</div>
+    }
+    function CaiJing(){
+        return <div  className="wrap">财经</div>
+    }
+    class MyCom extends React.Component{
+        constructor(props){
+            super(props);
+            this.state={
+                childCom:[
+                    <Yule></Yule>,
+                    <TiYu></TiYu>,
+                    <CaiJing></CaiJing>
+                ],
+                num:1
+            }
+        }
+        change(num){
+            this.setState({
+                num
+            })
+        }
+        // 组件
+        render(){
+            return (
+                <div>
+                    <input type="button" style={{background:this.state.num==0?'red':''}} value="娱乐" onClick={this.change.bind(this,0)}/>
+                    <input type="button" style={{background:this.state.num==1?'red':''}} value="体育" onClick={this.change.bind(this,1)}/>
+                    <input type="button" style={{background:this.state.num==2?'red':''}} value="财经" onClick={this.change.bind(this,2)}/>
+                    {this.state.childCom[this.state.num]}
+                </div>
+            )
+        }
+    }
+    ReactDOM.render(
+        <MyCom/>,document.querySelector("#myApp")
+    )
+</script>
+</html>

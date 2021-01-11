@@ -1,0 +1,30 @@
+fs.rename("./xixi.txt","./up/haha.txt",function(err){
+    console.log(err);
+})
+// 重命名
+// fs.rename("./lala.txt","./xixi.txt",function(err){
+//     console.log(err);
+// })
+// 删除指定的文件
+// fs.unlink("./xixi.txt",function(err){
+//     console.log(err);
+// })
+
+formdata
+*******************************************************************************
+接收数据:
+formidable:通过该模块接收formdata数据。自然 也包括 文件。
+1、下载安装
+    cnpm install formidable --save-dev
+2、使用
+    const formidable=require("formidable");
+
+
+    app.post("/addAdv",function(req,res){
+          var form=new fomidable.IncmingForm();
+          form.uploadDir="./upload";// 设置文件保存的目录
+          form.keepExtendsions=true;// 保留扩展名
+
+
+
+    })

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+         #wrap input{
+            padding:5px;
+            margin:5px;
+        }
+        #wrap div{
+            width:100px;
+            height:100px;
+            background:red;
+            display: none;
+        }
+        .active{
+            background: #666;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <input type="button" value="中" />
+        <input type="button" value="日" />
+        <input type="button" value="韩" />
+        <div>中国</div>
+        <div>日本</div>
+        <div>韩国</div>
+    </div>
+</body>
+</html>
+<script>
+    // 1.第一种方式
+    // var btns = document.querySelectorAll("#wrap input");
+    // var divs = document.querySelectorAll("#wrap div");
+    // var index = 0;
+    // for(var i = 0; i < btns.length; i++){
+    //     btns[i].index = i;
+    //     btns[i].onclick = function(){
+    //         for(var j = 0; j < btns.length; j++){
+    //             btns[j].className = null;
+    //             divs[j].style.display = "none";
+    //         }
+    //         this.className = "active";
+    //         divs[this.index].style.display = "block"
+    //     }
+    // }
+    // btns[index].className="active";
+    // divs[index].style.display="block";
+
+
+    // 2.第二种
+    // var btns = document.querySelectorAll("#wrap input");
+    // var divs = document.querySelectorAll("#wrap div");
+    // var index = 0;
+    // for(var i = 0; i < btns.length; i++){
+    //     btns[i].onclick = (function(i){
+    //         return function(){
+    //             for(var j = 0; j < btns.length; j++){
+    //                 btns[j].className = null;
+    //                 divs[j].style.display = "none";
+    //             }
+    //             btns[i].className = "active";
+    //             divs[i].style.display = "block";
+    //         }
+    //     })(i)
+    // }
+    // btns[index].className="active";
+    // divs[index].style.display="block";
+
+    // 3.第三种
+    // var btns = document.querySelectorAll("#wrap input");
+    // var divs = document.querySelectorAll("#wrap div");
+    // var index = 0;
+    // for(var i = 0; i < btns.length; i++){
+    //     btns[i].onclick = (function(i){
+    //         return function(){
+    //             for(var j = 0; j < btns.length; j++){
+    //                 if( j != i){
+    //                     btns[j].className = null;
+    //                     divs[j].style.display = "none";
+    //                 }else{
+    //                     btns[i].className = "active";
+    //                     divs[i].style.display = "block";
+    //                 }
+    //             }
+    //         }
+    //     })(i)
+    // }
+    // btns[index].className="active";
+    // divs[index].style.display="block";
+
+    // 3.第四种
+    var btns = document.querySelectorAll("#wrap input");
+    var divs = document.querySelectorAll("#wrap div");
+    var index = 0;
+    init();
+    function init(){
+        for(var i = 0; i < btns.length; i++){
+            btns[i].onclick = (function(i){
+                return function(){
+                    index = i;
+                    hide();
+                    show();
+                }
+            })(i);
+        }
+        hide();
+        show();
+    }
+    // 显示
+    function show(){
+        btns[index].className="active";
+        divs[index].style.display="block";
+    }
+    // 隐藏
+    function hide(){
+        for(var j = 0; j < btns.length; j++){
+            btns[j].className = null;
+            divs[j].style.display = "none";
+        }
+    }
+
+
+
+
+
+</script>

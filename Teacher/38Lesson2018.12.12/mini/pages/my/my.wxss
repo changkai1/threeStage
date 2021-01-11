@@ -1,0 +1,9 @@
+/* pages/my/my.wxss */
+.wrap{
+    display:flex;
+    padding:10rpx;
+}
+.wrap image{
+    width:200rpx;
+    height:200rpx;
+}

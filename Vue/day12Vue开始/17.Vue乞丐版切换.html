@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        #wrap input{
+            padding:5px;
+            margin:5px;
+        }
+        #wrap div{
+            width:100px;
+            height:100px;
+            background:red;
+        }
+        .active{
+            background: #333;
+        }
+    </style>
+</head>
+<body>
+    <div id="myApp">
+      <div id="wrap">
+        <input type="button" value="中" :class="{active:index==0}" @click="index=0"/>
+        <input type="button" value="日" :class="{active:index==1}" @click="index=1"/>
+        <input type="button" value="韩" :class="{active:index==2}" @click="index=2"/>
+        <div v-show="index==0">中国</div>
+        <div v-show="index==1">日本</div>
+        <div v-show="index==2">韩国</div>
+      </div>
+    </div>
+</body>
+</html>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+          index:0
+        },
+        methods:{ //方法
+           
+        }
+    }) 
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .bg{
+            background:yellowgreen;
+        }
+        .red{
+            color:red;
+        }
+    </style>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="myApp">
+    <p class="bg red">写上一句话！风往北吹！老师唱的。</p>
+    <p v-bind:class="bg">那就是青藏高原！</p>
+    <p class="red">那就是青藏高原！</p>
+    <p :class="'bg'">你猜我是什么样子</p>
+    <p :class="'bg red'">你猜我是什么样子</p>
+    <p :class="[abc,def]">你猜我是什么样子</p>
+    <p :class="{bg:num==2}">你猜我是什么样子</p>
+    <p :class="[bg,'red']">你猜我是什么样子</p>
+</div>
+</body>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+            abc:"bg",
+            def:"red",
+            num:1
+        }
+    })
+
+    //
+    // var num=1;
+    // var num2=num;
+    // var num3="num"
+</script>
+</html>

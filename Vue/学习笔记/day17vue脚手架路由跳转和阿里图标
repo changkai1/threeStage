@@ -1,0 +1,129 @@
+1、vue-cli --->脚手架
+   可以快速搭建一个单页面应用
+
+2、安装脚手架
+    1.cnpm install vue-cli -g  全局安装
+    2.vue -V  查看版本
+
+3、使用脚手架搭建项目
+    1. vue init webpack  myapp(项目名称)  项目名称要小写   
+       vue init webpack  不指定目录的话为当前目录
+       Install vue-router?yes  只有这一个选择yes，其余都选择no
+       src:开发环境当中的源代码
+       build:打包
+       config:项目配置
+       static:静态资源
+    2. npm run dev 运行开发环境
+       npm run build  对项目进行打包
+    3. config--->index.js
+       autoOpenBrowser: true  自动打开浏览器
+    4. .editorconfig--->可以设置空格 indent_size = 4
+    5. <router-view/> 显示路由的信息。路由的一个占位  显示路由
+       路由：对你项目统一管理的系统
+    6. @代表src的根目录
+
+4、路由跳转
+   <router-link to="/Hi">Hi</router-link>
+   <router-link :to="{path:'/News'}">News</router-link>
+   <router-link :to="{name:'News'}">News</router-link>
+
+5、路由模式
+   1.mode:"hash"     默认样式，带#
+   2.mode:"history"  去除#
+
+6、路由的传值
+                           传值1
+   传值<router-link :to="{name:'Hi',params:{a:1,b:2}}">Hi</router-link>
+   接收 this.$route.params.a     this.$route.params.b
+   当页面刷新时数据丢失
+   ********************************************************************************
+                        传值2
+   传值<router-link :to="{path:'/Hi',query:{a:6,b:90}}">Hi</router-link>
+   接收this.$route.query.a     this.$route.query.b
+   页面刷新数据不会丢失
+   *********************************************************************************
+                        传值3
+   传值<router-link :to="{name:'Hi',query:{a:8,b:100}}">Hi</router-link>
+   接收this.$route.query.a     this.$route.query.b
+   页面刷新数据不会丢失
+   **********************************************************************************
+                        传值4
+   传值：在router--->index.js里设置路径
+      {
+         path:'/News/:id/:type',  //传值
+         name:'News',
+         component:News
+      }
+      <router-link :to="{path:'/News/45/89'}">News</router-link> //传值的参数和路由一一对应
+   接收：this.$route.params.id   this.$route.params.type
+   页面刷新数据不会丢失
+
+7、路由的设置  router-->index.js
+   {
+      path: '/',             //路由的地址
+      name: 'HelloWorld',    //路由的名称
+      component: HelloWorld,  //路由所需要的组件
+      alias:'/home'          //别名
+    },
+    {
+      path:'/red',
+      redirect:'/'         //重定向
+    },
+    {
+       path:'*',           //路由找不到合适的时候，会走该路由，不受位置顺序的限制
+       component:Error
+    }
+
+8、编程式导航(传值和router-link一样)
+   1.跳转到hi组件，不传值
+   this.$router.push("/Hi");
+
+   2.跳转到hi组件，传值直接在路径上传  query接收
+   this.$router.push("/Hi?a=90&b=100");
+   接收：this.$route.query.a   this.$route.query.b
+
+   3.跳转到hi组件，路径path,query传值  query接收
+   this.$router.push({path:"/Hi",query:{a:45,b:90}});
+   接收：this.$route.query.a   this.$route.query.b
+
+   4.跳转到hi组件，路径name,query传值  query接收
+   this.$router.push({name:"Hi",query:{a:100,b:200}});
+   接收：this.$route.query.a   this.$route.query.b
+
+   5.跳转到hi组件，路径name,params传值  params接收
+   this.$router.push({name:"Hi",params:{a:300,b:400}});
+   接收：this.$route.params.a   this.$route.params.b 
+
+   6.返回上一个路由
+   this.$router.go(-1);
+
+9、单页面多路由
+   router--->index.js里设置  路由设置
+   {
+      path: '/',             //路由的地址
+      name: 'HelloWorld',    //路由的名称
+      alias:'/home',
+      components:{
+        one:Hi,
+        News,
+        Error,
+        default:HelloWorld   // <router-view/>的name值没有时，默认使用HellowWorld
+      }
+   }
+    App.vue里设置  页面设置
+    <router-view name="one"/> //使用Hi组件
+    <router-view name="News"/>//使用News组件
+    <router-view /> //没有name时默认使用default的组件HellowWorld
+
+10、阿里图标库使用
+      1.下载的文件删除demo开头的两个文件，其余文件放到assets中
+         src/assets/iconfont
+      2.在main.js中引入.css的文件
+         import "@/assets/iconfont/iconfont.css"
+      3.使用 Font class 样式
+          <!-- 使用矢量图标 -->
+         <i class="iconfont xxxxx"></i>  图标名
+         <i class="iconfont iconedit"></i>
+         <i class="iconfont iconDND_mode"></i>
+         <i class="iconfont iconbluetoothon"></i>
+         <i class="iconfont iconbluetoothoff"></i>

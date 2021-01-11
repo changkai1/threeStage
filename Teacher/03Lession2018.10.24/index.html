@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="baiduTemplate.js"></script>
+</head>
+<body>
+<div id="wrap">
+
+</div>
+<hr/>
+<div id="wrap2">
+
+</div>
+
+<script type="text/html" id="tp">
+    <div>
+        <%for(var i=0;i<arr.length;i++){%>
+            <p><%=i%>:<%=arr[i]%></p>
+        <%}%>
+
+
+        世上只有爸爸好！<%=userName%><%=age%>
+        <%var a=43;%>
+        <%=a%>
+        <%if(a==44){%>
+            <p>爸爸好</p>
+        <%}else{%>
+             <p>父亲好</p>
+        <%}%>
+    </div>
+</script>
+</body>
+<script>
+    document.querySelector("#wrap").innerHTML=baidu.template("tp",{
+        userName:"laotie",
+        age:13,
+        arr:[1,2,3,4,5,6,7,8]
+    });
+    document.querySelector("#wrap2").innerHTML=baidu.template("tp",{
+        userName:"我爱你中国，我亲爱的母亲，我为你自豪也为你骄傲",
+        age:13,
+        arr:["a"]
+    })
+</script>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/feng.js"></script>
+</head>
+<body>
+    <div id="myApp">
+        <input type="button" f-on:click="fn" value="夜深人静的时候">
+        <input type="text" f-model="str">
+        <div f-text="str"></div>
+        <div f-html="str"></div>
+        <div>
+            <div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    var vm=new Feng({
+        el:"#myApp",
+        data:{
+            str:"我是自已做出来的"
+        },
+        methods:{
+            fn(){
+                console.log(this.str);
+                this.str+="!"
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,135 @@
+1、回顾
+    1、脚手架
+        cnpm install create-react-app -g
+    2、创建项目
+        create-react-app my-app
+    3、路由
+        cnpm install react-router-dom --save
+
+       import {// 三个对象  location,match,history
+            BrowserRouter as Router,// 路由器（路由的容器）只能有一个子元素
+                // basename:给你的路径增加一个前缀。
+                // forceRefresh={true}:强制刷新，布尔值。true为强制，默认false
+            Route,// 路由，外围必须要是Router
+            NavLink,// 路由的跳转导航
+            Switch:// 依次进行路由匹配，匹配上的话，后续不会再去匹配。
+            Redirect:// 重定向           from to  exact
+            withRouter,// 是一个函数。可以将你的组件作为参数传递给它。它负责给予自定义的组件于   location,match,history.不用一层层向下传。
+
+            HashRouter,// 路由的一种带#的模式。
+            Link:NavLink是Link的一个扩展，扩展了选 中的样式，activeStyle,activeClassNamecccccvv
+       } from "react-router-dom"
+
+
+       // 二级路由---》子路由----》路由嵌套
+       <Router>
+           <div>
+               <NavLink/>
+               <Route/>
+               <Router>
+                    <div>
+                        <NavLink/>
+                        <Route/>
+                    </div>
+               </Router>
+           </div>
+       </Router>
+
+
+*****************************************************************
+2、redux
+   1、下载
+       cnpm install redux --save
+   2、使用
+       1、state:状态（数据）   store.getState();// 获取你的数据。
+       2、store:仓库（状态容器）
+               来：import {createStore} from "redux";
+               var store=createStore();
+       3、action:行为（action是对数据操作的唯一方法）
+               action是一个对象。该对象内有一个type属性
+               {
+                    type:"行为的类别，建议大写  ADD_NUM"  必写的,
+                    payLoad:"荷载,传递一些参数"
+               }
+
+               function oneAction(userName){
+                    return {
+                        type:"ADD_ONE",
+                        payLoad:{
+                            userName
+                        }
+                    }
+               }
+               oneAction("laoliu")
+        4、reducer:是一个函数，负责 接收你的状态与行为。根据你的行为来操作你的状态。
+**************************************************************************************************
+1、redux
+    store
+    action
+    state
+    reducer
+
+    合并
+        combineReducers
+
+        store=createStore(combineReducers({
+            goods:goodsReducer,
+            shop:shopReducer
+        }))
+
+    1、如何创建仓库（store)
+    2、如何获得数据
+    3、合并reducer
+    4、action是干啥 的，如何触发？
+2、模块
+    action:逻辑，来触发actionCreator当中的action,对数据的操作。 dispatch
+    actionCreator:
+        生成action:
+            {
+                type:"xxx",
+
+            }
+    actionType:对action的类别进行管理
+    reducers:所有的reducer进行管理。
+    state:初始状态
+    index:生成store.
+    ********************************************************************
+    1、导出
+        export num=1;
+    2、导入
+        import {num} from "xxxx"
+
+
+      1、导出
+            export num=1;
+            export num2=2
+        2、导入
+            import {num,num2} from "xxxx"
+
+
+     1、导出
+        export default {
+        };
+    2、导入
+        import abc from "xxxx"
+
+
+     1、导出
+        export num=3,
+        export default {
+        };
+    2、导入
+        import abc,{num} from "xxxx"
+        // 还可以通过num as num2  可以对其进行重命名
+
+         1、导出
+             let num:12
+            export {
+                num as num2
+            }
+        2、导入
+            import {num} from "xxxx"
+
+
+
+

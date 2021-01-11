@@ -1,0 +1,31 @@
+1、@keydown.65="fn"     65对应的是字母a，只有按下a的时候才会调用fn函数输出
+2  @keydown.left="fn"   左箭头对应的是left，只有按下left的时候才会调用fn函数输出                        
+3、get请求
+    this.$http.get("http://127.0.0.1:8081/sum",{
+        num:this.num,  //参数
+        num2:this.num2 //参数
+    }).then(({data})=>{
+        console.log(data);
+        this.num3 = data.sum;
+    })
+4、启动mongodb：mongod --dbpath d:\mongo
+   处于mongodb环境：mongo
+   下载mongodb模块：cnpm install mongodb --save-dev
+5、下载express模块：cnpm install express
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

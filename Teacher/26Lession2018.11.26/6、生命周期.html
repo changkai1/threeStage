@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/babel.min.js"></script>
+    <script src="lib/axios.min.js"></script>
+</head>
+<body>
+    <div id="myApp">
+
+    </div>
+</body>
+<script type="text/babel">
+    class MyCom extends React.Component{
+        constructor(props){
+            super(props);
+            // 写一些你的逻辑，设置你的数据状态
+            this.state={
+                userName:"laoliu"
+            }
+            console.log("1、constructor",this.props,this.state);
+        }
+        componentWillMount(){
+            console.log("2、componentWillMount",this.props,this.state)
+        }
+        render(){
+            console.log("3、render",this.props,this.state);
+            return (
+                <div>大家好，我叫生命周期</div>
+            )
+        }
+        componentDidMount(){
+            console.log("4、componentDidMount",this.props,this.state)
+        }
+    }
+    ReactDOM.render(
+        <MyCom num="1"/>,
+        document.querySelector("#myApp")
+    )
+</script>
+</html>

@@ -1,0 +1,15 @@
+
+<view class="wrap">
+
+</view>
+
+
+<view class="wrap2">
+
+</view>
+<view>
+    <button >按钮</button>
+     <button size="mini">按钮</button>
+     <button style="width:375rpx;">按钮</button>
+     <button style="width:250rpx;">按钮</button>
+</view>

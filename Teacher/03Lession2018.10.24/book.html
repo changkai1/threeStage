@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="baiduTemplate.js"></script>
+</head>
+<body>
+<div id="wuxia">
+
+</div>
+<div id="xuanhuan">
+
+</div>
+<script type="text/html" id="tp">
+    <div>
+        <h3><%=bookType%></h3>
+        <%for(var i=0;i<bookList.length;i++){%>
+        <div>
+            <p>作者：<%=bookList[i].author%></p>
+            <p>书名：《 <%=bookList[i].bookName%> 》</p>
+        </div>
+        <hr/>
+        <%}%>
+    </div>
+</script>
+</body>
+<script>
+    document.querySelector("#wuxia").innerHTML=baidu.template("tp",{
+        bookType:"武侠",
+        bookList:[
+            {
+                bookName:"神雕侠侣",
+                author:"金庸"
+            },{
+                bookName:"小李飞刀",
+                author:"古龙"
+            }
+        ]
+    });
+    document.querySelector("#xuanhuan").innerHTML=baidu.template("tp",{
+        bookType:"玄幻",
+        bookList:[
+            {
+                bookName:"斗罗大陆",
+                author:"唐家三少"
+            },{
+                bookName:"斗破苍穹",
+                author:"天蚕土豆"
+            }
+        ]
+    })
+</script>
+</html>

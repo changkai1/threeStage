@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding:0;
+            margin:0;
+        }
+        #myApp p{
+            border:1px solid green;
+        }
+        #myApp p.active{
+            background:gray;
+        }
+    </style>
+    <script src="lib/vue.js"></script>
+    <script src="lib/vue-resource.js"></script>
+</head>
+<body>
+<div id="myApp">
+    <form method="get" target="_blank" action="https://www.baidu.com/s">
+        <input type="text" autocomplete="off" v-model="keyword" name="wd" @keyup="searchFn">
+    </form>
+    <p v-for="(v,i) in s" :class="{active:i===index}">{{v}}</p>
+</div>
+</body>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+            keyword:"",
+            index:-1,
+            q:"",
+            s:[]// 用于存储返回的结果
+        },
+        methods:{
+            searchFn(e){
+                if(e.keyCode===13){
+                    document.querySelector("form").submit();
+                }
+                else if(e.keyCode==38){
+                    // console.log("向上");
+                    this.index--;
+                    if(this.index<-1){
+                        this.index=this.s.length-1;
+                    }
+                    if(this.index>-1){
+                        this.keyword=this.s[this.index];
+                    }
+                    if(this.index==-1){
+                        this.keyword=this.q;
+                    }
+                }
+                else if(e.keyCode==40){
+                    // console.log("向下");
+                    this.index++;
+                    if(this.index>(this.s.length-1)){
+                        this.index=-1
+                        this.keyword=this.q;
+                    }else{
+                        this.keyword=this.s[this.index];
+                    }
+
+
+
+                }
+                else{
+                    this.$http.jsonp("https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su",{
+                        wd:this.keyword
+                    },{
+                        jsonp:"cb"
+                    }).then(function({data}){
+                        this.s=data.s;
+                        this.q=data.q;
+                        console.log(data) //接收的是一个对象
+                    })
+                }
+
+            }
+        }
+    })
+</script>
+</html>

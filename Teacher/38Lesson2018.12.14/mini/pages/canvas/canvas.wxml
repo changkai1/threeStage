@@ -1,0 +1,5 @@
+<canvas canvas-id="my"
+ bindtouchstart="bindStart"
+ bindtouchmove="bindMove"
+ bindtouchend='bindEnd'
+ style="background:gray;width:100%;height:100%;"></canvas>

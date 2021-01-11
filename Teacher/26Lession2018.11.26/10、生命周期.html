@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/babel.min.js"></script>
+    <script src="lib/axios.min.js"></script>
+</head>
+<body>
+<div id="myApp">
+
+</div>
+</body>
+<script type="text/babel">
+    class Child extends React.Component{
+        constructor(props){
+            super(props);
+            // 写一些你的逻辑，设置你的数据状态
+            this.state={
+                userName:"laoliu",
+                age:0,
+                timer:""
+            }
+            console.log("1、constructor",this.props,this.state);
+        }
+        componentWillMount(){
+            // 在该钩子下更改状态，不会触发后面的钩子函数。
+            // this.setState({
+            //     age:10
+            // })
+            console.log("2、componentWillMount",this.props,this.state)
+        }
+        render(){
+            console.log("4、render",this.props.isShow);
+            return (
+                <div>
+                    <input type="button" value="age+1" onClick={()=>{
+                        this.setState({
+                            age:++this.state.age
+                        })
+                    }}/>
+                    {this.props.isShow?"真":"假"}我还是个孩子今年只有{this.state.age}
+                </div>
+            )
+        }
+        // 要完成的状态值 nextState，
+        shouldComponentUpdate(nextProps,nextState){
+            // if(this.props.isShow===nextProps.isShow){
+            //     return false;
+            // }else{
+            //     return true;
+            // }
+            // console.log("2、shouldComponentUpdate",nextProps.isShow,this.props.isShow);
+            console.log("2、shouldComponentUpdate",nextState.age,this.state.age);
+            return true;
+        }
+        componentWillUpdate(nextProps,nextState){
+            console.log("3、componentWillUpdate",nextProps.isShow,this.props.isShow)
+        }
+        componentDidUpdate(nextProps,nextState){// 完成之前的属性值
+            console.log("5、componentDidUpdate",nextProps.isShow,this.props.isShow);
+        }
+        change(){
+            console.log(1111111);
+            this.setState({
+                age:1000,
+            },function(){
+                console.log("success")
+            })
+        }
+        componentDidMount(){// 修改你的状态时会触发到后面的钩子函数。
+            // this.state.timer=setInterval(()=>{
+            //     this.setState({
+            //         age:++this.state.age
+            //     })
+            // },1000)、
+
+            // this.change();
+            // this.setState({
+            //     age:300
+            // })
+
+            console.log("4、componentDidMount",this.props,this.state)
+        }
+        componentWillUnmount(){// 卸载之前取消掉计时器
+            clearInterval(this.state.timer);
+            console.log("componentWillUnmount");
+        }
+        componentWillReceiveProps(nextProps){
+            console.log("1、componentWillReceiveProps",nextProps.isShow,this.props.isShow);
+        }
+    }
+    class MyCom extends React.Component{
+        constructor(props){
+            super(props);
+            this.state={
+                isShow:true
+            }
+        }
+
+        render(){
+            return (
+                <div>
+                    <input type="button" value="加载与卸载" onClick={()=>{
+                        this.setState({
+                            isShow:!this.state.isShow
+                        })
+                    }}/>
+                    <Child isShow={this.state.isShow}/>
+                </div>
+
+            )
+        }
+
+    }
+    ReactDOM.render(
+        <MyCom num="1"/>,
+        document.querySelector("#myApp")
+    )
+</script>
+</html>

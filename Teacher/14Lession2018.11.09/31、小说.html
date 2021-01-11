@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="myApp">
+    <book :info="boyBook"></book>
+    <book :info="girlBook"></book>
+</div>
+<template id="tp">
+    <div>
+        <div v-for="item in info">
+            <h3>{{item.bookName}}</h3>
+        </div>
+    </div>
+</template>
+</body>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+            boyBook:[
+                {
+                    bookName:"《鹿鼎记》",
+                    author:"金庸"
+                },
+                {
+                    bookName:"《小李飞刀》",
+                    author:"古龙"
+                }
+            ],
+            girlBook:[
+                {
+                    bookName:"《情深深雨蒙蒙》",
+                    author:"琼瑶"
+                },
+                {
+                    bookName:"《一起去看流星雨》",
+                    author:"F4"
+                }
+            ]
+        },
+        components:{
+            book:{
+                props:["info"],
+                template:"#tp"
+            }
+        }
+    })
+</script>
+</html>

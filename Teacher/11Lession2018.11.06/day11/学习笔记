@@ -1,0 +1,32 @@
+// ejs
+// request--get,post
+request(url,function(err,response,body){})
+// 服务器
+开发-》开发者工具-》公众平台测试账号
+https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421135319
+
+http://114.116.93.176/weixin get
+验证消息的确来自微信服务器：
+
+sha1
+    1、下载
+        cnpm install sha1 --save-dev
+    2、引入
+        const sha1=require("sha1")
+    3、使用
+        var sha1Str=sha1(str);// 将str进行sha1加密，将加密的结果交给sha1Str
+************************************************************************************
+json与xml互转
+1、下载
+    cnpm install xml2js --save-dev
+2 引入
+    const xmlJs=require("xml2js");
+
+1、json-------->xml
+       var builder=new xmlJs.Builder();
+       var xml=builder.buildObject(jsonData);
+2、xml--------->json
+        // 将变量为xml的数据转换为JSON
+       xmlJs.parseString(xml,function(err,json){
+            // json是xml转换的结果
+       })

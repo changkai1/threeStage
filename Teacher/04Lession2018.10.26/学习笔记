@@ -1,0 +1,31 @@
+1、模块
+    mo.js
+        module.exports.age
+    server1.js
+    require("mo.js"
+2、多用户投票系统
+    1、对投票人的增删改查
+    2、多用户的登陆和注册
+
+    查看端口号是否被占用：
+    netstat -ano
+
+    req.method----->请求的方式
+3、作业：
+   1、不允许添加重复的名字
+
+   // webStorage
+   localStorage  sessionStorage
+
+   写入
+       localStorage.age=12;
+       localStorage["age"]=12;
+       localStorage.setItem("age",12);
+   读取
+        localStorage.age;
+        localStorage["age"];
+        localStorage.getItem("age");
+   删除
+        localStorage.remove("age");
+        localStorage.clear();
+

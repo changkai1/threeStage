@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%=title%></title>
+</head>
+<body>
+<%include header.ejs%>
+<!--aksdlfkajs<%=title%>>ldkfjasldkfj-->
+<%for(var i=0;i<newList.length;i++){%>
+<h3><a href="detail/<%=newList[i].id%>" title="<%=newList[i].newTitle%>" target="_blank">[<%=newList[i].newType%>]<%=newList[i].newTitle%></a></h3>
+<%}%>
+<%include footer.ejs%>
+
+</body>
+</html>

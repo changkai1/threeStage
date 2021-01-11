@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- <input type="text" @keydown="fn"> -->
+
+        <!-- 1.@keydown.65   65对应的是字母a，只有按下a的时候才会调用fn函数输出 -->
+        <!-- <input type="text" @keydown.65="fn"> -->
+
+        <!-- 2. @keydown.left   左箭头对应的是left，只有按下left的时候才会调用fn函数输出-->
+        <input type="text" @keydown.left="fn">
+
+    </div>
+</body>
+</html>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            
+        },
+        methods:{
+            fn(e){
+                console.log(e.keyCode);
+            }
+        }
+    })
+
+
+
+
+
+
+
+
+
+
+
+</script>

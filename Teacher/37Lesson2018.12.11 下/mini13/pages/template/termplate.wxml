@@ -1,0 +1,34 @@
+
+<!-- <include src="./my.wxml" /> -->
+<import src="./my.wxml" />
+<template is="one" data="{{userName,age,id}}"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <template name="one">
+  <view>
+  one,one,  {{userName}},{{age}},{{id}}
+  </view>
+</template> -->
+<!-- 使用name为one的模板 -->
+<!-- <template is="one"  data="{{userName,age,id}}" />
+<template is="one"  data="{{userName:'haha',age:18}}"/>
+<template is="one"/>
+<template is="one"/>
+<template is="one"/>
+
+<view>
+  {{userName}},{{age}},{{id}}
+</view> -->

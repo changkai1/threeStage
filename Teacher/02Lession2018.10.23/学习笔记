@@ -1,0 +1,37 @@
+const url=require("url");
+var str="http://username:123456@www.youxi.com:80/newslist/detail?id=1&type=2#one";
+console.log(url.parse(str));
+
+Url {
+  protocol: 'http:',// 协议
+  slashes: true,// 是否带//
+  auth: "username:123456",// 权限
+  host: 'www.youxi.com:8081',// 域名带端口号
+  port: '8081',// 端口号
+  hostname: 'www.youxi.com',// 域名不带端口号
+  hash: '#one',// 锚点 hash
+  search: '?id=1&type=2',// 参数 带？
+  query: 'id=1&type=2',// 参数 不带？
+  pathname: '/newslist/detail', // 目录 不带参数
+  path: '/newslist/detail?id=1&type=2',// 目录+参数
+  href: 'http://www.youxi.com:8081/newslist/detail?id=1&type=2#one'// 完整路径
+  }
+文本当中的换行： \n
+
+********************************************************************
+
+1、疑问：
+    1、ajax get,url
+    接口：
+        请求方式：get
+        请求地址：http://127.0.0.1/sent
+        传递的参数：
+            userName:
+            sex:
+            hobby:
+            jiehun
+        返回的信息：
+            {
+                ok:1,//1 代表的是成功，2代表的是失败
+                msg:"成功" // 返回的消息
+            }

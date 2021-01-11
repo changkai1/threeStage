@@ -1,0 +1,6 @@
+<!--pages/subject/subject.wxml-->
+<text>pages/subject/subject.wxml</text>
+<view>
+
+    {{movieInfo.summary}}
+</view>

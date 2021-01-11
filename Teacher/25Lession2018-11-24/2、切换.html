@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/babel.min.js"></script>
+</head>
+<body>
+<div id="myApp">
+
+</div>
+</body>
+<script type="text/babel">
+    class Tag extends React.Component{
+        constructor(props){
+            super(props);
+            this.state={
+                tagData:[
+                    {
+                        typeName:"吃的",
+                        color:"red",
+                        goodsList:[
+                            {
+                                goodsName:"猫耳朵"
+                            },
+                            {
+                                goodsName:"呀，土豆"
+                            }
+                        ]
+                    },
+                    {
+                        typeName:"喝的",
+                        color:"yellow",
+                        goodsList:[
+                            {
+                                goodsName:"小茗同学"
+                            },
+                            {
+                                goodsName:"白开水"
+                            }
+                        ]
+                    },
+                    {
+                        color:"green",
+                        typeName:"玩的",
+                        goodsList:[
+                            {
+                                goodsName:"长城"
+                            },
+                            {
+                                goodsName:"长白山"
+                            }
+                        ]
+                    }
+                ],
+                index:0
+            }
+        }
+        changeIndex(index){
+            this.setState({
+                index
+            })
+        }
+        render(){
+            return (
+                <div>
+                    {
+                        this.state.tagData.map((v, i) => {
+                            return (
+                                <input
+                                        style={{background:this.state.index===i?v.color:""}}
+                                    onClick={this.changeIndex.bind(this,i)}
+                                    type="button" key={i} value={v.typeName}/>
+                            )
+                        })
+                    }
+                    {
+                        this.state.tagData.map((v,i)=>{
+                            return (
+                                <div key={i} style={{
+                                    width:"500px",
+                                    height:"300px",
+                                    background:"yellow",
+                                    display:this.state.index===i?"block":"none",
+                                    color:"red"
+                                }}>
+                                    {
+                                        v.goodsList.map((goods,index)=>{
+                                            return (
+                                                <p key={index}>{goods.goodsName}</p>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+            )
+        }
+    }
+    ReactDOM.render(<Tag></Tag>,document.querySelector("#myApp"));
+</script>
+</html>

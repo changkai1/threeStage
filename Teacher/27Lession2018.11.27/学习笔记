@@ -1,0 +1,7 @@
+1、受控组件：需要在表单元素当中添加onChange事件，当你的表单元素值发生变化时，触发该事件，执行setState,render
+    1、首先在state当中进行初始值设置
+    2、给表单元素添加onChange事件
+    3、当你的元素值发生变化时执行setState
+    4、通过render 将你的value与state同步
+2、非受控组件：
+    ref

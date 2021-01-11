@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #wrap input,#news input{
+            padding:5px;
+            margin:5px;
+        }
+        #wrap div,#news div{
+            width:200px;
+            height:200px;
+            background:red;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <input type="button" value="中">
+    <input type="button" value="日">
+    <input type="button" value="韩">
+    <div>中国</div>
+    <div>日本</div>
+    <div>韩国</div>
+</div>
+<div id="news">
+    <input type="button" value="娱乐">
+    <input type="button" value="体育">
+    <input type="button" value="军事">
+    <div>娱乐</div>
+    <div>体育</div>
+    <div>军事</div>
+</div>
+<script src="tag2.js"></script>
+<script>
+    new Tag({
+        el:"#wrap",
+        index:2,
+        colorArr:["red","yellow","green"]
+    })
+    var tag=new strongTag({
+        el:"#news",
+        index:2,
+        colorArr:["blue","gold","orange"],
+        s:5
+    })
+</script>
+</body>
+</html>

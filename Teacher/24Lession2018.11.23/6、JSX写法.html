@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--主库文件-->
+    <script src="lib/react.development.js"></script>
+    <!--对DOM操作，-->
+    <script src="lib/react-dom.development.js"></script>
+    <!--支持JSX-->
+    <script src="lib/babel.min.js"></script>
+</head>
+<body>
+<div id="myApp">
+
+</div>
+</body>
+<!--支持babel-->
+<script type="text/babel">
+    var elemnt=(
+        <div>
+            <div>
+                daflaksdjf;laksdf
+            </div>
+        </div>
+    );
+    ReactDOM.render(
+       elemnt,document.querySelector("#myApp"));
+    // ReactDOM.render(
+    //     <div>
+    //         <div>
+    //             <h3>唯美</h3>
+    //         </div>
+    //     </div>,document.querySelector("#myApp"));
+</script>
+</html>

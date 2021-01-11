@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+       <input type="button" @click="changObj"><br/>
+       <input type="button" @click="changObj1"><br/>
+    </div>
+</body>
+</html>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+           obj:{
+               username:"laotie",
+               age:12
+           },
+           obj1:{
+                username:"xixi",
+                age:12
+           }
+        },
+        methods:{
+            changObj(){  //改变的是obj的引用地址
+                this.obj={
+                    sex:"女"
+                }
+            },
+            changObj1(){
+                this.obj1.age = 20;
+            }
+        },
+        watch:{ 
+            obj(){ //这里能侦听到是因为改变的是obj的引用地址，不是改变的obj的值，改变obj的值，侦听不到
+                console.log(1111)
+            },
+            // obj1(){  // 侦听不到obj1的变化，因为是改变的obj1的属性值，不是改变的引用地址
+            //     console.log(2222);
+            // },
+            obj1:{
+                handler(){
+                    console.log(3333);
+                },
+                deep:true
+            }
+        }
+    })
+
+
+
+
+
+
+
+</script>

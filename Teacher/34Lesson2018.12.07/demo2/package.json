@@ -1,0 +1,12 @@
+{
+  "name": "demo2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "zhang.config.js",
+  "scripts": {
+    "build": "webpack --config zhang.config.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

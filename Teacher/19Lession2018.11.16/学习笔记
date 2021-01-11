@@ -1,0 +1,119 @@
+1、vuex:是一个集中式的数据状态管理器
+   1、下载
+        npm install vuex --save-dev
+   2、引入
+        import Vuex from "vuex"
+   3、use
+        Vue.use(Vuex);
+   4、创建数据仓库
+        var store = new Vuex.Store({
+            state:// 存放你的数据
+            mutations:// 修改数据
+            actions:// 实现异步操作
+            getters:// 相当于之前的计算属性。
+            modules:// 模块
+        })
+   5、将仓库传递给你的实例中
+        new Vue({
+            store
+        })
+   6、this.$store.state.
+
+****************************state***********************************************
+使用值：  this.$store.state.xxxxxxxx
+简写：
+    1、引入
+        import {mapState} from "vuex";
+
+        computed:{
+            ...mapState(["studyList","userName"]),
+            ...{
+
+            }
+        }
+    2、this.studyList
+
+    *****************************************
+      1、引入
+            import {mapState} from "vuex";
+
+            computed:{
+                ...mapState({
+                    study(v){
+                        return v.studyList
+                    }
+                }),
+                ...{
+
+                }
+            }
+        2、this.study
+*****************************************mutations****************************************************************
+1、vuex:
+    mutations:{
+          CHANGE_STUDYLIST_ID(state,id){
+              state.studyList.find(v=>v.id===id).loveNum++;
+          }
+    }
+
+    调用 方法：
+        this.$store.commit("CHANGE_STUDYLIST_ID",xxx);//  传递的值只能有一个。
+    简写：
+        import {mapMutations} from "vuex";
+
+        methods:mapMutations(["CHANGE_STUDYLIST_ID"])
+ ******************************************getters******************************************************
+1、getters:{
+          loveSum(state){
+              var s=0;
+              state.studyList.forEach(v=>{
+                  s+=v.loveNum;
+              });
+              return s;
+          }
+      }
+
+2、调用 ：
+    this.$store.getters.loveSum
+    简写：
+    import {mapGetters} from "vuex";
+    computed:mapGetters(["loveSum"])
+***************************************actions************************************************************************
+1、const actions={
+      // ajax 异步调取
+      getStudyList({state,commit}){
+          // state,commit,dispatch
+          // ajax 调取
+          var arr=[
+              {
+                  id:1,
+                  title:"php",
+                  day:2,
+                  loveNum:0
+              },
+              {
+                  id:2,
+                  title:"node",
+                  day:5,
+                  loveNum:0
+              },
+              {
+                  id:3,
+                  title:"vue",
+                  day:1,
+                  loveNum:0
+              }
+          ];
+          commit("CHANGE_STUDYLIST_INIT",arr);
+          // state.studyList=arr;
+          // console.log("执行了getStudyList",v,v1,v2);
+      }
+  }
+ 2、使用：
+    this.$store.dispatch("getStudyList");
+
+    简写：
+        import {mapActions} from "vuex"
+
+        methods:mapActions(["getStudyList"])
+*************************************modules************************************************

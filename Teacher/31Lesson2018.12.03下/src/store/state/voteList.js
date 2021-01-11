@@ -1,0 +1,21 @@
+export default [
+    {
+        id:1,
+        voteName:"张学友",
+        voteNum:0
+    },{
+        id:2,
+        voteName:"刘德华",
+        voteNum:0
+    },
+    {
+        id:3,
+        voteName:"黎明",
+        voteNum:0
+    },
+    {
+        id:4,
+        voteName:"郭富城",
+        voteNum:0
+    }
+]

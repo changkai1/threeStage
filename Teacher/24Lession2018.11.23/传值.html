@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .wrap{
+            width:500px;
+            height:300px;
+            background:red;
+            border:1px solid yellow;
+            color:yellow;
+        }
+    </style>
+    <script src="lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/babel.min.js"></script>
+
+</head>
+<body>
+<div id="myApp">
+
+</div>
+</body>
+<script type="text/babel">
+    // <input type="button" value="我是打酱油的"  onClick={fn}/>
+    // <input type="button" value="我是打酱油的"  onClick={()=>{props.change(2)}}
+    // <input type="button" value="我是打酱油的"  onClick={props.change.bind(props.that,2)}/>/>
+    function Wrap(props){
+        var arr=["娱乐","体育","财经"];
+        function fn(){
+            props.change(2);
+        }
+        return (
+            <div className="wrap">
+                <input type="button" value="我是打酱油的"  onClick={props.change.bind(props.that,2)}/>
+                {arr[props.num]}
+            </div>
+        )
+    }
+    class MyCom extends React.Component {
+        constructor(props){
+            super(props);
+            this.state={
+                num:0
+            }
+        }
+        changeNum(num){
+            console.log(this);
+            this.setState({
+                num
+            })
+        }
+        render(){
+            return (
+                <div>
+                    <input type="button" style={{background:this.state.num==0?'red':''}} value="娱乐" onClick={this.changeNum.bind(this,0)}/>
+                    <input type="button" style={{background:this.state.num==1?'red':''}} value="体育" onClick={this.changeNum.bind(this,1)}/>
+                    <input type="button" style={{background:this.state.num==2?'red':''}} value="财经" onClick={this.changeNum.bind(this,2)}/>
+                    <Wrap num={this.state.num} that={this} change={this.changeNum}></Wrap>
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(<MyCom/>,document.querySelector("#myApp"));
+</script>
+</html>

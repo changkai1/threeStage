@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>豆瓣网</title>
+    <script src="baiduTemplate.js"></script>
+</head>
+<body>
+<div id="wrap">
+
+</div>
+<script type="text/html" id="tp">
+    <input type="button" onclick="getMovie(<%=pageIndex-1%>)" value="上一页">
+    <%=pageIndex%>/<%=pageSum%>
+    <input type="button" onclick="getMovie(<%=pageIndex+1%>)" value="下一页">
+    <%for(var i=0;i<subjects.length;i++){%>
+    <div>
+        <h3>《<%=subjects[i].title%>》</h3>
+        <img src="<%=subjects[i].images.small%>" alt="">
+    </div>
+    <%}%>
+</script>
+</body>
+<script>
+    getMovie(1);
+    function getMovie(pageIndex){
+        document.querySelector("#wrap").innerHTML="加载中……";
+        var xhr=new XMLHttpRequest();
+        xhr.open("get","http://127.0.0.1/movie?pageIndex="+pageIndex);
+        xhr.send();
+        xhr.onload=function(){
+            document.querySelector("#wrap").innerHTML=baidu.template("tp",JSON.parse(xhr.responseText));
+        }
+    }
+
+</script>
+</html>

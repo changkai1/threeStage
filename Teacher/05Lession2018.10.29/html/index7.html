@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="baiduTemplate.js"></script>
+</head>
+<body>
+    <div id="wrap">
+
+    </div>
+    <script type="text/html" id="tp">
+        <%for(var i=0;i<subjects.length;i++){%>
+        <div>
+            <h3><%=subjects[i].title%></h3>
+            <img src="<%=subjects[i].images.small%>" alt="">
+        </div>
+        <%}%>
+    </script>
+</body>
+<script>
+
+    function fn(obj){
+        document.querySelector("#wrap").innerHTML=baidu.template("tp",obj);
+        // console.log(obj);
+    }
+
+
+
+
+
+    // var xhr=new XMLHttpRequest();
+    // // index6.html
+    // xhr.open("get","https://douban.uieee.com/v2/movie/top250?start=0&count=1");
+    // xhr.send();
+    // xhr.onload=function(){
+    //     console.log(xhr.responseText);
+    // }
+    // var xhr=new XMLHttpRequest();
+    // // index6.html
+    // xhr.open("post","http://10.9.168.41/reg?t=2");
+    // xhr.setRequestHeader("content-type","application/json");
+    // xhr.send(JSON.stringify({
+    //     userName:"laowang"
+    // }));
+    // xhr.onload=function(){
+    //     console.log(xhr.responseText);
+    // }
+</script>
+<script src="https://douban.uieee.com/v2/movie/top250?start=0&count=10&callback=fn"></script>
+</html>

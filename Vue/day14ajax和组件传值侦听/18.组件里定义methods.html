@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-resource.js"></script>
+</head>
+<body>
+    <div id="app">
+        <add-one></add-one>
+        <add-one></add-one>
+        <add-one></add-one>
+        <add-one></add-one>
+        <add-one></add-one>
+    </div>
+
+    <template id="tp">
+        <input type="button" :value="num" @click="fn">
+    </template>
+
+
+
+    
+
+
+</body>
+</html>
+<script>
+    // 外部定义的data一改全改
+    var data = {
+        num:1
+    }
+    new Vue({
+        el:"#app",
+        data:{
+            num:2
+        },
+        components:{
+            addOne:{ //组件名
+                // 组件里不能使用外部data里定义的数据，
+                // 在组件里定义data,data必须是一个函数，必须返回一个对象
+                data(){
+                    return data
+                },
+                methods:{
+                    fn(){
+                        this.num++;
+                    }
+                },
+                template:"#tp"
+            }
+        }
+    })
+
+
+
+
+
+</script>

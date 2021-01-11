@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= htmlWebpackPlugin.options.title%></title>
+</head>
+<body>
+    <div id="myApp">
+        我是从TEST当中来的你想咋地1
+        <% for(var i=0;i< htmlWebpackPlugin.options.arr.length;i++){%>
+        <p><%=i%></p>
+        <%}%>
+    </div>
+</body>
+</html>

@@ -1,0 +1,116 @@
+1、 vue生命周期:vue实例加载到销毁的过程
+    8个生命周期函数
+        1.beforeCreate  实例创建前
+        2.created       实例创建后
+        3.beforeMount   实例挂载前
+        4.mounted       实例挂载后
+        5.beforeUpdate  数据更新前
+        6.updated       数据更新后
+        7.beforeDestroy 销毁前
+        8.destroyed     销毁后
+
+2、element-ui
+    1.下载
+        npm install element-ui --save-dev
+    2. 引入
+        import ElementUI from 'element-ui';
+        import 'element-ui/lib/theme-chalk/index.css';
+    3.使用
+        Vue.use(ElementUI);
+
+3、axios使用
+    1.下载
+        npm install axios --save-dev
+    2.直接引入
+        import axios from "axios"
+    3.请求方式
+        // 1. get
+            axios.get("http://127.0.0.1/get",{
+                params:{
+                    a:1,
+                    b:2
+                }
+            }).then((data)=>{
+                console.log(data);
+            })
+        
+        // 2.post  json
+            axios.post("http://127.0.0.1/post",{
+                a:1,
+                b:2
+            }).then((data)=>{
+                console.log(data);
+            })
+
+        // 3.post  urlencoded
+            axios.post("http:127.0.0.1/post","a=1&b=2",{
+                headers:{
+                    "content-type":"application/x-www-form-urlencoded"
+                }
+            }).then(({data})=>{
+                console.log(data);
+            })
+
+        // 4.get  不简写
+            axios({
+                url:"http://127.0.0.1/get",
+                method:"get",
+                params:{
+                    a:2,
+                    b:3
+                }
+            }).then(({data})=>{
+                console.log(data);
+            })
+
+        // 5.post json  不简写
+            axios({
+                url:"http://127.0.0.1/post",
+                method:"post",
+                data:{
+                    a:2,
+                    b:3
+                }
+            }).then(({data})=>{
+                console.log(data);
+            })
+
+        // 6.post  urlencoded  不简写
+            axios({
+                url:"http://127.0.0.1/post",
+                method:"post",
+                data:"a=1&b=2",
+                headers:{
+                    "content-type":"application/x-www-form-urlencoded"
+                }
+            }).then(({data})=>{
+                console.log(data);
+            })
+
+4、axios拦截器,拦截的是所有的axios请求
+    1.请求拦截
+        axios.interceptors .request.use((config)=>{
+            config.url = "http:127.0.0.1" + config.url;
+            console.log(config);
+            return config;
+        })
+    
+    2.响应拦截
+        axios.interceptors.response.use((data)=>{
+            // 这里返回的东西，就是axios调取接口返回的东西
+            // return "喝红牛！"
+            return data; //返回data,就是原样返回
+        })
+
+5、md5加密 后端使用
+    1.下载
+        npm install md5 --save-dev
+    2.使用
+        const md5=require("md5");
+        const pwd = "1234567";
+        md5(pwd);
+
+
+
+
+

@@ -1,0 +1,64 @@
+1、jsx
+2、组件
+    class
+    function
+3、组件之间如何传值
+    function fn(props){
+
+    }
+    class MyCom extends React.Component{
+        render(){
+            this.props
+        }
+    }
+4、属性与状态。 属性是不允许被修改的。另外属性名不允许设置为key
+     状态可以修改
+        this.state.userName="xxx";//
+        render
+5、axios
+    resultful
+6、数据列表渲染
+    var arr=[1,2,3,4]
+    render(){
+        return (
+            <div>{arr}</div>
+        )
+    }
+7、表单数据绑定。
+    <input type="text" value={this.state.userName} />
+    constructor
+8、事件绑定
+    4种方法。
+*********************************************生命周期*********************************************************
+9个生命周期：组件----》挂载--》更新--》销毁
+1、constructor(){
+    // 构造器
+}
+2、render(){
+    // render
+}
+3、componentWillMount(){
+    // 挂载前
+}
+4、componentDidMount(){
+    // 挂载完成
+}
+5、componentWillUnmount(){
+    // 卸载之前
+}
+6、componentWillReciveProps(){
+    // 接收你的属性之前
+}
+7、shouldComponentUpdate(){
+    // 当数据要发生变化时，他决定是否要进行更新。必须要有一个返回值，类型是一个布尔值
+}
+8、componentWillUpdate(){
+    // 更新数据之前
+}
+9、componentDidUpdate(){
+    // 更新数据之后
+}
+
+
+
+

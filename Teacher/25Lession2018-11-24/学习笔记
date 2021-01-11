@@ -1,0 +1,16 @@
+1、直接写箭头函数
+<input type="button" value="困不困" onClick={()=>{this.changeNum()}}/>
+2、bind
+    <input type="button" value="困不困" onClick={this.changeNum.bind(this,1)}/>
+    事件对象，最后一个参数是对象
+    changeNum(num,e){
+    }
+3、在构造器当中直接bind
+    constructor(){
+        super();
+        this.changeNum=this.changeNum.bind(this,1);// 传递数据不灵活，而且每 一个函数都要定义一次。
+    }
+4、将你的函数直接写义为箭头函数
+    changeNum=(e)=>{
+
+    }

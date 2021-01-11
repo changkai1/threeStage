@@ -1,0 +1,7 @@
+1、被投票人的信息 voteList
+    1、id
+    2、voteName:名字
+    3、voteType:
+    4、addTime
+    5、voteNum
+    6、votePic

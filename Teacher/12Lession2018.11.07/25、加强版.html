@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #wrap input{
+            padding:5px;
+            margin:5px;
+        }
+        #wrap input.active{
+            background:red;
+        }
+        #wrap div{
+            width:500px;
+            height:200px;
+            background:red;
+        }
+    </style>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="myApp">
+    <div id="wrap">
+        <input type="button" v-for="(v,i) in newInfo"
+               :class="{active:index===i}" :value="v.typeName" @click="index=i">
+        <div v-for="(item,i) in newInfo" v-show="index===i">
+            <p v-for="info in item.newList"><a :href="info.url">{{info.title}}</a></p>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+            index:0,
+            newInfo:[
+                {
+                    typeName:"体育",
+                    newList:[
+                        {
+                            title:"韦少确诊为左脚踝扭伤 客场战骑士他不会出战1",
+                            url:"http://sports.qq.com/a/20181107/000892.htm"
+                        },
+                        {
+                            title:"韦少确诊为左脚踝扭伤 客场战骑士他不会出战2",
+                            url:"http://sports.qq.com/a/20181107/000892.htm"
+                        },
+                        {
+                            title:"韦少确诊为左脚踝扭伤 客场战骑士他不会出战3",
+                            url:"http://sports.qq.com/a/20181107/000892.htm"
+                        }
+                    ]
+                },
+                {
+                    typeName:"娱乐",
+                    newList:[
+                        {
+                            title:"陈晓夫妇恩爱合照，十指紧扣还不够，陈妍希快“挂”在老公身上了1",
+                            url:"http://new.qq.com/omn/20181107/20181107A07ZBY.html"
+                        },
+                        {
+                            title:"陈晓夫妇恩爱合照，十指紧扣还不够，陈妍希快“挂”在老公身上了2",
+                            url:"http://new.qq.com/omn/20181107/20181107A07ZBY.html"
+                        },
+                        {
+                            title:"陈晓夫妇恩爱合照，十指紧扣还不够，陈妍希快“挂”在老公身上了3",
+                            url:"http://new.qq.com/omn/20181107/20181107A07ZBY.html"
+                        }
+                    ]
+                },
+                {
+                    typeName:"财经",
+                    newList:[
+                        {
+                            title:"滴滴整改进展：3836万司乘加紧急联系人 逐步试行车内录像1",
+                            url:"http://new.qq.com/cmsn/20181107/20181107008180.html"
+                        },
+                        {
+                            title:"滴滴整改进展：3836万司乘加紧急联系人 逐步试行车内录像2",
+                            url:"http://new.qq.com/cmsn/20181107/20181107008180.html"
+                        },
+                        {
+                            title:"滴滴整改进展：3836万司乘加紧急联系人 逐步试行车内录像3",
+                            url:"http://new.qq.com/cmsn/20181107/20181107008180.html"
+                        }
+                    ]
+                }
+            ]
+        }
+    })
+</script>
+</html>

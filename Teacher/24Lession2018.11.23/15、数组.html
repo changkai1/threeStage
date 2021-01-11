@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .red{
+            color:red;
+        }
+    </style>
+    <!--主库文件-->
+    <script src="lib/react.development.js"></script>
+    <!--对DOM操作，-->
+    <script src="lib/react-dom.development.js"></script>
+    <!--支持JSX-->
+    <script src="lib/babel.min.js"></script>
+</head>
+<body>
+<div id="myApp">
+
+</div>
+</body>
+<!--支持babel-->
+<script type="text/babel">
+    var arr=[
+        [
+            {
+                newTitle:"庾澄庆再当爸 妻子顺产第二胎是男孩",
+                href:"http://new.qq.com/cmsn/20181122/20181122015548.html"
+            }
+        ],
+        [
+            {
+                newTitle:" 陈建斌谈育儿沟通最重要 曝新片进展和周迅演喜剧",
+                href:"http://new.qq.com/cmsn/20181122/20181122014322.html"
+            }
+        ]
+    ]
+    ReactDOM.render(
+        <div>
+            {arr.map((v,i)=>{
+                return v.map(function(info){
+                    return <p><a href={info.href}>{info.newTitle}</a></p>
+                })
+            })}
+        </div>
+        ,document.querySelector("#myApp")
+    )
+</script>
+</html>

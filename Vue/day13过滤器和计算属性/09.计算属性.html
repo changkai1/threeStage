@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-filters.js"></script>
+</head>
+<body>
+    <div id="app1">
+       <p>{{reverseText()}}</p>
+       <p>{{reverseText()}}</p>
+       <p>{{reverseText()}}</p>
+       <p>{{reverseText()}}</p>
+
+        <p>{{reverse}}</p>
+        <p>{{reverse}}</p>
+        <p>{{reverse}}</p>
+        <p>{{reverse}}</p>
+    </div>
+</body>
+</html>
+<script>
+   
+    new Vue({
+        el:"#app1",
+        data:{
+           str:"师法魔级超"
+        },
+        methods:{ //调用一次执行一次
+           reverseText(){
+               console.log(111)
+               return this.str.split("").reverse().join("");
+           }
+        },
+        computed:{ //数据不改变的情况下，只执行一次
+            reverse(){
+               console.log(22222);
+               return this.str.split("").reverse().join("");
+            }
+        }
+    })
+   
+
+
+
+
+
+
+
+
+
+
+</script>

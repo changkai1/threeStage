@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+    
+</head>
+<body>
+    <div id="myApp">
+        <!-- 1.item指的是arr的值 -->
+        <p v-for="item in arr">{{item}}</p>
+        <!-- 2.value指的是arr的值，index指的是下标 -->
+        <p v-for="(value,index) in arr">{{value}}---{{index}}</p>
+        <!-- 3.对数字进行遍历 -->
+        <p v-for="i in num">{{i}}</p>
+        <!-- 4.对 对象进行遍历 item指的是值-->
+        <p v-for="item in obj">{{item}}</p>
+        <!-- 5.对 对象遍历 键和值  value指的是值，index指的是键-->
+        <p v-for="(value,index) in obj">{{index}}---{{value}}</p>
+    </div>
+</body>
+</html>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+           arr:[1,2,3,4,5,6,7,8],
+           num:10,
+           obj:{
+               userName:"laoli",
+               age:"14"
+           }
+        }
+    }) 
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

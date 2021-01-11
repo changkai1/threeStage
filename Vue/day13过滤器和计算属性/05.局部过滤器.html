@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 1.货币过滤器 -->
+        {{num | currency}}<br/>
+        <!-- 2.货币过滤器多个参数 第一个参数是要过滤的值即num,第二个参数是传递的要过滤的货币符号,第三个参数是保留的小数位数-->
+        {{num | currency2("$",3)}}<br/>
+        <!-- 3.时间过滤器 -->
+        {{time | formatTime}}
+    </div>
+</body>
+</html>
+<script>
+    // 位数不够前补0
+    function fillZero(num){
+        return num < 10 ? "0"+num : num;
+    }
+    new Vue({
+        el:"#app",
+        data:{
+            num:110,
+            time:Date.now()
+        },
+        methods:{
+            
+            
+        },
+        filters:{ //过滤器 局部过滤器，只能在当前vue实例内起作用
+            // 1.货币过滤器
+            //第一个参数是要过滤的值
+            currency(value){  
+                return "￥"+value.toFixed(2)
+            },
+            // 2.货币过滤器多个参数
+            // 第一个参数是要过滤的值即num,第二个参数是传递的要过滤的货币符号,第三个参数是保留的小数位数
+            currency2(value,sym,dec){
+                return sym+value.toFixed(dec);
+            },
+            // 3.时间过滤器
+            formatTime(time){
+                var now = new Date(time);
+                var y = now.getFullYear();
+                var m = fillZero(now.getMonth()+1);
+                var d = fillZero(now.getDate());
+                var h = fillZero(now.getHours());
+                var min = fillZero(now.getMinutes());
+                var s = fillZero(now.getSeconds());
+                return y+"-"+m+"-"+d+" "+h+":"+min+":"+s;
+            }
+        }
+    })
+
+
+
+
+
+
+
+
+
+
+
+</script>

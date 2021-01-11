@@ -1,0 +1,105 @@
+mysql------------php
+access-----------asp
+sqlserver--------.net c#
+oracle-----------java
+
+mongodb:非关系型数据库--非结构型数据库--nosql
+    库(db)
+        -》集合(collection)
+            -》文档（document）
+
+1、解决不是内部命令：
+    1、右击电脑属性
+    2、点击高级系统设置
+    3、点击高级
+    4、环境变量
+    5、系统变量---》path
+        windows10  点击新建
+            C:\Program Files\MongoDB\Server\3.4\bin
+
+        确定
+
+        windows7
+        尾部追加
+          ;C:\Program Files\MongoDB\Server\3.4\bin
+    6、将你的CMD关掉。
+    7、再打开CMD
+        mongo
+
+2、解决系统错误：丢失
+1、打开C:\Windows\SysWOW64
+2、找到.dll 移除掉。
+***********************************************命令***********************************************************
+1、mongo:运行该命令，处于mongodb的环境。执行mongodb的数据操作命令。
+2、mongod --dbpath d:\mongo
+    1、创建一个用于存放数据库的文件夹 d:\mongo
+3、show dbs:查看mongodb下的数据库列表
+4、use admin:使用admin数据库
+5、db:查看当前使用的数据库
+6、show collections:查看当前数据库下的所有集合列表。
+7、db.dropDatabase():删除当前的数据库
+*********************************************增***************************************************************
+添加一条：db.collectionName.insert({userName:"lala"})
+批量导入：mongoimport --db study --collection store --file d:\文件地址
+--db:数据库名
+--collection:集合名
+--file:文件地址
+--drop:添加该属性是覆盖，省略为追加
+*********************************************删***************************************************************
+db.集合.remove(条件)
+ db.score.remove({"score.yingyu":10}) // 将英语 为10分的删除掉。
+ db.score.remove({sex:"男"},{justOne:true})  删除符合条件的一条记录
+ db.score.remove({})
+ db.score.drop()   删除指定的集合。
+*********************************************改***************************************************************
+1、db.集合.update(条件，修改的项，是否修改多条)
+2、db.score.update({userName:"刘俊一"},{$set:{"score.yingyu":1}})  // 将刘俊一的英语成绩修改为1
+3、db.score.update({sex:"女"},{$set:{age:16}})：将第一个符合条件的文档年龄修改为16
+4、 db.score.update({sex:"女"},{$set:{age:16}},{multi:true})：将所有的女同胞年龄修改为16
+5、 db.score.update({userName:/刘/},{sex:"男",age:1000})：完整替换 。
+*********************************************查***************************************************************
+1、db.score.find(); 将所有的文档罗列出来
+2、精确查找： db.score.find({userName:"刘俊一"})
+              db.score.find({"score.yingyu":{$lt:10}})  英语小于10
+              db.score.find({"score.yingyu":{$lte:10}})  小于等于
+              db.score.find({age:{$gt:100}})   年龄大于100
+              $gte   大于等于
+              db.score.find({userName:/王/})   模糊搜索。
+              db.score.find({age:{$ne:18}})
+3、多条件：
+     db.score.find({sex:"男",age:{$gt:50}})
+     db.score.find({$or:[{sex:"女"},{age:{$lt:50}}]})
+4、排序：
+     db.score.find().sort({age:1})  年龄的正序排列 （从小到大）
+     db.score.find().sort({age:-1})  年龄的倒序排列 （从大到小）
+     db.score.find().sort({sex:1,"score.yingyu":1})  性别相同，按照英语的正序排列
+   > db.score.find({sex:"女"}).sort({age:1})  性别为女，年龄正序排列
+5、count
+    db.score.count()  统计 score的记录条数
+     db.score.count({age:18}) 年龄等于18的文档数量
+6、limit:获取 指定的条数
+    db.score.find().limit(0);//全部
+    db.score.find().limit(3);//前三条
+7、skip:跳过指定的文档数
+   db.score.find().skip(1.9)  // 1
+   db.score.find().skip(0)  // 跳过0条
+   db.score.find().skip(3)  // 跳过3条
+8、分页
+    count 总条数
+    pageNum: 每页显示的条数4
+    pageIndex:显示第几页
+
+    skip=(pageIndex-1)*pageNum;
+
+*******************************node 操作mongodb**********************************************************
+1、下载mongodb模块
+    cnpm install mongodb --save-dev
+2、引入
+    const mongodb=require("mongodb");
+    const mongoClient=mongodb.MongoClient;
+    mongoClient.connect("mongodb://127.0.0.1:27017",function(err,client){
+        if(err)
+            console.log("连接数据库失败");
+        else
+            console.log("连接数据库成功");
+    )

@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>微博</title>
+<link href="style/weibo.css" rel="stylesheet" type="text/css" />
+    <script src="js/baiduTemplate.js"></script>
+</head>
+
+<body>
+<div class="jyArea">
+<!--留言-->
+     <div class="takeComment">
+        <textarea name="textarea" class="takeTextField" id="tijiaoText"></textarea>
+        <div class="takeSbmComment">
+            <input type="button" class="inputs" value="" />
+        </div>
+    </div>
+<!--已留-->
+    <div class="commentOn">
+
+    </div>
+</div>
+<script type="text/html" id="tp">
+    <%if(contextList.length<=0){%>
+    <div class="noContent">暂无留言</div>
+    <%}%>
+    <div class="messList">
+        <%for(var i=0;i<contextList.length;i++){%>
+        <div class="reply">
+            <p class="replyContent"><%=contextList[i].context%></p>
+            <p class="operation">
+                <span class="replyTime"><%=contextList[i].addTime%></span>
+                <span class="handle">
+                    	<a href="javascript:;" class="top" onclick="upWeibo('<%=contextList[i]._id%>',1)"><%=contextList[i].topNum%></a>
+                        <a href="javascript:;" class="down_icon" onclick="upWeibo('<%=contextList[i]._id%>',2)"><%=contextList[i].downNum%></a>
+                        <a href="javascript:;" class="cut" onclick="deleteWeibo('<%=contextList[i]._id%>')">删除</a>
+                    </span>
+            </p>
+        </div>
+        <%}%>
+    </div>
+    <div class="page">
+        <%for(var i=1;i<=pageSum;i++){%>
+        <a href="javascript:;" onclick="getWeibo(<%=i%>)" class="<%=(i===pageIndex?'active':'')%>"><%=i%></a>
+        <%}%>
+    </div>
+</script>
+</body>
+<script>
+    var btn=document.querySelector(".inputs");
+    var tijiaoText=document.querySelector("#tijiaoText");
+    var pageIndex=1;
+    getWeibo(1)
+    btn.onclick=function(){
+        var xhr=new XMLHttpRequest();
+        xhr.open("post","addWeibo");
+        xhr.setRequestHeader("content-type","application/json");
+        xhr.send(JSON.stringify({
+            context:tijiaoText.value
+        }));
+        xhr.onload=function(){
+            var obj=JSON.parse(xhr.responseText);
+            if(obj.ok===1){
+                getWeibo(1);
+            }else{
+                alert(obj.msg);
+            }
+        }
+    }
+    function getWeibo(pageI){
+        var xhr=new XMLHttpRequest();
+        xhr.open("get","getweibo?pageIndex="+pageI);
+        xhr.send();
+        xhr.onload=function(){
+            var obj=JSON.parse(xhr.responseText);
+            pageIndex= obj.pageIndex;
+            document.querySelector(".commentOn").innerHTML=baidu.template("tp",obj);
+            console.log(xhr.responseText);
+        }
+    }
+    function deleteWeibo(id){
+        var xhr=new XMLHttpRequest();
+        xhr.open("get","deleteWeibo?id="+id);
+        xhr.send();
+        xhr.onload=function(){
+            getWeibo(pageIndex)
+        }
+    }
+    function upWeibo(id,type){
+        var xhr=new XMLHttpRequest();
+        xhr.open("get","upWeibo?id="+id+"&type="+type);
+        xhr.send();
+        xhr.onload=function(){
+            getWeibo(pageIndex)
+        }
+    }
+
+
+</script>
+</html>

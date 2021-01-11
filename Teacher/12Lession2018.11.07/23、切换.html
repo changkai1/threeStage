@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #wrap input{
+            padding:5px;
+            margin:5px;
+        }
+        #wrap input.active{
+            background:red;
+        }
+        #wrap div{
+            width:200px;
+            height:200px;
+            background:red;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <input type="button" value="中">
+    <input type="button" value="日">
+    <input type="button" value="韩">
+    <div>中国</div>
+    <div>日本</div>
+    <div>韩国</div>
+</div>
+<script>
+    var btns=document.querySelectorAll("#wrap input");
+    var divs=document.querySelectorAll("#wrap div");
+    var index=0;//
+    init();
+    function init(){
+        for(var i=0;i<btns.length;i++){
+            btns[i].onclick=(function(i){
+                return function(){
+                    index=i;
+                   hide();
+                   show();
+                }
+            })(i);
+        }
+        hide();
+        show();
+    }
+    // 显示
+    function show(){
+        btns[index].className="active";
+        divs[index].style.display="block";
+    }
+    // 隐藏
+    function hide(){
+        for(var i=0;i<btns.length;i++){
+            btns[i].className=null;
+            divs[i].style.display="none";
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+    // for(var i=0;i<btns.length;i++){
+    //     divs[i].style.display="none";
+    //     btns[i].onclick=(function(i){
+    //         return function(){
+    //             for(var j=0;j<btns.length;j++){
+    //                 if(j !=i){
+    //                     btns[j].className=null;
+    //                     divs[j].style.display="none";
+    //                 }else{
+    //                     btns[i].className="active";
+    //                     divs[i].style.display="block";
+    //                 }
+    //                 // if(j==i){
+    //                 //     btns[i].className="active";
+    //                 //     divs[i].style.display="block";
+    //                 // }else{
+    //                 //     btns[j].className=null;
+    //                 //     divs[j].style.display="none";
+    //                 // }
+    //             }
+    //            // for(var j=0;j<btns.length;j++){
+    //            //     btns[j].className=null;
+    //            //     divs[j].style.display="none";
+    //            // }
+    //            // btns[i].className="active";
+    //            // divs[i].style.display="block";
+    //         }
+    //     })(i);
+    //     // btns[i].index=i;
+    //     // btns[i].onclick=function(){
+    //     //     alert(this.index);
+    //     // }
+    // }
+    // btns[index].className="active";
+    // divs[index].style.display="block";
+</script>
+</body>
+</html>

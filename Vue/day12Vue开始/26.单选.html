@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+    <style>
+       
+    </style>
+</head>
+<body>
+    <div id="myApp">
+        <input type="radio" v-model="num" value="1">抽烟
+        <input type="radio" v-model="num" value="2">学习
+        <input type="radio" v-model="num" value="3">运动
+        <div>
+            {{num}}
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+           num:1
+        },
+        methods:{
+            
+        }
+    }) 
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

@@ -1,0 +1,17 @@
+***********百度模板****************
+可以帮助我们快速实现数据的渲染
+1、百度模板
+    1、引入模板：
+      <script src="baiduTemplate.js"></script>
+    2、创建模板：
+    // <%=userName%>  =将数据进行输出，不带=会认为是普通的JS代码。
+    <script type="text/html" id="tp">
+        <div>
+            世上只有爸爸好！<%=userName%>
+        </div>
+    </script>
+    3、使用模板：
+        // template(模板的ID,必须要是一个对象)
+        document.querySelector("#wrap").innerHTML=baidu.template("tp",{
+            userName:"laotie"
+        })

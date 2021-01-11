@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/babel.min.js"></script>
+</head>
+<body>
+    <div id="myApp">
+
+    </div>
+</body>
+<script type="text/babel">
+    class MyCom extends React.Component{
+        constructor(){
+            super();
+            this.state={
+                phoneId:"15101125517",
+                valiCode:"123"
+            }
+        }
+        handleSubmit(e){
+            console.log(this.refs.phoneId.value);
+            console.log(this.refs.myForm.phoneId.value);
+            console.log(this.refs.myForm.querySelector("input[name='phoneId']").value);
+            console.log(this.valiCode.value);
+            this.valiCode.value=100;
+            e.preventDefault();
+        }
+
+
+    // <p>验证码：<input ref={(el)=>{
+    //     console.log(el)
+    //     el.value=90;
+    //     this.valiCode=el;
+    // }} type="text"/></p>
+
+        render(){
+            return (
+                <form ref="myForm" onSubmit={this.handleSubmit.bind(this)}>
+                    <p>手机号：<input ref="phoneId" name="phoneId" defaultValue={this.state.phoneId} type="text"/> <input type="button" value="发送验证码"/></p>
+                    <p>验证码：<input ref={el=>this.valiCode=el} defaultValue={this.state.valiCode} type="text"/></p>
+                    <p><input type="submit" value="登陆" /></p>
+                </form>
+            )
+        }
+    }
+    ReactDOM.render(
+        <MyCom/>,
+        document.querySelector("#myApp")
+    )
+</script>
+</html>

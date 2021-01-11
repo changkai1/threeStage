@@ -1,0 +1,210 @@
+1、webpack:是一个打包机。
+2、webpack作用:
+    1、打包（将多个文件打包在一起），减少请求次数。
+    2、转换:(jsx,sass,less,ts,es6)转换成浏览器可识别的信息。
+    3、优化：（单页面应用越来越普及，前端的逻辑越来越复杂。）
+3、webpack构成：
+    1、mode   模式：
+            开发环境：development     生产环境: production
+    2、entry:入口
+    3、output:出口
+    4、devServer:服务器设置
+    5、plugins:插件。   html-webpack-plugin
+    6、loaders:转换。  sass .less
+*********************************************************************************
+webpack.
+    1、cnpm install webpack -g
+    2、cnpm install webpack-cli -g
+    3、查看版本号：
+        webpack -v
+零配置:0 不需要配置
+    1、默认将你的开发环境当中的js打包到dist文件当中的main.js里面。
+    ************************************************************************
+    npm cnpm
+    cnpm install webpack --save-dev
+    cnpm install webpack --save
+    cnpm uninstall webpack
+    cnpm un webpack
+
+    cnpm i webpack -S
+    cnpm i webpack --save
+
+    cnpm i webpack -D
+    cnpm i webpack --save-dev
+   ************************************************************
+   打包：
+   // 将src/index.js  打包到 ./dist/bundle.js
+    webpack ./src/index.js --output ./dist/bundle.js
+    ***************
+    创建一个package.json
+      "scripts":{
+          "build":"webpack ./src/index.js --output ./dist/bundle.js"
+      },
+    运行：
+        cnpm run build
+        相当于：webpack ./src/index.js --output ./dist/bundle.js
+    *********************************
+    webpack --mode development 或 production  指定环境
+    **********************************
+    webpack的配置文件
+    zhang.config.js
+
+    module.exports={
+        mode:"development",// 打包所处的环境
+        entry:"./src/index.js",// 入口
+        output:{// 出口
+            path:__dirname+"/dist",
+            filename:"bundle.js"
+        }
+    }
+    ******************************cn
+    webpack.config.js
+    问:必须叫webpack.config.js吗
+        否定的
+        zhang.config.js
+        webpack --config zhang.config.js
+
+     npm init -y
+        创建：package.json
+    ********************多个文件（多入口）打包成一个*******************************************************
+    module.exports={
+        mode:"development",
+        entry:["./src/index.js","./src/index1.js"],
+        output:{
+            path:__dirname+"/dist",
+            filename:"bundle.js"
+        }
+    }
+    ********************多个文件（多入口），多出口*******************************************************
+    module.exports={
+        mode:"development",
+        entry:{
+            index:"./src/index.js",
+            index1:"./src/index1.js"
+        },
+        output:{
+            path:__dirname+"/dist",
+            filename:"[name].bundle.js"// name指的是入口对象的属性。
+        }
+    }
+    **********************************************************************************************************
+    plugins:插件
+        html-webpack-plugin://对html进行优化。
+     1、下载
+        cnpm install html-webpack-plugin -D
+     2、引入
+        const HtmlWebpackPlugin =require("html-webpack-plugin");
+     3、使用：
+        webpack.config.js
+        module.exports={
+            entry:
+            output:
+            plugins:[
+                new HtmlWebpackPlugin()
+            ]
+        }
+     示例：
+     const HtmlWebpackPlugin=require("html-webpack-plugin");
+     module.exports={
+         entry:"./src/index.js",
+         output:{
+             path:__dirname+"/dist",
+             filename:"bundle.js"
+         },
+         plugins:[
+             new HtmlWebpackPlugin()// 将打包的js放到你的index.html当中
+         ]
+     }
+
+     示例：可以生成多个html.  并且可心指定html所需要的JS文件。
+            模板 ：可以给模板提供数据
+            接收： <%= htmlWebpackPlugin.options.xxxxx%>
+     const HtmlWebpackPlugin=require("html-webpack-plugin");
+     module.exports={
+         entry:{
+             index:"./src/index.js",
+             index1:"./src/index1.js"
+         },
+         output:{
+             path:__dirname+"/dist",
+             filename:"[name].bundle.js"
+         },
+         plugins:[
+             new HtmlWebpackPlugin({
+                  minify:{//压缩
+                                collapseWhitespace:true,  //压缩空白
+                                removeAttributeQuotes:true //删除属性双引号
+                            },
+                 template:"./src/test.html",// 指定模板 路径
+                 filename:"test.html",// 指定生成文件的名称，
+                 title:"我是一只来自南方的小鸟",// <%= htmlWebpackPlugin.options.title%>来获得值
+                 arr:[1,2,3,4,5],
+                 chunks:["index1"]
+             }),
+             new HtmlWebpackPlugin({
+                 template:"./src/test.html",// 指定模板 路径
+                 filename:"test1.html",// 指定生成文件的名称，
+                 title:"我是一只来自北方的狼",// <%= htmlWebpackPlugin.options.title%>来获得值
+                 arr:[1,2,3,4,5],
+                 chunks:["index"]
+             })
+         ]
+     }
+*************************************************************************
+归纳：1、插件放到plugins
+      2、plugins是一个数组
+      3、html-webpack-plugin
+            plugins:[
+                    new HtmlWebpackPlugin({
+                        filename:""// 指定在生产环境当中的文件名
+                        template:"./src/xxx"// 指定模板
+                        title:"",
+                        arr:"",
+                        str:""
+                        chunk:[],//指定页面所需要引入的JS文件
+                        minify:{//压缩
+                            collapseWhitespace:true,  //压缩空白
+                            removeAttributeQuotes:true //删除属性双引号
+                        },
+                        hash:true,// 清除缓存。
+                    })
+                ]
+************************************************************************************
+打包之前可以删除文件：
+ 1、下载：
+    cnpm i clean-webpack-plugin -D;
+ 2、引入：
+    const CleanWebpackPlugin =require("clean-webpack-plugin");
+ 3、使用
+    plugins:[
+        new CleanWebpackPlugin(["dist"])// 打包时进行删除操作。
+************************************************************************
+服务器
+// npm run dev
+ webpack-dev-server
+
+ cnpm install webpack-dev-server -D
+
+ devServer:{
+    contentBase:path.resolve(__dirname,"dist"), // 指定站点目录
+    host:"127.0.0.1",
+    port:8090,
+    open:true,// 布尔值，默认false,设为true,自动打开你的浏览器
+ }
+ 在package.json文件进行设置
+   "scripts":{
+     "dev":"webpack-dev-server --open"
+   }
+  cnpm run dev
+
+
+
+
+
+
+
+
+
+
+
+

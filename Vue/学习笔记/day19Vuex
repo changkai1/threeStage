@@ -1,0 +1,416 @@
+1、vuex:是一个集中式的数据状态管理器
+    1.下载
+        npm install vuex --save-dev
+    2.引入
+        import Vuex from "vuex"
+    3.使用
+        Vue.use(Vuex);
+    4.创建数据仓库
+        var store = new Vuex.Store({
+            state:      存放数据     --->data
+            mutations:  修改数据     --->methods
+            actions:    实现一步操作 --->mounted
+            getters:    相当于计算属性-->computed
+            modules:    模块
+        })
+    5.将仓库传递给你的实例中
+        new Vue({
+            store
+        })
+    6.使用store里的数据
+        this.$store.state
+
+2、 2.1.使用vuex中的 state 中的数据的简写形式
+        state---映射到---->  computed 中
+
+        调用this.$store.state.studyList.find(v=>v.id === this.id); 
+        简写步骤
+        // 1.在组建中引入vuex,两种形式引入
+            第一种
+            import vuex from "vuex"
+            第二种
+            import {mapState} from "vuex"
+
+        // 2. state 中的数据映射到 computed 当中，在 computed 中的写法
+            第一种，对应上面第一种
+            computed:Object.assign(vuex.mapState(["studyList"]),{
+                // 可以接着写计算属性
+                sum(){
+                    return 13
+                }
+            })
+
+            第二种，对应上面的第二种,直接写映射
+            computed:Object.assign(mapState(["studyList"]),{
+                // 可以接着写计算属性
+                sum(){
+                    return 13
+                }
+            })
+
+            第二种，对应上面的第二种，直接写映射。 计算属性合并简写
+            computed:{
+                //1.
+                ...mapState(["studyList","userName"]),
+                //2.还可以这么写
+                ...mapState({
+                    study(v){
+                        return v.studyList;
+                    }
+                }),
+
+                ...{  // 直接写计算属性
+                    sum(){
+                        var s = 0;
+                        this.studyList.forEach(v => {
+                            s += v.loveNum;
+                        })
+                        return s;
+                    }
+                }
+            }
+        // 3.mounted中使用studyList
+            mounted(){
+                //不简写的形式
+                this.studyinfo = this.$store.state.studyList.find( v=>v.id == this.id);
+
+                //简写形式
+                this.studyinfo = this.studyList.find( v=>v.id == this.id);
+            }
+
+            var store = new Vuex.Store({
+                state:{
+                    userName:"lalala",
+                    studyList:[
+                        {
+                            id:1,
+                            title:"php",
+                            day:2,
+                            loveNum:0
+                        },
+                        {
+                            id:2,
+                            title:"node",
+                            day:5,
+                            loveNum:0
+                        },
+                        {
+                            id:3,
+                            title:"vue",
+                            day:1,
+                            loveNum:0
+                        }
+                    ]
+                }
+            })
+
+    2.2.使用vuex中 mutations 的简写
+        mutations---映射到---methods--中
+    
+        调用：this.$store.commit("CHANGE_STUDYLIST_ID","5678");
+        简写步骤
+        1.引入vuex
+            import {mapMutations} from "vuex"
+
+        2.mutations中的方法映射到methods中，在methods中的写法
+            methods:{
+                ...mapMutations(["CHANGE_STUDYLIST_ID"]), // 直接写要映射的函数名，大写
+                ...{
+                        changeLoveNum(){
+
+                            this.CHANGE_STUDYLIST_ID(this.id); // 直接调用函数，传值
+
+                            // 如果不简写，可以使用这种方法，this.$store.commit()触发mutations中的函数
+                            // 第一个参数:mutations中要调用的函数名  第二个参数:传值,只能传一个值，传多个值使用对象
+                            this.$store.commit("CHANGE_STUDYLIST_ID",this.id);
+                        }
+                }
+            }
+        
+        3.store中的mutations写法
+            var store = new Vuex.Store({
+                state:{
+                    userName:"lalala",
+                    studyList:[
+                        {
+                            id:1,
+                            title:"php",
+                            day:2,
+                            loveNum:0
+                        },
+                        {
+                            id:2,
+                            title:"node",
+                            day:5,
+                            loveNum:0
+                        },
+                        {
+                            id:3,
+                            title:"vue",
+                            day:1,
+                            loveNum:0
+                        }
+                    ]
+                },
+                mutations:{ //修改state数据,同步 函数名大写
+                    //1.第一个参数:state里的数据，第二个参数:传的值
+
+                    CHANGE_STUDYLIST_ID(state,id){ 
+                        var studyinfo = state.studyList.find(v=>v.id === id);
+                        studyinfo.loveNum += 1;
+                    }
+                }
+            })
+        
+        4.组件中点击按钮时也可以直接调用，写法
+            //1.调用methods中的changeLoveNum函数，然后再函数里触发调用mutations中的方法
+            <input type="button" :value="studyinfo.loveNum" @click="changeLoveNum">
+
+            //2.直接调用，直接写函数名调用就可以
+            <input type="button" :value="studyinfo.loveNum" @click="CHANGE_STUDYLIST_ID(studyinfo.id)">
+
+    2.3 使用vuex中 getters 的简写
+        getters---映射到---computed--中
+
+        调用：$store.getters.loveNum
+        简写
+            1.引入vuex
+                import {mapGetters} from "vuex"
+            
+            2.getters中的方法映射到 computed 中，在 computed 中的写法
+                computed:{
+                    ...mapGetters(["loveNum"]),
+                    ...{
+                        // 可以写当前组件的计算属性
+
+                    }
+                }
+
+            3.使用
+                //1.不简写时使用
+                喜欢的总数：{{$store.getters.loveNum}}
+
+                //2.简写时候的使用
+                喜欢的总数：{{loveNum}}
+    
+    2.4 使用vuex中 actions 的简写
+        actions--映射到--methods--中
+
+        调用: this.$store.dispatch()
+        简写：
+            1.引入vuex
+                import {mapActions} from "vuex"
+            
+            2.actions中的方法映射到 methods 中，在methods中的写法
+                methods:{
+                    ...mapActions(["getStudyList"]),
+                    ...{
+                        // 可以写方法
+                    }
+                }
+            
+            3.使用，可以直接调用方法
+                mounted(){
+                    //简写调用
+                    this.getStudyList();
+
+                    //不简写调用
+                    this.$store.dispatch("方法名","传值")
+                }
+
+            4.store中的写法
+            const state = {
+                userName:"lalala",
+                studyList:[]
+            }
+
+            const mutations = { 
+                //修改state数据,同步 函数名大写
+                //第一个参数:state里的数据，第二个参数:传的值
+                CHANGE_STUDYLIST_ID(state,id){ 
+                    var studyinfo = state.studyList.find(v=>v.id === id);
+                    studyinfo.loveNum += 1;
+                },
+
+                CHANGE_STUDYLIST_INIT(state,info){
+                    state.studyList = info
+                }
+            }
+
+            const actions = {  //ajax的异步
+                //接收传递过来的参数
+                getStudyList(v,v1){
+                    // v 里面包含：state、commit、dispatch、getters
+                    var arr = [
+                        {
+                            id:1,
+                            title:"php",
+                            day:2,
+                            loveNum:0
+                        },
+                        {
+                            id:2,
+                            title:"node",
+                            day:5,
+                            loveNum:0
+                        },
+                        {
+                            id:3,
+                            title:"vue",
+                            day:1,
+                            loveNum:0
+                        }
+                    ]
+                    console.log("执行了getStudyList",v,v1);
+
+                    // ajax得到的arr，在mutations中修改，通过commit触发函数
+                    v.commit("CHANGE_STUDYLIST_INIT",arr)
+                }
+            }
+
+            export default new Vuex.Store({
+                state,
+                mutations,
+                getters,
+                actions
+            })
+    
+    2.5 使用vuex中 modules 
+
+        modules中的adv,goods分模块
+        
+        调用modules中adv模块的state
+            this.$store.state.adv.name
+        调用modules中adv模块的mutations中的方法
+            this.$store.commit("CHANGE","你变了")
+
+        export default new Vuex.Store({
+            state,
+            mutations,
+            getters,
+            actions,
+            modules:{
+                adv,
+                goods
+            }
+        })
+
+        // adv模块
+        export default {
+            state:{
+                name:"广告"
+            },
+            mutations:{
+                CHANGE(state,v){
+                    state.name = v;
+                }
+            },
+            actions:{
+                
+            }
+        }
+
+        // goods模块
+        export default {
+            state:{
+                name:"商品"
+            },
+            mutations:{
+
+            },
+            getters:{
+
+            },
+            actions:{
+
+            },
+            modules:{
+
+            }
+        }
+
+3、vuex总结
+
+     1. state
+        调用: this.$store.state.studyList
+        简写: 
+            state 映射到  computed
+            1.引入
+                import {mapState} from "vuex"
+            2.使用
+                computed:{
+                    ...mapState(["studyList"]),
+                    ...{
+                        //写计算属性
+                    }
+                }
+    2. mutations
+        调用：this.$store.commit("CHANGE","121212");
+        简写：
+            mutations 映射到  methods
+            1.引入
+                import {mapMutations} from "vuex"
+            2.使用
+                methods:{
+                    ...mapMutations(["CHANGE_STUDYLIST_ID"]),
+                    ...{
+                        //写方法
+
+                    }
+                }
+    3. getters
+        调用: this.$store.getters.loveNum
+        简写：
+            getters 映射到 computed
+            1.引入
+                import {mapGetters} from "vuex"
+            2.使用
+                computed:{
+                    ...mapGetters(["loveNum"]),
+                    ...{
+                        //写计算属性
+                    }
+                }
+    4. actions
+        调用：this.$store.dispatch("getStudyList","1212");
+        简写：
+            getters 映射到 methods
+            1.引入
+                import {mapActions} from "vuex"
+            2.使用
+                methods:{
+                    ...mapActions(["getStudyList"]),
+                    ...{
+                        //写方法
+                    }
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

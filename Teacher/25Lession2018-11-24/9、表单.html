@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>受控组件</title>
+    <script src="lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/babel.min.js"></script>
+</head>
+<body>
+<div id="myApp">
+
+</div>
+</body>
+<script type="text/babel">
+    class MyCom extends React.Component{
+        constructor(props){// 构造器
+            super(props);
+            this.state={
+                userName:"xixi"
+            }
+        }
+        changeUserName(e){
+            this.setState({
+                userName:e.target.value
+            })
+            // console.log(e.target.value);
+        }
+        render(){
+            return (
+                <div>
+                    <input type="text" onChange={this.changeUserName.bind(this)} value={this.state.userName} />
+                </div>
+            )
+        }
+    }
+    ReactDOM.render(
+        <MyCom></MyCom>,
+        document.querySelector("#myApp")
+    )
+</script>
+</html>

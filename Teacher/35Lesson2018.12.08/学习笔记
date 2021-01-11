@@ -1,0 +1,71 @@
+webpack:打包工具
+：mode--------------------development           production
+    plugins:
+    entry
+    output
+    devServer
+    loaders:
+***********************************css***********************************************
+style-loader
+css-loader
+          {
+                test:/\.css$/,// 正则.css
+                // use:["style-loader","css-loader"]
+                // loader:["style-loader","css-loader"]
+                use:[
+                    {
+                        loader:"style-loader"
+                    },{
+                        loader:"css-loader"
+                    }
+                ]
+            }
+  ***********************************************************图片
+  url-loader
+  file-loader
+{
+    test:/\.(gif|png|jpg)$/,
+    // use:["url-loader"]
+    use:[
+        {
+            loader:"url-loader",
+            options:{
+                limit:20000, // 范围 当你的图片大于指定范围时，用图片的文件地址，相返用base64
+                outputPath:"image"// 给你的文件指定目录
+            }
+        }
+    ]
+}
+**********************************************************sass
+{
+                test:/\.scss$/,
+                loader:["style-loader","css-loader","sass-loader"]
+            },
+            **********************************************************less
+            {
+                test:/\.less$/,
+                loader:["style-loader","css-loader","less-loader"]
+            }
+            *************************************************************************************
+            作业：
+                src:
+                    index.html
+                        <div id="root">
+                        </div>
+                    main.js
+
+                    import React from "react";
+                    import ReactDOM from "react-dom";
+                    class MyCom extends React.Component{
+                        render(){
+                            return (
+                                <div>12121212</div>
+                            )
+                        }
+                    }
+                    ReactDOM.render(<MyCom/>,document.querySelect("#root"))
+                    // babel
+
+
+                    npm run build
+                    npm run dev

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        .bg{
+            background:yellowgreen;
+        }
+        .red{
+            color:red;
+        }
+        .green{
+            font-size:30px;
+        }
+        .active{
+            color:pink;
+            font-size:30px;
+        }
+        .static{
+            background:#333;
+        }
+    </style>
+</head>
+<body>
+    <div id="myApp">
+        <!-- 1.class绑定的是data里面的bg,只能绑定一个 -->
+       <p v-bind:class="bg">风往北吹</p>
+
+       <!-- 2.class绑定的是data里面的bg和abc可以绑定多个 -->
+       <p :class="[bg,abc]">绑定的是data里面的bg和abc</p>
+
+       <!-- 3. 绑定的是字符串style里面的样式，不再是data里面的值-->
+       <p :class="['bg','green']">绑定的是data里面的bg和abc</p>
+
+       <!-- 4. :class="'bg'"   'bg'指的是字符串 -->
+       <p :class="'bg'">你猜是什么样子</p>
+       <p :class="'bg red'">你猜是什么样子</p>
+
+        <!-- 5. 对象语法 可以传给 v-bind:class 一个对象，以动态地切换 class,acrive是定义的样式-->
+        <p :class="{active:isActive}">class的对象语法</p>
+
+        <!-- 6.多个class可以并存 -->
+        <p class="static" :class="{active:isActive,'text-danger':hasError}">class的对象语法,多个class可以共存</p>
+    </div>
+</body>
+</html>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+           bg:"red",
+           abc:"green",
+           isActive:true,
+           hasEror:false
+        }
+    }) 
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

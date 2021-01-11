@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+    <style>
+       
+    </style>
+</head>
+<body>
+    <div id="myApp">
+        <!-- 右击事件 contextmenu -->
+        <input type="button" value="右击我吧" @contextmenu="fn">
+        <!-- vue中解决  默认事件prevent -->
+        <input type="button" value="vue中默认事件" @contextmenu.prevent="fn1">
+
+        <!-- a标签默认事件 -->
+        <a href="http://www.baidu.com" @click.prevent="alert">百度</a>
+
+        <!-- 表单默认事件 -->
+        <form method="get" action="http://www.baidu.com">
+            <input type="submit" value="提交" @click.prevent="alert">
+        </form>
+    </div>
+</body>
+</html>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+           
+        },
+        methods:{
+            fn(e){
+                alert("右击了");
+                e.preventDefault();
+            },
+            fn1(){
+                alert("vue右击");
+            },
+            alert(){
+                alert(111);
+            }
+        }
+    }) 
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

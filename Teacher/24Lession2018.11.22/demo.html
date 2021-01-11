@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text" id="myInput">
+<div id="myDiv"></div>
+</body>
+<script>
+    var myInput=document.querySelector("#myInput");
+    var myDiv=document.querySelector("#myDiv");
+    var obj={
+        userName:"laoli"
+    }
+    myDiv.innerHTML=myInput.value=obj.userName;
+    myInput.onkeyup=function(){
+        myDiv.innerHTML=this.value;
+    }
+</script>
+</html>

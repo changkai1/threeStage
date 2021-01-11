@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/baiduTemplate.js"></script>
+</head>
+<body>
+<!--阿里大鱼-->
+    <div id="reg">
+        <p>用户名: <input type="text" name="ruserName"></p>
+        <p>密码: <input type="password" name="rpassWord"></p>
+        <p>确认密码: <input type="password" name="rpassWord2"></p>
+        <p>
+            <input type="button" onclick="reg()" value="注册">
+            <input type="button" onclick="goLogin()" value="跳转到登陆">
+        </p>
+    </div>
+    <div id="login">
+        <p>用户名: <input type="text" name="userName"></p>
+        <p>密码: <input type="password" name="passWord"></p>
+        <p><input type="button" name="loginBtn" onclick="logins()" value="登陆1">
+            <input type="button" name="goReg" onclick="goReg()" value="跳转到注册">
+        </p>
+    </div>
+    <div id="vote">
+        <div>
+            欢迎<span id="userName"></span>的到来，<input type="button" onclick="outLogin()" value="退出">
+        </div>
+        <div id="wrap">
+
+        </div>
+    </div>
+<script type="text/html" id="tp">
+    <%for(var i=0;i<voteList.length;i++){%>
+    <div>
+        <h3><%=voteList[i].voteName%></h3>
+        <p>当前票数：<%=voteList[i].voteNum%></p>
+        <p><input type="button" onclick="sentVote(<%=voteList[i].id%>)" value="投票"></p>
+        <hr/>
+    </div>
+    <%}%>
+</script>
+</body>
+<script>
+    // localStorage.userName
+    var voteDiv=document.querySelector("#vote");
+    var regDiv=document.querySelector("#reg");
+    var login=document.querySelector("#login");
+    init();
+    function init(){
+        // 登陆过了
+        if(localStorage.userName){
+            voteDiv.style.display="block";
+            regDiv.style.display="none";
+            login.style.display="none";
+            document.querySelector("#userName").innerHTML=localStorage.userName;
+            getVoteList();
+        }else{
+            voteDiv.style.display="none";
+            regDiv.style.display="none";
+            login.style.display="block";
+        }
+    }
+
+    // 跳转到注册
+    function goReg(){
+        regDiv.style.display="block";
+        login.style.display="none";
+    }
+    // 跳转到登陆
+    function goLogin(){
+        regDiv.style.display="none";
+        login.style.display="block";
+    }
+    function reg(){
+        var xhr=new XMLHttpRequest();
+        xhr.open("post","http://127.0.0.1/reg");
+        xhr.send("userName="+document.querySelector("input[name='ruserName']").value
+            +"&passWord="+document.querySelector("input[name='rpassWord']").value);
+        xhr.onload=function(){
+            var obj=JSON.parse(xhr.responseText);
+            if(obj.ok==1){
+                goLogin();
+            }else{
+                alert(obj.msg);
+            }
+        }
+    }
+    function logins(){
+        // alert(1);
+        var xhr=new XMLHttpRequest();
+        xhr.open("post","http://127.0.0.1/login");
+        xhr.send("userName="+document.querySelector("input[name='userName']").value
+            +"&passWord="+document.querySelector("input[name='passWord']").value);
+        xhr.onload=function(){
+            console.log(xhr.responseText);
+            var obj=JSON.parse(xhr.responseText);
+            if(obj.ok==1){
+                localStorage.userName=obj.userName;
+                localStorage.userId=obj.userId;
+
+                init();
+            }else{
+                alert(obj.msg);
+            }
+        }
+    }
+
+    function outLogin(){
+        localStorage.clear();
+        init();
+    }
+
+    function getVoteList(){
+        var xhr=new XMLHttpRequest();
+        xhr.open("get","http://127.0.0.1/getVoteList");
+        xhr.send();
+        xhr.onload=function(){
+            // console.log(xhr.responseText);
+            document.querySelector("#wrap").innerHTML=baidu.template("tp",JSON.parse(xhr.responseText));
+        }
+    }
+    function sentVote(id){
+        var xhr=new XMLHttpRequest();
+        xhr.open("get","http://127.0.0.1/sentVote?id="+id+"&userId="+localStorage.userId);
+        xhr.send();
+        xhr.onload=function(){
+            var obj=JSON.parse(xhr.responseText);
+            if(obj.ok===1)
+                getVoteList();
+            else
+                alert(obj.msg);
+        }
+    }
+
+
+</script>
+</html>

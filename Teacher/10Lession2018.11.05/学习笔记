@@ -1,0 +1,51 @@
+前后端分离
+混合式开发
+使用EJS是一个服务器端的模板。
+1、下载
+    cnpm install ejs --save-dev
+2、引入
+    const ejs=require("ejs")
+3、设置模板
+    // 设置模板为ejs
+    app.set("view engine","ejs");
+4、即可正常使用
+    res.render("文件名（默认存放在views文件夹当中）"，数据(必须要是一个对象)）;
+    文件需要以.ejs为扩展名，使用时扩展名可以省略
+
+    *<%include header.ejs%>
+    app.set("views","html");// 将默认views文件夹修改为 html文件夹
+
+    样式：
+***********************************// 通过NODE发送请求。*****************************************
+1、下载
+    cnpm install request --save-dev
+2、引入
+    const request=require("request");
+3、使用
+     request("http://127.0.0.1:8081/userInfo",function(err,response,body){
+            if(!err && response.statusCode===200){
+                res.json(
+                    JSON.parse(body)
+                )
+            }else{
+                res.json({
+                    ok:2,
+                    msg:"连接错误！"
+                })
+            }
+        })
+  好处：
+    1、解决跨域
+    2、可以将得到的数据进行二次解析。
+
+**********************************************************************************************************
+总结 ：
+    1、前端
+    2、后端
+    3、服务器
+    4、数据库
+    // ejs
+    // request(url,function(err,response,body){});
+
+    // post
+

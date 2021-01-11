@@ -1,0 +1,107 @@
+1、动态组件：
+    <input type="button" value="切换" @click="changeCom"/>
+    <components :is="comArr[index]"></components> 
+    data:{
+        index:0,
+        comArr:["one","two","three"]
+    },
+    methods:{
+           changeCom(){
+               this.index++;
+               if(this.index > 2){
+                    this.index = 0;
+               }
+           }
+        },
+    改变index就可以实现动态的切换
+
+2、 全局组件，第一个参数是组件名，第二个参数是对象
+    Vue.component("one",{
+        template:`<div>one组件</div>`
+    })
+
+3、局部模块对象合并方式
+    第一种
+    components:Object.assign(advM,userM,{ //合并advM和userM对象，还可以接着写组件，一起合并
+        one:{
+            template:`<div>one组件</div>`
+        }
+    })
+
+    第二种，拓展运算符合并
+    components:{
+        ...advM,
+        ...userM,
+        ...{ //还可以接着写对象
+            two:{
+                template:`<div>two组价</div>`
+            }
+        }
+    }
+
+4、全局模块对象合并，可以使用for...in...遍历
+    合并对象
+    var userM = {
+        userInfo:{
+            template:`<div>userInfo</div>`
+        },
+        login:{
+            template:`<div>login</div>`
+        }
+    };
+    var advM = {
+        advInfo:{
+            template:`<div>advInfo</div>`
+        },
+        advName:{
+            template:`<div>advName</div>`
+        }
+    };
+    对象合并后
+    var com = {
+         userInfo:{
+            template:`<div>userInfo</div>`
+        },
+        login:{
+            template:`<div>login</div>`
+        },
+        advInfo:{
+            template:`<div>advInfo</div>`
+        },
+        advName:{
+            template:`<div>advName</div>`
+        }
+    }
+    var com = {
+        ...userM,
+        ...advM
+    }
+    //遍历生成多个组件
+    for(var key in com){  // key-->键   com[key]-->值
+        Vue.component(key,com[key]);
+    }
+5、开启mongodb
+    mongod --dbpath d:\mongo
+    mongodb导入文件
+    mongoimport --db db13 --collection goodsList --file 直接拖入要导入的文件 --drop
+6、下载express和mongodb
+    cnpm install express mongodb --save-dev
+7、清除购物车数据
+    db.carList.remove({})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

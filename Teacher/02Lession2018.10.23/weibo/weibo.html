@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>微博</title>
+<link href="style/weibo.css" rel="stylesheet" type="text/css" />
+    <script src="js/baiduTemplate.js"></script>
+</head>
+
+<body>
+<div class="jyArea">
+<!--留言-->
+     <div class="takeComment">
+        <textarea name="textarea" class="takeTextField" id="tijiaoText"></textarea>
+        <div class="takeSbmComment">
+            <input type="button" class="inputs" value="" />
+        </div>
+    </div>
+<!--已留-->
+    <div class="commentOn">
+
+    </div>
+</div>
+<script type="text/html" id="tp">
+    <div class="noContent">暂无留言</div>
+    <div class="messList">
+        <%for(var i=0;i<contextList.length;i++){%>
+        <div class="reply">
+            <p class="replyContent"><%=contextList[i].context%></p>
+            <p class="operation">
+                <span class="replyTime"><%=contextList[i].addTime%></span>
+                <span class="handle">
+                    	<a href="javascript:;" class="top"><%=contextList[i].topNum%></a>
+                        <a href="javascript:;" class="down_icon"><%=contextList[i].downNum%></a>
+                        <a href="javascript:;" class="cut">删除</a>
+                    </span>
+            </p>
+        </div>
+        <%}%>
+
+
+
+    </div>
+    <div class="page">
+        <a href="javascript:;" class="active">1</a>
+        <a href="javascript:;">2</a>
+        <a href="javascript:;">3</a>
+    </div>
+</script>
+</body>
+<script>
+    var btn=document.querySelector(".inputs");
+    // 获取微博
+    getWeibo();
+    function callback(obj){
+        if(obj.ok==1){
+            getWeibo();
+        }else{
+            alert(obj.msg);
+        }
+    }
+    btn.onclick=function(){
+        // jsonp
+        var script=document.createElement("script");
+        script.src="http://127.0.0.1/addweibo?context="+document.querySelector("#tijiaoText").value+"&cb=callback";
+        document.body.appendChild(script);
+        document.body.removeChild(script);
+    }
+    function getWeibo(){
+        var script=document.createElement("script");
+        script.src="http://127.0.0.1/getweibo?cb=commentOnHTML";
+        document.body.appendChild(script);
+        document.body.removeChild(script);
+    }
+    function commentOnHTML(obj){
+        document.querySelector(".commentOn").innerHTML=baidu.template("tp",{
+            contextList:obj.contextList
+        })
+    }
+</script>
+</html>

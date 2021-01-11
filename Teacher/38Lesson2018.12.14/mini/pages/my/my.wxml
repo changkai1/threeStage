@@ -1,0 +1,6 @@
+
+
+<view class="wrap" wx:for="{{movieList}}" wx:key="{{item.id}}">
+    <image src="{{item.images.small}}"></image>
+    <navigator url="../subject/subject?id={{item.id}}">{{item.title}}{{item.year}}</navigator>
+</view>

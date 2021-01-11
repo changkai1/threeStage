@@ -1,0 +1,41 @@
+request
+get
+post
+
+token ---- 令牌
+*******************************************************
+公众号
+
+开发设置
+    开发者工具
+    验证消息的确来自微信服务器：
+    https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421135319
+sha1加密：
+    cnpm install sha1 --save-dev
+    const sha1=require("sha1");
+    加密后的结果=sha1(str);
+1、验证消息的确来自微信服务器
+
+***********************xml2js***************************************
+cnpm install xml2js --save-dev
+const xmlJs=require("xml2js");
+xml-->json
+// body---xml , function(err,json){//json xml转换以后的结果}
+    xmlJs.parseString(body,function(err,json){
+                console.log(json);
+                res.end();
+            })
+json->xml
+************************************************************
+公众号的接口
+    1、公众号验证
+    2、得到token
+    3、创建菜单
+    4、得到消息
+    5、被动发送消息
+        关注点：
+            1、接口的地址
+            2、方式
+            3、参数
+            4、返回结果
+

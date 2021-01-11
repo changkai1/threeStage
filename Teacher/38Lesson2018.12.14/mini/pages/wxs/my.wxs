@@ -1,0 +1,6 @@
+module.exports = {
+    a: 3,
+    fn: function (num) {
+        return 34 + num;
+    }
+}

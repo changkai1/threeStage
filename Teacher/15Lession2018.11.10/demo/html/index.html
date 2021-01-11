@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <script src="lib/vue-resource.js"></script>
+    <script src="lib/vue-filters.js"></script>
+</head>
+<body>
+<div id="myApp">
+    <components :is="comArr[index]" @gocom="goCom"></components>
+</div>
+<!--商品列表模板-->
+<template id="goodsTp">
+    <div>
+        <div>
+            <input type="button" value="我的购物车" @click="$emit('gocom',2)">
+        </div>
+        <div v-for="item in goodsList">
+            <h3>{{item.goodsName}}</h3>
+            <p>价格：{{item.goodsPrice | currency}}</p>
+            <p>库存：{{item.storeNum}}</p>
+            <p>上架时间：{{item.addTime | date}}</p>
+            <input type="button" value="加入购物车" @click="joinCar(item._id)">
+            <hr/>
+        </div>
+    </div>
+</template>
+<template id="loginTp">
+    <div>
+        <p>手机号：<input v-model.trim="phoneId" type="text"></p>
+        <p>验证码：<input v-model.trim="code" type="text"></p>
+        <p><input type="button" value="登陆" @click="login"></p>
+    </div>
+</template>
+<template id="carTp">
+    <div>
+        购物车模板
+    </div>
+</template>
+</body>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+            index:0,
+            fromIndex:-1,
+            comArr:["goods","login","car"]
+        },
+        methods:{
+            // toIndex 你要去哪，fromIndex从哪里来
+            goCom(toIndex,fromIndex){
+                //
+                if(localStorage.phoneId){
+                    if(this.fromIndex<0){
+                        this.index=toIndex;
+                    }else{
+                        this.index=this.fromIndex;
+                    }
+                }else{
+                    this.index=toIndex;
+                    this.fromIndex=fromIndex;
+                }
+            }
+        },
+        components:{
+            goods:{
+                data(){
+                    return {
+                        goodsList:[]
+                    }
+                },
+                methods:{
+                    getGoodsList(){
+                        this.$http.get("http://127.0.0.1/getGoodsList")
+                            .then(({data})=>{
+                            this.goodsList=data.goodsList;
+                         })
+                    },
+                    joinCar(id){
+                        // 已经登陆
+                        if(localStorage.phoneId){
+                            // 加入购物车
+                            this.$http.get("http://127.0.0.1/joinCar",{
+                                goodsId:id,
+                                phoneId:localStorage.phoneId
+                            }).then(({data})=>{
+                                console.log(data);
+                                if(data.ok===1){
+                                    this.getGoodsList();
+                                }else{
+                                    alert(data.msg);
+                                }
+                            })
+                        }else{// 未登陆
+                            this.$emit("gocom",1,0)
+                        }
+                    }
+                },
+                template:"#goodsTp",
+                mounted(){
+                   this.getGoodsList();
+                }
+            },
+            login:{
+                data(){
+                    return {
+                        phoneId:"",
+                        code:""
+                    }
+                },
+                template:"#loginTp",
+                methods:{
+                    login(){
+                        this.$http.post("http://127.0.0.1/login",{
+                            phoneId:this.phoneId,
+                            code:this.code
+                        }).then(({data})=>{
+                            if(data.ok==1){
+                                localStorage.phoneId=data.phoneId;
+                                this.$emit("gocom",0);
+                            }else{
+                                alert(data.msg);
+                            }
+                        })
+                    }
+                }
+            },
+            car:{
+                template:"#carTp",
+                mounted(){
+                    // console.log(121212);
+                    if(!localStorage.phoneId){
+                        this.$emit("gocom",1,2)
+                    }
+                }
+            }
+        }
+    })
+</script>
+</html>

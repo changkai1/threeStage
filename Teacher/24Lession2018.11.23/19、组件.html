@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/babel.min.js"></script>
+</head>
+<body>
+    <div id="myApp">
+
+    </div>
+</body>
+<script type="text/babel">
+    // 属性，状态   state
+    // 组件 函数名即是组件名，返回的内容即是组件的内容。名字首字母大写。必须要有返回值。
+    function Fn(props){
+//      props.userName+="!";//  属性是不允许被修改的，只读的。
+        // return null;// 必须要有return ,而且必须要有返回值。如果你不想返回值的时候，你可以写个null,false
+        return (
+            <div>我来自于FN方法{props.userName}</div>
+        )
+    }
+    ReactDOM.render(<Fn userName="来自星星的你！" />,document.querySelector("#myApp"));
+</script>
+</html>

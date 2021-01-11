@@ -1,0 +1,8 @@
+<template name="one">
+  <view>
+  one,one,  {{userName}},{{age}},{{id}}
+  </view>
+</template>
+<view>
+   我的名字叫view
+</view>

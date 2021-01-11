@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-resource.js"></script>
+</head>
+<body>
+    <div id="app">
+        <red></red>
+        <yellow></yellow>
+        <blue></blue>
+    </div>
+</body>
+</html>
+<script src="api/vue-components.js"></script>
+<script>
+    // var red = {
+    //     template:`<div>红色</div>`
+    // };
+    // var yellow = {
+    //     template:`<div>黄色</div>`
+    // };
+    // var blue = {
+    //     template:`<div>蓝色</div>`
+    // };
+    new Vue({
+        el:"#app",
+        data:{
+            
+        },
+        components:{ //组件
+          red,
+          yellow,
+          blue
+        }
+    })
+    
+
+
+
+
+
+
+</script>

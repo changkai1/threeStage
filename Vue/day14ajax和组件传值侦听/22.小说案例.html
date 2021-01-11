@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-resource.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 父组件向子组件传值通过属性，把boyBook传递给子组件 -->
+        <book :info="boyBook"></book>
+        <book :info="girlBook"></book>
+    </div>
+
+    <template id="tp">
+        <!-- 模板使用传递过来的属性 -->
+        <div>
+            <div v-for="item in info">
+                <h3>{{item.bookName}}</h3>
+                <h4>{{item.author}}</h4>
+            </div>
+        </div>
+    </template>
+</body>
+</html>
+<script>
+
+    new Vue({
+        el:"#app",
+        data:{
+           boyBook:[
+               {
+                   bookName:"《天龙八部》",
+                   author:"金庸"
+               },
+               {
+                   bookName:"《小李飞刀》",
+                   author:"古龙"
+               }
+           ],
+           girlBook:[
+               {
+                   bookName:"《情深深雨蒙蒙》",
+                   author:"琼瑶"
+               },
+               {
+                   bookName:"《一起来看流星雨》",
+                   author:"F4"
+               }
+           ]
+        },
+        methods:{
+           
+        },
+        components:{ //组件
+            book:{
+                // 子组件通过props接收传递过来的属性
+                props:["info"],
+                template:"#tp"
+            }
+        }
+    })
+
+
+
+
+
+</script>

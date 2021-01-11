@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="myApp">
+    <input type="button" :value="num" @click="addOne">
+    <child :num="num"></child>
+</div>
+</body>
+<script>
+    <!--子组件不能够直接修改父组件传过来的属性值-->
+    new Vue({
+        el:"#myApp",
+        data:{
+            num:45
+        },
+        methods:{
+            addOne(){
+                this.num++
+            }
+        },
+        components:{
+
+            child:{
+                props:["num"],
+                methods:{
+                    addOne(){
+                        this.num++;
+                        // alert(this.num);
+                    }
+                },
+                template:`<div>{{num}} <input type="button" value="子组件的按钮" @click="addOne"></div>`
+            }
+        }
+    })
+</script>
+</html>

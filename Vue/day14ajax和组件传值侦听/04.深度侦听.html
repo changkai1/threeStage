@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+       <input type="text" v-model="obj.userName"><br/>
+       <input type="text" v-model="num">
+    </div>
+</body>
+</html>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+           obj:{
+               userName:"laotie",
+               age:12
+           },
+           num:11
+        },
+        methods:{
+
+        },
+        computed:{
+
+        },
+        mounted(){
+            
+        },
+        watch:{ //通过该对象可以设置侦听，一次只能侦听一个数据
+            //深度侦听，可以侦听引用类型和值类型
+            obj:{ //侦听的引用类型
+                handler(){
+                    console.log(121212);
+                },
+                deep:true  //深度侦听
+            },
+            num:{ //侦听的值类型
+                handler(){
+                    console.log(1313131);
+                },
+                deep:true
+            }
+        }
+    })
+
+
+
+
+
+
+
+</script>

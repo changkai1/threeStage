@@ -1,0 +1,97 @@
+1、vue-cli--->脚手架
+    帮助咱们快速搭建一个单页面应用。
+2、安装脚手架
+    1、cnpm install vue-cli -g
+    2、vue -V   查看版本号
+3、使用脚手架搭建项目
+   1、vue  init webpack  myApp   ---->项目名称要小写
+      vue init webpack ------------------------- 不指定目录 的话为当前目录。
+
+      src:开发环境 当中的源代码。
+      build:打包
+      config:项目配置
+      static:静态资源
+   2、npm run dev 运行你的开发环境
+      npm run build 对你的项目进行打包
+
+      config->index.js->autoOpenBrowser: false,---->是否自动打开浏览器
+
+
+      <router-view/>  显示你路由的信息。 路由的一个占位
+      路由：对你项目路径进行统一管理的系统。
+@ 代表的src根目录
+***********************************************************************************************************
+通过router-link实现路由的切换
+    <router-link to="/url">名字</router-link>
+    <router-link :to="{name:'路由的名字'}">名字</router-link>
+    <router-link :to="{path:'路由的地址'}">名字</router-link>
+    *****************路由模式*******************
+    1、mode="hash" 默认的模式，带#
+    2、mode="history" 去除掉#
+    ***************************传值******************************************************************************************
+    ***********************传值1**************************
+    1、传值：    <router-link :to="{name:'HI',params:{a:1,b:2}}">Hi</router-link>
+    2、接收     this.$route.params.a    this.$route.params.b
+     {{$route.params.a}}|{{$route.params.b}}
+     当页面刷新时，数据丢失
+   ***********************传值2**************************
+    1、传值<router-link :to="{path:'/hi',query:{a:6,b:90}}">Hi</router-link>
+    2、接收{{$route.query.a}}|{{$route.query.b}}
+    刷新页面，不会丢失数据
+      ***********************传值3**************************
+        1、传值<router-link :to="{name:'HI',query:{a:6,b:90}}">Hi</router-link>
+        2、接收{{$route.query.a}}|{{$route.query.b}}
+        刷新页面，不会丢失数据
+         ***********************传值4**************************
+        1、设置一下路由：
+         {
+                    path:"/news-:id-:type",
+                    name:"news",
+                    component:News
+                }
+         2、<router-link :to="{path:'/news-45-89'}">news</router-link>
+         3、接收 {{$route.params.id}}|{{$route.params.type}}
+
+
+
+         ***************************alias*****************************
+         alias:别名可以通过别名访问你的路由。
+         ***************************redirect**********************************
+         redirect:重定向。将你的地址重新定义
+
+         **************************404***********************
+          {
+                     path:"*",// 当你的路由找不到适合的时候，会走该路由
+                     component:Error
+                 },
+         *************************编程式导航**************************
+             // this.$router.push("/hi");
+             // this.$router.push("/hi?a=90&b=100");
+             this.$router.push({path:"/hi",query:{a:45,b:98}});
+             this.$router.go(-1);// 返回
+
+
+
+         *****************************单页面多路由************************************
+
+        页面内容：
+        <router-view name="one"/>
+        ******************************
+        <router-view name="News"/>
+        ******************************
+        <router-view name="Error"/>
+        ******************************
+        <router-view/>
+        ******************************
+        路由配置：
+                    components:{
+                        one:Hi,
+                        News,
+                        Error,
+                        default:HelloWorld
+                    }
+        // 1、路由的钩子
+        // 2、二级路由（子路由）
+        // vuex  axios
+
+

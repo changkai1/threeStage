@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+    <style>
+       
+    </style>
+</head>
+<body>
+    <div id="myApp">
+        <select v-model="num">
+            <option value="1">中国</option>
+            <option value="2">泰国</option>
+            <option value="3">马来西亚</option>
+            <option value="4">新加坡</option>
+        </select>
+        <div>
+            {{num}}
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+           num:2
+        },
+        methods:{
+            
+        }
+    }) 
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

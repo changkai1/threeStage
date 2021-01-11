@@ -1,0 +1,66 @@
+1、Object.defineProperty方法使用  拦截器，对象属性拦截器
+
+var obj = {
+    userName:"laowangtou"
+}
+// 拦截器，对象属性拦截器。
+// 第一个参数：你要劫持的对象
+// 第二个参数：你要劫持的对象属性名
+// 第三个参数：描述
+var value = "";
+Object.defineProperty(obj,"userName",{
+    get(){ // 当你获得值时会执行该方法
+        return value
+    },
+    set(v){ // 当你设置该属性时会执行该方法,参数是设置的值
+        // console.log(v);
+        value = "《" + v + "》";
+    }
+})
+obj.userName = "天龙八部";
+console.log(obj.userName);
+
+obj.userName = "射雕英雄传"
+console.log(obj.userName);
+
+2、自定义指令传值
+<body>
+    <div id="app">
+        <div v-red>{{num}}</div>
+        <div v-green="green">one</div>
+    </div>
+</body>
+</html>
+
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            num:"天",
+            green:"green"
+        },
+        directives:{ // 局部自定义指令
+            // 参数el: 指令所在的元素
+            red(el){ // 指令是一个方法，用的时候加上v-, v-red
+                console.log(el); // <div>天</div>
+                el.style.color = "red";
+                el.innerHTML = "《" + el.innerHTML + "》";
+            },
+            green(el,binding){  // 自定义指令传值
+                el.style.color = binding.value;
+                console.log(el,binding);
+            }
+        }
+    })
+</script>
+
+
+
+
+
+
+
+
+
+
+

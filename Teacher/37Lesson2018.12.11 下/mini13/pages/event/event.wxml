@@ -1,0 +1,21 @@
+
+<!-- <view>
+<button bindtap="changeVal">{{val}}</button>
+<button bindlongtap="changeVal">{{val}}</button>
+<button bindtouchstart='bindTouchStart'   bindtouchend='bindTouchEnd' bindtouchmove='bindTouchMove'>333333333</button>
+</view> -->
+
+<view>
+{{nowTime}}
+
+</view>
+
+<view bindtap="bindOutter">
+  outter
+    <view data-age="90" data-user-name="laotie" catchtap="bindMiddle" id="middle">
+      middle
+      <view id="inner">
+      inner
+      </view>
+    </view>
+</view>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="myApp">
+    <input type="text" v-model="obj.userName">
+    <input type="text" v-model="num">
+</div>
+</body>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+            num:13,
+            obj:{
+                userName:"laotie",
+                age:12
+            }
+        },
+        watch:{
+            // 用尝试侦听，来侦听值类型
+            obj:{
+                handler(){
+                    console.log(12121212);
+                },
+                deep:true
+
+            },
+            num:{
+                handler(){
+                    console.log(333333333);
+                },
+                deep:true
+            }
+            // obj(){
+            //     console.log(12121212);
+            // }
+        }
+    })
+</script>
+</html>

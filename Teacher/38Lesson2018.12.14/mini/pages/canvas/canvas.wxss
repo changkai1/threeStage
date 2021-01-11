@@ -1,0 +1,4 @@
+/* pages/canvas/canvas.wxss */
+page{
+    height:100%;
+}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/babel.min.js"></script>
+</head>
+<body>
+<div id="myApp">
+
+</div>
+</body>
+<script type="text/babel">
+    // 类 class定义组件时，render方法是必须，必须要有一个返回值，返回的内容即是组件的内容。
+    class MyCom extends React.Component {
+        constructor(props){
+            super(props);// 当你不需要在constructor 当中不需要写逻辑时，这一块可以省略。
+            console.log(props.goodsName);// 属性是只读的。
+        }
+        render(){
+            return <h1>最近天冷了，记得穿{this.props.goodsName}</h1>;
+        }
+    }
+    ReactDOM.render(<MyCom goodsName="秋裤"/>,document.querySelector("#myApp"));
+</script>
+</html>

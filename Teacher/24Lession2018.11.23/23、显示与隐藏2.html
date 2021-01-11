@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .wrap{
+            width:500px;
+            height:300px;
+            background:red;
+            border:1px solid yellow;
+            color:yellow;
+        }
+    </style>
+    <script src="lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/babel.min.js"></script>
+
+</head>
+<body>
+<div id="myApp">
+
+</div>
+</body>
+<script type="text/babel">
+    // 属性是不可修改的.状态是可以修改的。
+    class MyCom extends React.Component {
+        constructor(props){
+            super(props);
+            this.state={
+                isComShow:this.props.isShow
+            }
+        }
+        change(){
+            // 修改状态。异步
+            this.setState({
+                isComShow:!this.state.isComShow
+            })
+            console.log(this.state.isComShow);
+            // this.state.isComShow=true;
+            // console.log(this.state.isComShow);
+            // alert(this.state.isComShow);
+        }
+        render(){
+            return (
+                <div>
+                    <input type="button" value={this.state.isComShow?"隐藏":"显示"} onClick={this.change.bind(this,45)}/>
+                    <div className="wrap" style={{display:this.state.isComShow?"block":"none"}}>
+                        你在他乡还好吗？
+                    </div>
+                </div>
+            )
+        }
+    }
+    // isShow来控制DIV的初始状态
+    ReactDOM.render(<MyCom isShow={true}/>,document.querySelector("#myApp"));
+</script>
+</html>

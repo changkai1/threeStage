@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .wrap{
+            width:500px;
+            height:300px;
+            background:red;
+            border:1px solid yellow;
+            color:yellow;
+        }
+    </style>
+    <script src="lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/babel.min.js"></script>
+
+</head>
+<body>
+<div id="myApp">
+
+</div>
+</body>
+<script type="text/babel">
+    // onClick :驼峰命名法。C要大写
+    class MyCom extends React.Component {
+        // change(i){
+        //     alert(this.props.num+i);
+        // }
+        change(num){
+            console.log(this);
+            alert(num);
+        }
+        render(){
+            return (
+                <div>
+                    <input type="button" value="切换" onClick={this.change.bind(this,45)}/>
+                    <div className="wrap">
+                        你在他乡还好吗？
+                    </div>
+
+
+
+
+                    {
+                        /*
+                        * <input type="button" value="切换" onclick={function(){alert(12);}}/>
+                        * <input type="button" value="切换" onClick={this.change}/>
+                        *
+                        * // 加括号会自动执行
+                        * <input type="button" value="切换" onClick={this.change(1)}/>
+                        *
+                        *   <input type="button" value="切换" onClick={()=>{
+                        this.change(56);
+
+                                // 通过bind绑定this
+                        <input type="button" value="切换" onClick={this.change.bind(this)}/>
+
+                                  // 通过bind绑定this  并传递参数。
+                         <input type="button" value="切换" onClick={this.change.bind(this,45)}/>
+                    }}/>*/
+                    }
+
+
+
+                </div>
+            )
+        }
+    }
+    ReactDOM.render(<MyCom num="14"/>,document.querySelector("#myApp"));
+</script>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-resource.js"></script>
+</head>
+<body>
+    <div id="app">
+        <userinfo></userinfo>
+        <login></login>
+        <goodsinfo></goodsinfo> 
+        <carlist></carlist>
+    </div>
+</body>
+</html>
+<!-- <script src="api/userM.js"></script>
+<script src="api/goodsM.js"></script> -->
+<script type="module">
+    
+    // 使用ES6导入时，script标签添加type="module"
+    import userm from "./api/userM.js";
+    import goodsm from "./api/goodsM.js";
+    new Vue({
+        el:"#app",
+        data:{
+            
+        },
+        // components:Object.assign(userM,goodsM)
+        components:Object.assign(userm,goodsm)
+    })
+    
+
+
+
+
+
+
+</script>

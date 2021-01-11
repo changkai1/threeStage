@@ -1,0 +1,9 @@
+    <div style="color:red;background:yellow;">写一点字，我确定你就是那披着羊皮的狼！</div>
+    <div :style="'color:red;background:yellow;'">写一点字，我确定你就是那披着羊皮的狼！</div>
+    <div :style="myc">写一点字，我确定你就是那披着羊皮的狼！</div>
+    <div :style="myc2">写一点字，我确定你就是那披着羊皮的狼！</div>
+    <div :style="{color:'red',background:'yellow'}">写一点字，我确定你就是那披着羊皮的狼！</div>
+    <div :style="{color:red,background:yellow}">写一点字，我确定你就是那披着羊皮的狼！</div>
+    <div :style="[bg,color]">写一点字，我确定你就是那披着羊皮的狼！</div>
+过滤器;
+    将数据进行过滤，生成自已想要的格式的数据。

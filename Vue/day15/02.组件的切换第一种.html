@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="切换" @click="changeCom">
+        <one v-if="index === 0"></one>
+        <two v-if="index === 1"></two>
+        <three v-if="index == 2"></three>
+    </div>
+</body>
+</html>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            index:0
+        },
+        methods:{
+            changeCom(){
+                this.index++;
+                if(this.index > 2){
+                    this.index = 0;
+                }
+            }
+        },
+        components:{ //组件,也是vue的实例
+            one:{
+                template:`<div>one</div>`
+            },
+            two:{
+                template:`<div>two</div>`
+            },
+            three:{
+                template:`<div>three</div>`
+            }
+        }
+     })
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

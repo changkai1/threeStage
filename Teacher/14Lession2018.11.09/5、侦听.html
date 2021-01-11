@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="myApp">
+    <input type="text" v-model="str">
+    {{str}}:{{num}}
+</div>
+</body>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+            str:"我在马路边捡到一分钱，把它交给警察叔叔手里面",
+            num:0
+        },
+        watch:{// 通过该对象来设置侦听
+            str(){
+                console.log(121212);
+                this.num+=1;
+            }
+        }
+    })
+</script>
+</html>

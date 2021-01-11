@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table{
+            width:100%;
+            border-collapse:collapse;
+        }
+        table td{
+            border:1px solid greenyellow;
+            text-align:center;
+        }
+    </style>
+    <script src="js/baiduTemplate.js"></script>
+</head>
+<body>
+<div>
+    <form name="myform">
+        <p><input   type="text" name="id"></p>
+        <p>被投票人名称：<input type="text" name="voteName"></p>
+        <p>被投票人类别：<select name="voteType">
+            <option value="1">大前端</option>
+            <option value="2">java</option>
+            <option value="3">node</option>
+            <option value="4">ui</option>
+        </select></p>
+        <p>被投票人票数：<input type="text" name="voteNum"></p>
+        <p>被投票人图片：<input type="text" name="votePic"></p>
+        <p><input type="button" value="添加" name="btn"></p>
+    </form>
+    <hr/>
+    <div id="search">
+        <input type="button" value="全部">
+        <input type="button" value="大前端">
+        <input type="button" value="java">
+        <input type="button" value="node">
+        <input type="button" value="ui">
+        <input type="text">
+    </div>
+    <hr/>
+    <div id="wrap">
+
+    </div>
+</div>
+
+<script type="text/html" id="tp">
+    <table>
+        <tr>
+            <td>ID</td>
+            <td>被投票人</td>
+            <td>图片</td>
+            <td>类型</td>
+            <td>票数</td>
+            <td>时间</td>
+            <td>操作</td>
+        </tr>
+        <% for(var i=0;i<voteList.length;i++){%>
+        <tr>
+            <td><%=voteList[i].id%></td>
+            <td><%=voteList[i].voteName%></td>
+            <td><img width="100" src="<%=voteList[i].votePic%>" /></td>
+            <td><%=voteTypeEnum[voteList[i].voteType]%></td>
+            <td><%=voteList[i].voteNum%></td>
+            <td><%=voteList[i].addTime%></td>
+            <td><a href="javascript:;" onclick="getVoteInfoByID(<%=voteList[i].id%>)">修改</a>   删除</td>
+        </tr>
+        <%}%>
+    </table>
+</script>
+
+<script>
+    var btn=document.querySelector("input[name=btn]");
+    btn.onclick=function(){
+        // 调用添加被投票人接口地址
+        var url="http://127.0.0.1/addVoteList";
+        if(document.myform.id.value.length>0){
+            // 调用修改被投票人接口地址
+            url="http://127.0.0.1/upVoteList?id="+document.myform.id.value
+        }
+        var xhr=new XMLHttpRequest();
+        xhr.open("post",url);
+        xhr.send("voteName="+document.myform.voteName.value
+            +"&voteType="+document.myform.voteType.value
+            +"&voteNum="+document.myform.voteNum.value
+            +"&votePic="+document.myform.votePic.value
+        );
+        xhr.onload=function(){
+            // console.log(xhr.responseText);
+            getVoteList();
+            // 将你的表单恢复到初始状态
+            // document.myform.submit();
+            document.myform.reset();
+            document.myform.btn.value="添加";
+        }
+
+        // 修改
+        // if(document.myform.id.value.length>0){
+        //     var xhr=new XMLHttpRequest();
+        //     xhr.open("post","http://127.0.0.1/upVoteList?id="+document.myform.id.value);
+        //     xhr.send("voteName="+document.myform.voteName.value
+        //         +"&voteType="+document.myform.voteType.value
+        //         +"&voteNum="+document.myform.voteNum.value
+        //         +"&votePic="+document.myform.votePic.value
+        //     );
+        //     xhr.onload=function(){
+        //         // console.log(xhr.responseText);
+        //         getVoteList();
+        //         // 将你的表单恢复到初始状态
+        //         // document.myform.submit();
+        //         document.myform.reset();
+        //         document.myform.btn.value="添加";
+        //     }
+        // }else{
+        //     var xhr=new XMLHttpRequest();
+        //     xhr.open("post","http://127.0.0.1/addVoteList");
+        //     xhr.send("voteName="+document.myform.voteName.value
+        //         +"&voteType="+document.myform.voteType.value
+        //         +"&voteNum="+document.myform.voteNum.value
+        //         +"&votePic="+document.myform.votePic.value
+        //     );
+        //     xhr.onload=function(){
+        //         // console.log(xhr.responseText);
+        //         getVoteList();
+        //     }
+        // }
+
+    }
+    var search=document.querySelector("#search");
+    var btns=search.querySelectorAll("input[type='button']");
+    var keyword=search.querySelector("input[type='text']");
+    var voteType=0;// 初始值为0
+    btns[voteType].style.background="red";
+    for(var i=0;i<btns.length;i++){
+        btns[i].onclick=(function(i){
+            return function(){
+                for(var j=0;j<btns.length;j++){
+                    btns[j].style.background=null;
+                }
+                this.style.background="red";
+                voteType=i;
+                getVoteList();
+                console.log(i);
+            }
+        })(i);
+        // btns[i].index=i;
+        // btns[i].onclick=function(){
+        //     console.log(this.index);
+        // }
+    }
+   keyword.onkeyup=function(){
+        getVoteList()
+   }
+
+
+
+    getVoteList();
+    // 获取被投票人的信息
+    function getVoteList(){
+        var xhr=new XMLHttpRequest();
+        xhr.open("get","http://127.0.0.1/getVoteList?type="+voteType+"&keyword="+keyword.value);
+        xhr.send();
+        xhr.onload=function(){
+            // {ok:xx  voteList:[]}
+            document.querySelector("#wrap").innerHTML=baidu.template("tp",JSON.parse(xhr.responseText));
+        }
+    }
+    function getVoteInfoByID(id){
+        var xhr=new XMLHttpRequest();
+        xhr.open("get","http://127.0.0.1/getVoteInfoByID?id="+id);
+        xhr.send();
+        xhr.onload=function(){
+            var obj=JSON.parse(xhr.responseText);
+            if(obj.ok==1){
+                document.myform.voteName.value=obj.voteInfo.voteName;
+                document.myform.voteType.value=obj.voteInfo.voteType;
+                document.myform.votePic.value=obj.voteInfo.votePic;
+                document.myform.voteNum.value=obj.voteInfo.voteNum;
+                document.myform.id.value=obj.voteInfo.id;
+                document.myform.btn.value="修改"
+                document.myform.btn.setAttribute("data-id",obj.voteInfo.id);
+
+
+            }else{
+                alert(obj.msg);
+            }
+
+
+            // {ok:xx  voteList:[]}
+            // document.querySelector("#wrap").innerHTML=baidu.template("tp",JSON.parse(xhr.responseText));
+        }
+    }
+</script>
+</body>
+</html>

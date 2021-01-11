@@ -1,0 +1,92 @@
+1、回顾：
+    redux
+    react-redux
+    import {createStore} from "redux";
+    import {Provider,connect} from "react-redux";
+
+    <Provider store={store}>
+       <Child/>
+    </Provider>
+
+    default connect(mapStateToProps,mapDispatchToProps)(Child);
+***************************************************************************
+// 异步
+1、拦截器
+    1、config/index.js
+    import axios from "axios";
+    axios.interceptors.request.use((config)=>{
+        config.url="http://127.0.0.1"+config.url;
+        return config;
+    })
+    axios.interceptors.response.use(({data})=>{
+        return data;
+    })
+   2、index.js
+   import "./config";
+*****************************异步action*******************************************
+action对象：{
+    type:xxx,
+    payload:{
+    }
+}
+action函数：
+// store.getState()
+    (dispatch,getState)=>{
+          // 逻辑操作
+          dispatch({
+          })
+    }
+1、redux-chunk------>来实现action的异步。对你的项目进行优化。
+     下载： cnpm install redux-thunk --save
+
+
+    import thunk from "redux-thunk"
+    import {
+        createStore,
+        combineReducers,
+        applyMiddleware
+    } from "redux";
+
+    store=createStore(rootReducers,applyMiddleware(thunk));
+
+
+    // action 是需要通过 dispatch来执行的。
+
+
+*********************************************************************************************
+pubsub-js
+publish:发布
+subscribe:订阅
+1、下载
+    cnpm install pubsub-js --save
+2、import pubSub from "pubsub-js"
+使用：发布
+    pubSub.publish("消息名称"，“消息的内容”);
+订阅者：订阅
+    pubSub.subscribe("消息名称"，function(name,context){})
+ ********************************************************************************************
+ // 异步action
+ import thunk from "redux-thunk";
+ import {
+    createStore,
+    applyMiddleware
+ } from "redux"
+ var store=creatStore(rootReducers,applyMiddleware(thunk))
+
+
+
+ // 异步
+
+ dispatch((dispatch,getState)=>{
+     axios.post()
+     .then(data=>{
+        dispatch({
+            type:xxx,
+            xxx:
+        });// state
+     })
+ });
+
+
+
+

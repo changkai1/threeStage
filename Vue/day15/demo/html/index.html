@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+    <script src="lib/vue-resource.js"></script>
+    <script src="lib/vue-filters.js"></script>
+</head>
+<body>
+    <div id="myApp">
+        <components :is="comArr[index]" @gocom="gocom"></components>
+    </div>
+
+    <template id="goodsTp">
+        <div>
+            <div>
+                <input type="button" value="我的购物车" @click="$emit('gocom',2)">
+            </div>
+            <div v-for="item in goodsList">
+                <h3>{{item.goodsName}}</h3>
+                <p>价格：{{item.goodsPrice | currency}}</p>
+                <p>库存：{{item.storeNum}}</p>
+                <p>上架时间：{{item.addTime | date}}</p>
+                <input type="button" value="加入购物车" @click="joinCar(item._id)">
+                <hr/>
+            </div>
+        </div>
+    </template>
+
+    <template id="loginTp">
+        <div>
+            <p>手机号：<input v-model.trim="phoneId" type="text"></p>
+            <p>验证码：<input v-model.trim="code" type="text"></p>
+            <input type="button" value="登录" @click="login">
+        </div>
+    </template>
+    
+    <template id="carTp">
+        <div>
+            <div>
+                <input type="button" value="返回首页" @click="$emit('gocom',0)">
+                <input type="button" value="退出登录" @click="outLogin">
+            </div>
+            <div>
+                <!-- 总价的全选按钮：如果购物车里有一个没有选中，全选按钮都不会选中
+                      遍历购物车，查找是否都是全选状态 -->
+                <img @click="changeAllIsOk" :src="allIsOk?'./images/yes.png':'./images/no.png'" >总价：{{sumPrice}}
+            </div>
+            <div v-for="item in carList">
+                <p><img @click="changeCarInfo(item._id,item.isOk)" :src="item.isOk?'./images/yes.png':'./images/no.png'" alt="">{{item.goodsName}}</p>
+                <p>单价：{{item.goodsPrice | currency}}</p>
+                <p>数量：<input type="button" value="-">{{item.buyNum}}<input type="button" value="+"/>    </p>
+                <p>小计：{{item.buyNum*item.goodsPrice | currency}}</p>
+                <hr/>
+            </div>
+        </div>
+    </template>
+</body>
+</html>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+            index:localStorage.index || 0,  //1  0
+            fromIndex:-1,   //0
+            comArr:["goods","login","car"]
+        },
+        methods:{
+            // toIndex 要跳转到哪个页面 
+            // fromIndex  从哪个组件来  登录完成后去那
+            gocom(toIndex,fromIndex){
+                if(localStorage.phoneId){
+                    if(this.fromIndex < 0){
+                        this.index = toIndex;
+                    }else{
+                        this.index = this.fromIndex;
+                    }
+                    this.fromIndex = -1;
+                }else{
+                    this.index = toIndex;
+                    this.fromIndex = fromIndex || -1;
+                }
+                // 保留最后一次的打开状态，防止刷新跳页面
+                localStorage.index = this.index;
+            }
+        },
+        components:{
+            goods:{
+                data(){
+                    return{
+                        goodsList:[]
+                    }
+                },
+                methods:{
+                    getGoodsList(){
+                        //调取接口
+                        this.$http.get("http://127.0.0.1/getGoodsList").then(({data})=>{
+                            this.goodsList = data.goodsList;
+                        })
+                    },
+                    // 点击加入购物车，判断是否登录过(判断又没有localStrong)，没有登陆过跳转到登录页面
+                    joinCar(id){
+                        if(localStorage.phoneId){
+                            // 已登录，加入购物车
+                            this.$http.get("http://127.0.0.1/joinCar",{
+                                goodsId:id,
+                                phoneId:localStorage.phoneId
+                            }).then(({data})=>{
+                                if(data.ok === 1){
+                                    this.getGoodsList();
+                                }else{
+                                    alert(data.msg);
+                                }
+                            })
+                        }else{
+                            // 没登录跳转到登录页面
+                            this.$emit("gocom",1,0);
+                        }
+                    }
+                },
+                template:"#goodsTp",
+                mounted(){
+                    this.getGoodsList();
+                }
+            },
+            login:{
+                data(){
+                    return{
+                        phoneId:"",
+                        code:""
+                    }
+                },
+                template:"#loginTp",
+                methods:{
+                    // 点击登录，发送手机号和验证码到后台
+                    login(){
+                        this.$http.post("http://127.0.0.1:80/login",{
+                            phoneId:this.phoneId,
+                            code:this.code
+                        }).then(({data})=>{
+                            if(data.ok == 1){ //登录成功，记录phoneId
+                                 localStorage.phoneId = data.phoneId;
+                                 this.$emit("gocom",0);
+                            }else{ //登录失败
+                                alert(data.msg);
+                            }
+                        })
+                    }
+                }
+            },
+            car:{
+                data(){
+                    return{
+                        carList:[]
+                    }
+                },
+                template:"#carTp",
+                mounted(){
+                    if(!localStorage.phoneId){
+                        this.$emit("gocom",1,2);
+                    }else{
+                        this.getMyCarList();
+                    }
+                },
+                methods:{
+                    outLogin(){
+                        localStorage.clear();
+                        this.$emit("gocom",0);
+                    },
+                    getMyCarList(){
+                        this.$http.get("http://127.0.0.1/getMyCarList",{
+                            phoneId:localStorage.phoneId
+                        }).then(({data})=>{
+                            this.carList = data.carList;
+                        })
+                    },
+                    changeAllIsOk(){
+                        this.$http.get("http://127.0.0.1/changeAllIsOk",{
+                            phoneId:localStorage.phoneId,
+                            allIsOk:this.allIsOk  //可以使用计算属性的返回值
+                        }).then(({data})=>{
+                            this.getMyCarList();
+                        })
+                    },
+                    changeCarInfo(id,isOk){
+                        this.$http.get("http://127.0.0.1/changeCarInfo",{
+                            id:id,
+                            isOk:isOk
+                        }).then(({data})=>{
+                            this.getMyCarList();
+                        })
+                    }
+                },
+                computed:{
+                    allIsOk(){
+                        var isOk = 1; //1购物车全选，0不是全选
+                        for(var i = 0; i < this.carList.length; i++){
+                            if( this.carList[i].isOk != 1 ){
+                                isOk = 0;
+                                break;
+                            }
+                        }
+                        return isOk;
+                    },
+                    sumPrice(){
+                        var sum = 0;
+                        for(var i = 0; i < this.carList.length; i++){
+                            if(this.carList[i].isOk == 1){
+                                sum += this.carList[i].buyNum*this.carList[i].goodsPrice;
+                            }
+                        }
+                        return sum;
+                    }
+                }
+            }
+        }
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

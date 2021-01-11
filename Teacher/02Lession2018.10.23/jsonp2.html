@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="button" value="我很帅" onclick="fn()">
+</body>
+<script>
+    // document.querySelector("input").onclick=
+    function fb(num){
+        console.log(num);
+    }
+    function fn(){
+        // alert(1);
+        var script=document.createElement("script");
+        script.src="http://127.0.0.1/?cb=fb";
+        document.body.appendChild(script);
+        document.body.removeChild(script);
+    }
+</script>
+</html>

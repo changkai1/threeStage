@@ -1,0 +1,5 @@
+/* pages/navi/navi.wxss */
+.navi{
+    background:red;
+    color:yellow;
+}

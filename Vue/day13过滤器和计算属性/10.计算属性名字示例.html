@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-filters.js"></script>
+</head>
+<body>
+    <div id="app1">
+       <input type="text" v-model="firstName">
+       <input type="text" v-model="lastName">
+       <p>{{fillName}}</p>
+    </div>
+</body>
+</html>
+<script>
+   
+    new Vue({
+        el:"#app1",
+        data:{
+           firstName:"",
+           lastName:""
+        },
+        methods:{
+          
+        },
+        computed:{
+            fillName(){
+                return this.firstName + this.lastName;
+            }
+        }
+    })
+   
+
+
+
+
+
+
+
+
+
+
+</script>

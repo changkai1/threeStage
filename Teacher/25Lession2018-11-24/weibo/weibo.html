@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>微博</title>
+<link href="style/weibo.css" rel="stylesheet" type="text/css" />
+    <script src="./lib/react.development.js"></script>
+    <script src="./lib/react-dom.development.js"></script>
+    <script src="./lib/babel.min.js"></script>
+    <script src="./lib/axios.min.js"></script>
+</head>
+
+<body>
+<div class="jyArea">
+
+</div>
+<script type="text/babel">
+    class JyArea extends React.Component{
+        constructor(){
+            super();
+            this.state={
+                contextList:[],
+                pageSum:[],
+                pageIndex:1
+            }
+        }
+        getWeibo(pageIndex=1){
+            console.log(pageIndex);
+            axios.get("http://127.0.0.1/getWeibo",{
+                params:{
+                    pageIndex
+                }
+            })
+                .then(({data})=>{
+                    console.log(data);
+                    var arr=[];
+                    for(var i=1;i<=data.pageSum;i++){
+                        arr.push(i);
+                    }
+                    // 异步
+                    this.setState({
+                        contextList:data.contextList,
+                        pageSum:arr,
+                        pageIndex:data.pageIndex
+                    })
+                })
+        }
+        componentDidMount(){
+            this.getWeibo();
+        }
+        render(){
+            return (
+                <div>
+                    <TakeComment getWeibo={this.getWeibo.bind(this)}></TakeComment>
+                    <CommentOn pageIndex={this.state.pageIndex} getWeibo={this.getWeibo.bind(this)} contextList={this.state.contextList} pageSum={this.state.pageSum}></CommentOn>
+                </div>
+            )
+        }
+    }
+    
+    class TakeComment extends React.Component{
+        constructor(props){
+            super(props);// 不写
+            this.state={
+                context:""
+            }
+        }
+        changeContext=(e)=>{
+            this.setState({
+                context:e.target.value
+            })
+        }
+        addWeibo=(e)=>{
+            axios.post("http://127.0.0.1/addWeibo",{
+                context:this.state.context
+            }).then(({data})=>{
+                this.setState({
+                    context:""
+                },function(){
+                    this.props.getWeibo();
+                })
+
+            })
+        }
+        render(){
+            return (
+                <div className="takeComment">
+                    <textarea name="textarea" onChange={this.changeContext} value={this.state.context} className="takeTextField" id="tijiaoText"></textarea>
+                    <div className="takeSbmComment">
+                        <input onClick={this.addWeibo} type="button" className="inputs" value="" />
+                    </div>
+                </div>
+            )
+        }
+    }
+    
+    class PageInfo extends React.Component{
+        render(){
+            return (
+                <div className="page">
+                    {
+                        this.props.pageSum.map((v,i)=>{
+                            return  <a href="javascript:;" onClick={()=>{this.props.getWeibo(v)}} key={i} className={v===this.props.pageIndex?"active":""}>{v}</a>
+                        })
+                    }
+                </div>
+            )
+        }
+    }
+    
+    class CommentOn extends React.Component{
+
+        render(){
+            return (
+                <div className="commentOn">
+                    <div className="noContent" style={{display:this.props.contextList.length>0?"none":"block"}}>暂无留言</div>
+                    <div className="messList">
+                        {
+                            this.props.contextList.map((v,i)=>{
+                                return (
+                                    <div key={i} className="reply">
+                                        <p className="replyContent">{v.context}</p>
+                                        <p className="operation">
+                                            <span className="replyTime">2017.7.30</span>
+                                            <span className="handle">
+                                            <a href="javascript:;" className="top">0</a>
+                                            <a href="javascript:;" className="down_icon">9</a>
+                                            <a href="javascript:;" className="cut">删除</a>
+                                        </span>
+                                        </p>
+                                    </div>
+                                )
+                            })
+                        }
+
+
+                    </div>
+                    <PageInfo pageSum={this.props.pageSum} pageIndex={this.props.pageIndex} getWeibo={this.props.getWeibo}></PageInfo>
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(<JyArea/>,document.querySelector(".jyArea"))
+</script>
+</body>
+</html>

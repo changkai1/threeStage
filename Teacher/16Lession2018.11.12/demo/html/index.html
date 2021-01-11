@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <script src="lib/vue-resource.js"></script>
+    <script src="lib/vue-filters.js"></script>
+</head>
+<body>
+<div id="myApp">
+    <components :is="comArr[index]" @gocom="goCom"></components>
+</div>
+<!--商品列表模板-->
+<template id="goodsTp">
+    <div>
+        <div>
+            <input type="button" value="我的购物车" @click="$emit('gocom',2)">
+        </div>
+        <div v-for="item in goodsList">
+            <h3>{{item.goodsName}}</h3>
+            <p>价格：{{item.goodsPrice | currency}}</p>
+            <p>库存：{{item.storeNum}}</p>
+            <p>上架时间：{{item.addTime | date}}</p>
+            <input type="button" value="加入购物车" @click="joinCar(item._id)">
+            <hr/>
+        </div>
+    </div>
+</template>
+<template id="loginTp">
+    <div>
+        <p>手机号：<input v-model.trim="phoneId" type="text"></p>
+        <p>验证码：<input v-model.trim="code" type="text"></p>
+        <p><input type="button" value="登陆" @click="login"></p>
+    </div>
+</template>
+<template id="carTp">
+    <div>
+        <div>
+            <input type="button" value="返回首页" @click="$emit('gocom',0)">
+            <input type="button" value="退出登陆" @click="outeLogin()">
+        </div>
+        <div>
+            <div>
+                <img @click="changeAllIsOk" :src="allIsOk?'./images/yes.png':'./images/no.png'" alt="">
+                总价：{{sumPrice | currency}}
+            </div>
+            <div v-for="item in carList">
+                <p><img @click="changeCarInfo(item._id,item.isOk)" :src="item.isOk?'./images/yes.png':'./images/no.png'" alt=""> {{item.goodsName}}</p>
+                <p> 单价：{{item.goodsPrice | currency}}</p>
+                <p> 数量：<input type="button" value="-"> {{item.buyNum}}<input type="button" value="+"> </p>
+                <p> 小计：{{item.buyNum*item.goodsPrice | currency}}</p>
+                <hr/>
+            </div>
+        </div>
+    </div>
+</template>
+</body>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+            index:localStorage.index || 0,
+            fromIndex:-1,
+            comArr:["goods","login","car"]
+        },
+        methods:{
+            // toIndex 你要去哪，fromIndex从哪里来
+            // fromIndex 登陆完成以后去哪
+            goCom(toIndex,fromIndex){
+                if(localStorage.phoneId){
+                    if(this.fromIndex<0){
+                        this.index=toIndex;
+                    }else{
+                        this.index=this.fromIndex;
+                    }
+                    this.fromIndex=-1;
+                }else{
+                    this.index=toIndex;
+                    this.fromIndex=fromIndex || -1;
+                }
+                localStorage.index=this.index;
+            }
+        },
+        components:{
+            goods:{
+                data(){
+                    return {
+                        goodsList:[]
+                    }
+                },
+                methods:{
+                    getGoodsList(){
+                        this.$http.get("http://127.0.0.1/getGoodsList")
+                            .then(({data})=>{
+                            this.goodsList=data.goodsList;
+                         })
+                    },
+                    joinCar(id){
+                        // 已经登陆
+                        if(localStorage.phoneId){
+                            // 加入购物车
+                            this.$http.get("http://127.0.0.1/joinCar",{
+                                goodsId:id,
+                                phoneId:localStorage.phoneId
+                            }).then(({data})=>{
+                                console.log(data);
+                                if(data.ok===1){
+                                    this.getGoodsList();
+                                }else{
+                                    alert(data.msg);
+                                }
+                            })
+                        }else{// 未登陆
+                            this.$emit("gocom",1,0)
+                        }
+                    }
+                },
+                template:"#goodsTp",
+                mounted(){
+                   this.getGoodsList();
+                }
+            },
+            login:{
+                data(){
+                    return {
+                        phoneId:"",
+                        code:""
+                    }
+                },
+                template:"#loginTp",
+                methods:{
+                    login(){
+                        this.$http.post("http://127.0.0.1/login",{
+                            phoneId:this.phoneId,
+                            code:this.code
+                        }).then(({data})=>{
+                            if(data.ok==1){
+                                localStorage.phoneId=data.phoneId;
+                                this.$emit("gocom",0);
+                            }else{
+                                alert(data.msg);
+                            }
+                        })
+                    }
+                }
+            },
+            car:{
+                data(){
+                  return {
+                      carList:[]
+                  }
+                },
+                computed:{
+                    sumPrice(){
+                        var sum=0;
+                        for(var i=0;i<this.carList.length;i++){
+                            if(this.carList[i].isOk){
+                                sum+=(this.carList[i].goodsPrice*this.carList[i].buyNum)
+                            }
+                        }
+                        return sum;
+                    },
+                    allIsOk(){
+                        var isOk=1;// 全部选 中  0未全部选 中
+                        for(var i=0;i<this.carList.length;i++){
+                            if(!this.carList[i].isOk){
+                                isOk=0;
+                                break;
+                            }
+                        }
+                        return isOk;
+                    }
+                },
+                template:"#carTp",
+                methods:{
+                    outeLogin(){
+                        localStorage.clear();
+                        this.$emit("gocom",0);
+                    },
+                    getMyCarList(){
+                        this.$http.get("http://127.0.0.1/getMyCarList",{
+                            phoneId:localStorage.phoneId
+                        }).then(({data})=>{
+                                this.carList=data.carList;
+                        })
+                    },
+                    changeCarInfo(id,isOk){
+                        this.$http.get("http://127.0.0.1/changeCarInfo",{
+                            id,
+                            isOk
+                        }).then(({data})=>{
+                            this.getMyCarList();
+                        })
+                    },
+                    changeAllIsOk(){
+                        this.$http.get("http://127.0.0.1/changeAllIsOk",{
+                            phoneId:localStorage.phoneId,
+                            allIsOk:this.allIsOk
+                        }).then(({data})=>{
+                            this.getMyCarList();
+                        })
+                    }
+                },
+                mounted(){
+                    // console.log(121212);
+                    if(!localStorage.phoneId){
+                        this.$emit("gocom",1,2);
+                    }else{
+                        this.getMyCarList();
+                    }
+                }
+            }
+        }
+    })
+</script>
+</html>

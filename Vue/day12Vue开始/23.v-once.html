@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+    <style>
+       
+    </style>
+</head>
+<body>
+    <div id="myApp">
+        <input type="text" v-model="str">
+        <div v-once>
+            {{str}}
+        </div>
+        <div>
+            {{str}}
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    new Vue({
+        el:"#myApp",
+        data:{
+           str:"我是字符串"
+        },
+        methods:{
+            
+        }
+    }) 
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

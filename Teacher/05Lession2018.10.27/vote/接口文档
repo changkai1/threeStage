@@ -1,0 +1,13 @@
+1、添加被投票人  addVoteList
+    1、地址：http://127.0.0.1/addVoteList
+    2、访问的方式：post
+    3、传递的参数：
+            1、voteName:名字
+            2、voteType:
+            3、voteNum
+            4、votePic
+    4、返回的内容：
+        {
+            ok:1,// 1成功，2失败
+            msg:"原因"
+        }

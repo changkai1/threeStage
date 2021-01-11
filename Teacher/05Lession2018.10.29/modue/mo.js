@@ -1,0 +1,10 @@
+module.exports.newList=[
+    {
+        id:1,
+        title:"头条新闻1"
+    },
+    {
+        id:2,
+        title:"头条新闻2"
+    }
+]

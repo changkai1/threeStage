@@ -1,0 +1,17 @@
+<!-- <view wx:for="{{arr}}">
+{{item}}:{{index}}
+</view> -->
+<!-- 
+<view wx:for="{{arr}}" wx:for-item="ite" wx:for-index="inde">
+{{ite}}:{{inde}}
+</view> -->
+
+
+<!-- <view wx:for="{{arr}}" wx:for-item="v">
+    <view wx:for="{{arr2}}"  wx:if="{{v >= item}}"   style="display:inline-block;font-size:10px">
+    {{item}}*{{v}}={{v*item}}
+    </view>
+</view> -->
+<view wx:for="{{goodsList}}" id="goods{{item.id}}">
+  <text>{{item.id}}</text><text>{{item.goodsName}}</text>
+</view>
